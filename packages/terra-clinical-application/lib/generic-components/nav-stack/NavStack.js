@@ -20,21 +20,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var propTypes = {
   animationIsDisabled: _react.PropTypes.bool,
-  children: _react.PropTypes.node
+  items: _react.PropTypes.array
 };
 
 var NavStack = function NavStack(props) {
   // We don't want to render the transition group when no children exist. Doing so will cause the first child to
   // animate into place, which in most cases we do not want.
-  if (!_react2.default.Children.count(props.children)) {
+  if (!props.items || !props.items.length) {
     return null;
   }
 
   // We use the key from the first child as the key for the transition group. This will cause the transition group to
   // rerender when root child changes and subsequently prevent that child from animating into position.
-  var transitionGroupKey = _react2.default.Children.toArray(props.children)[0].key;
+  var transitionGroupKey = props.items[0].key;
 
-  var childCount = _react2.default.Children.count(props.children);
+  var itemCount = props.items.length;
 
   return _react2.default.createElement(
     _reactAddonsCssTransitionGroup2.default,
@@ -46,11 +46,11 @@ var NavStack = function NavStack(props) {
       transitionEnterTimeout: 300,
       transitionLeaveTimeout: 300
     },
-    _react2.default.Children.map(props.children, function (child, index) {
+    props.items.map(function (item, index) {
       return _react2.default.createElement(
         _NavStackContainer2.default,
-        { key: child.key, isHidden: index !== childCount - 1 },
-        child
+        { key: item.key, isHidden: index !== itemCount - 1 },
+        item
       );
     })
   );

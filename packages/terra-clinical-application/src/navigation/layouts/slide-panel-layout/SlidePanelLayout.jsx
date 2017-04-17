@@ -196,16 +196,8 @@ class SlidePanelLayout extends React.Component {
     return (
       <SlidePanel
         className="orion-SlidePanelLayout"
-        mainContent={
-          <NavStack animationIsDisabled>
-            {this.state.main.componentStack}
-          </NavStack>
-        }
-        panelContent={
-          <NavStack>
-            {this.state.slidePanel.componentStack}
-          </NavStack>
-        }
+        mainContent={<NavStack animationIsDisabled items={this.state.main.componentStack} />}
+        panelContent={<NavStack items={this.state.slidePanel.componentStack} />}
         isOpen={this.state.slidePanel.isOpen}
         panelBehavior={this.state.slidePanel.behavior}
         panelSize={this.state.slidePanel.size}

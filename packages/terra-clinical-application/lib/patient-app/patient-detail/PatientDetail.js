@@ -108,7 +108,7 @@ var PatientDetail = function (_React$Component) {
         newDataState.patient = _PatientStore2.default.getPatient(_this3.props.physicianId, _this3.props.patientId);
 
         _this3.setState(newDataState);
-      }, 5000 * Math.random());
+      }, 0);
     }
   }, {
     key: 'render',

@@ -164,9 +164,7 @@ class AppLayout extends React.Component {
           overlayClassName="terra-AppLayout-modalOverlay"
           contentLabel=""
         >
-          <NavStack>
-            {this.state.componentStack}
-          </NavStack>
+          <NavStack items={this.state.componentStack} />
         </Modal>
       </div>
     );

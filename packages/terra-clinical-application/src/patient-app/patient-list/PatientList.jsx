@@ -56,7 +56,7 @@ class PatientList extends React.Component {
       newDataState.patientList = PatientStore.getPatientList(this.props.physicianId);
 
       this.setState(newDataState);
-    }, 5000 * Math.random());
+    }, 0);
   }
 
   showPatientDetail(patient, type) {

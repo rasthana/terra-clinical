@@ -49,7 +49,7 @@ class PatientDetail extends React.Component {
       newDataState.patient = PatientStore.getPatient(this.props.physicianId, this.props.patientId);
 
       this.setState(newDataState);
-    }, 5000 * Math.random());
+    }, 0);
   }
 
   render() {

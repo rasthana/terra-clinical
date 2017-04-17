@@ -5,21 +5,21 @@ import NavStackContainer from '../nav-stack-container/NavStackContainer';
 
 const propTypes = {
   animationIsDisabled: PropTypes.bool,
-  children: PropTypes.node,
+  items: PropTypes.array,
 };
 
 const NavStack = (props) => {
   // We don't want to render the transition group when no children exist. Doing so will cause the first child to
   // animate into place, which in most cases we do not want.
-  if (!React.Children.count(props.children)) {
+  if (!props.items || !props.items.length) {
     return null;
   }
 
   // We use the key from the first child as the key for the transition group. This will cause the transition group to
   // rerender when root child changes and subsequently prevent that child from animating into position.
-  const transitionGroupKey = React.Children.toArray(props.children)[0].key;
+  const transitionGroupKey = props.items[0].key;
 
-  const childCount = React.Children.count(props.children);
+  const itemCount = props.items.length;
 
   return (
     <ReactCSSTransitionGroup
@@ -30,9 +30,9 @@ const NavStack = (props) => {
       transitionEnterTimeout={300}
       transitionLeaveTimeout={300}
     >
-      {React.Children.map(props.children, (child, index) => (
-        <NavStackContainer key={child.key} isHidden={index !== childCount - 1}>
-          {child}
+      {props.items.map((item, index) => (
+        <NavStackContainer key={item.key} isHidden={index !== itemCount - 1}>
+          {item}
         </NavStackContainer>
       ))}
     </ReactCSSTransitionGroup>

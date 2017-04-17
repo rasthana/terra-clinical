@@ -221,11 +221,7 @@ var AppLayout = function (_React$Component) {
             overlayClassName: 'terra-AppLayout-modalOverlay',
             contentLabel: ''
           },
-          _react2.default.createElement(
-            _NavStack2.default,
-            null,
-            this.state.componentStack
-          )
+          _react2.default.createElement(_NavStack2.default, { items: this.state.componentStack })
         )
       );
     }

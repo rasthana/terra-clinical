@@ -245,16 +245,8 @@ var SlidePanelLayout = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(_terraSlidePanel2.default, {
         className: 'orion-SlidePanelLayout',
-        mainContent: _react2.default.createElement(
-          _NavStack2.default,
-          { animationIsDisabled: true },
-          this.state.main.componentStack
-        ),
-        panelContent: _react2.default.createElement(
-          _NavStack2.default,
-          null,
-          this.state.slidePanel.componentStack
-        ),
+        mainContent: _react2.default.createElement(_NavStack2.default, { animationIsDisabled: true, items: this.state.main.componentStack }),
+        panelContent: _react2.default.createElement(_NavStack2.default, { items: this.state.slidePanel.componentStack }),
         isOpen: this.state.slidePanel.isOpen,
         panelBehavior: this.state.slidePanel.behavior,
         panelSize: this.state.slidePanel.size,
