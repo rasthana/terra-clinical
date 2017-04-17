@@ -1,0 +1,63 @@
+.terra-AppLayout {
+  color: #000;
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+}
+
+.terra-AppLayout-content {
+  height: 100%;
+  width: 100%;
+}
+
+.terra-AppLayout-modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.terra-AppLayout-modal {
+  position: absolute;
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  outline: none;
+}
+
+.terra-AppLayout-modal--large {
+  height: 75%;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  marginRight: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.terra-AppLayout-modal--small {
+  height: 40%;
+  width: 40%;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  marginRight: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.terra-AppLayout-modal--fullscreen {
+  height: calc(100% - 45px);
+  width: calc(100% - 45px);
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  marginRight: -50%;
+  transform: translate(-50%, -50%);
+}
