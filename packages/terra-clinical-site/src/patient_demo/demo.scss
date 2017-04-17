@@ -1,0 +1,23 @@
+// Styles specific to development only
+// @import 'node_modules/terra-legacy-theme/src/terra-legacy-theme';
+// @import 'node_modules/terra-application/src/terra-application';
+// $terra-bidi: true;
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+#orion-application-default {
+  height: 100%;
+  width: 100%;
+}
+
+.ReactModal__Overlay {
+  z-index: 1040;
+}
+
+.terraClinical-ItemView-accessory {
+  max-width: 50%;
+}

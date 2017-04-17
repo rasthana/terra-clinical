@@ -26,13 +26,18 @@
     "react-dom": "15.4.2",
     "react-intl": "^2.2.3",
     "react-router": "^3.0.2",
+    "react-router-dom": "^4.0.0",
     "terra-base": "^0.x",
     "terra-clinical-item-view": "^0.x",
     "terra-clinical-detail-view": "^0.x",
+    "terra-clinical-application": "^0.x",
     "terra-grid": "^2.x",
     "terra-legacy-theme": "^0.x",
     "terra-markdown": "^0.x",
-    "terra-props-table": "^0.x"
+    "terra-props-table": "^0.x",
+    "terra-list": "file:../../../terra-ui/packages/terra-list",
+    "terra-button": "file:../../../terra-ui/packages/terra-button",
+    "xfc": "git+http://github.cerner.com/hi-infra/xfc.git#master"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.6",

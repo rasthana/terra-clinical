@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    'terra-clinical': path.resolve(path.join(__dirname, 'src', 'Index')),
+    'patient-app': path.resolve(path.join(__dirname, 'src', 'patient_demo', 'demo')),
   },
   resolveLoader: {
     root: path.resolve(path.join(__dirname, 'node_modules')),
@@ -40,9 +40,13 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('[name]-[hash].css'),
+    // new HtmlWebpackPlugin({
+    //   template: path.join(__dirname, 'src', 'index.html'),
+    //   chunks: ['terra-clinical'],
+    // }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.html'),
-      chunks: ['terra-clinical'],
+      template: 'src/patient_demo/demo.html',
+      chunks: ['patient-app'],
     }),
   ],
   postcss: [
@@ -58,6 +62,9 @@ module.exports = {
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    alias: {
+      react: path.resolve(path.join(__dirname, 'node_modules', 'react')),
+    },
   },
   output: {
     filename: '[name].js',
