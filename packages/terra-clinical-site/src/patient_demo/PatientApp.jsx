@@ -103,8 +103,8 @@ const PatientDetailsRoute = ({ app }) => (
 );
 
 const PatientApp = () => (
-  <Router>
-    <Base style={{ height: '100%', width: '100%' }}>
+  <Base style={{ height: '100%', width: '100%' }}>
+    <Router>
       <AppLayout>
         <PrimaryNavLayout
           headerTitle="Patient Application"
@@ -118,8 +118,8 @@ const PatientApp = () => (
           <LayoutRoute path="/details" component={PatientDetailsRoute} />
         </PrimaryNavLayout>
       </AppLayout>
-    </Base>
-  </Router>
+    </Router>
+  </Base>
 );
 
 export { PatientApp };

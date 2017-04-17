@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    'patient-app': path.resolve(path.join(__dirname, 'src', 'patient_demo', 'demo')),
+    'patient-app': path.resolve(path.join(__dirname, 'src', 'patient_demo', 'demo.jsx')),
   },
   resolveLoader: {
     root: path.resolve(path.join(__dirname, 'node_modules')),
@@ -64,6 +64,9 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       react: path.resolve(path.join(__dirname, 'node_modules', 'react')),
+      xfc: path.resolve(path.join(__dirname, 'node_modules', 'xfc')),
+      'react-modal': path.resolve(path.join(__dirname, 'node_modules', 'react-modal')),
+      'react-dom': path.resolve(path.join(__dirname, 'node_modules', 'react-dom')),
     },
   },
   output: {
