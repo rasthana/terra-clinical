@@ -118,8 +118,8 @@ var PatientUpdate = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(_terraButton2.default, { onClick: this.handleCancel, intent: 'negative', text: 'Cancel' }),
-            _react2.default.createElement(_terraButton2.default, { onClick: this.handleSubmit, intent: 'positive', text: 'Submit' })
+            _react2.default.createElement(_terraButton2.default, { onClick: this.handleCancel, variant: 'secondary', text: 'Cancel' }),
+            _react2.default.createElement(_terraButton2.default, { onClick: this.handleSubmit, variant: 'primary', text: 'Submit' })
           )
         )
       );
