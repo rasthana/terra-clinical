@@ -16,6 +16,7 @@ import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-lay
 import PrimaryNavLayout from 'terra-clinical-application/src/navigation/layouts/primary-nav-layout/PrimaryNavLayout';
 import SecondaryNavLayout from 'terra-clinical-application/src/navigation/layouts/secondary-nav-layout/SecondaryNavLayout';
 import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/slide-panel-layout/SlidePanelLayout';
+import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
 import PatientStore from 'terra-clinical-application/src/patient-app/patient-list/data/PatientStore';
 
 const physicianId = 'physician1';
@@ -70,13 +71,13 @@ const ButtonLink = ({ title, ...rest }) => (
 );
 
 const PatientListRoute = ({ app }) => (
-  <SlidePanelLayout app={app}>
+  <BottomPanelLayout app={app}>
     <PatientList
       id="my-patient-list"
       physicianId={physicianId}
       key={'PATIENT_LIST_APP'}
     />
-  </SlidePanelLayout>
+  </BottomPanelLayout>
 );
 
 const PatientDetailApp = ({ match, app }) => {

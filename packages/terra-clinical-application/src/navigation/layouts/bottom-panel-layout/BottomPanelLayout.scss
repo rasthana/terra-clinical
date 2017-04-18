@@ -1,0 +1,28 @@
+.orion-BottomPanelLayout {
+  height: 100%;
+
+  .orion-BottomPanelLayout-content,
+  .orion-BottomPanelLayout-panel {
+    position: relative;
+  }
+
+  .orion-BottomPanelLayout-content {
+    height: 100%;
+  }
+
+  .orion-BottomPanelLayout-panel {
+    height: 0;
+    display: none;
+    border-top: 1px solid grey;
+  }
+}
+
+.orion-BottomPanelLayout--is-open {
+  .orion-BottomPanelLayout-content,
+  .orion-BottomPanelLayout-panel {
+    height: 50%;
+    display: block;
+  }
+}
+
+

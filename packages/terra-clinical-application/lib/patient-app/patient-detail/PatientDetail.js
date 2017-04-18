@@ -127,7 +127,7 @@ var PatientDetail = function (_React$Component) {
         detailContent = _react2.default.createElement(_terraClinicalDetailView2.default, {
           title: patient.name,
           subtitles: [patient.status],
-          graph: _react2.default.createElement('img', { style: { width: '200px' }, alt: 'patient-img', src: 'http://ll-media.tmz.com/2015/04/01/0401-kurt-russell-moustache-zoom-1.gif' }),
+          graph: _react2.default.createElement('img', { style: { width: '200px' }, alt: 'patient-img', src: patient.photo }),
           details: [_react2.default.createElement(
             'div',
             { key: 'UPDATE_BUTTONS' },
