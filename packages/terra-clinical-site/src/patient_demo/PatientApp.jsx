@@ -8,8 +8,8 @@ import {
 import List from 'terra-list';
 import ClinicalItemView from 'terra-clinical-item-view';
 import Button from 'terra-button';
-import Base from 'terra-base';
 
+import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
 import PatientList from 'terra-clinical-application/src/patient-app/patient-list/PatientList';
 import PatientDetail from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetail';
 import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-layout/AppLayout';
@@ -103,8 +103,8 @@ const PatientDetailsRoute = ({ app }) => (
 );
 
 const PatientApp = () => (
-  <Base style={{ height: '100%', width: '100%' }}>
-    <Router>
+  <Router>
+    <ClinicalBase style={{ height: '100%', width: '100%' }}>
       <AppLayout>
         <PrimaryNavLayout
           headerTitle="Patient Application"
@@ -118,8 +118,8 @@ const PatientApp = () => (
           <LayoutRoute path="/details" component={PatientDetailsRoute} />
         </PrimaryNavLayout>
       </AppLayout>
-    </Router>
-  </Base>
+    </ClinicalBase>
+  </Router>
 );
 
 export { PatientApp };

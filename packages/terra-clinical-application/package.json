@@ -27,12 +27,12 @@
   "peerDependencies": {
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "terra-base": "^0.x",
     "terra-icon": "^0.x",
     "terra-mixins": "^1.0.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "terra-base": "file:../../../terra-ui/packages/terra-base",
     "terra-list": "file:../../../terra-ui/packages/terra-list",
     "terra-button": "file:../../../terra-ui/packages/terra-button",
     "xfc": "git+http://github.cerner.com/hi-infra/xfc.git#master",

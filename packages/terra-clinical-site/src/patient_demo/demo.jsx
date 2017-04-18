@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Consumer, Provider } from 'xfc';
-import Base from 'terra-base';
 import PatientList from 'terra-clinical-application/src/patient-app/patient-list/PatientList';
 import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-layout/AppLayout';
+import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
 
 import { embeddedNavHandshake } from './EmbeddedNavBootstrapper';
 import { PatientApp } from './PatientApp';
@@ -19,11 +19,11 @@ if (window.top !== window) {
     secret: () => (Promise.resolve('Success')),
     onReady: () => {
       const embeddedComponent = (
-        // <Base style={{ height: '100%', width: '100%' }}>
-        <AppLayout>
-          <PatientList physicianId="physician1" />
-        </AppLayout>
-        // </Base>
+        <ClinicalBase style={{ height: '100%', width: '100%' }}>
+          <AppLayout>
+            <PatientList physicianId="physician1" />
+          </AppLayout>
+        </ClinicalBase>
       );
 
       embeddedNavHandshake(embeddedComponent, (updatedComponent) => {
