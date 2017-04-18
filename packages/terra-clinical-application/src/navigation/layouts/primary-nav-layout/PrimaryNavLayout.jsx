@@ -18,7 +18,7 @@ class PrimaryNavLayout extends React.Component {
     return (
       <div>
         <header className="orion-AppHeader">
-          <h1 style={{ paddingLeft: '10px' }}>{headerTitle}</h1>
+          <h1 style={{ paddingLeft: '10px', paddingTop: '5px' }}>{headerTitle}</h1>
           {headerButtons}
         </header>
       </div>

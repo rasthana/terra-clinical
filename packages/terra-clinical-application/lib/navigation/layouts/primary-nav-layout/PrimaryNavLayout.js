@@ -55,7 +55,7 @@ var PrimaryNavLayout = function (_React$Component) {
           { className: 'orion-AppHeader' },
           _react2.default.createElement(
             'h1',
-            { style: { paddingLeft: '10px' } },
+            { style: { paddingLeft: '10px', paddingTop: '5px' } },
             headerTitle
           ),
           headerButtons
