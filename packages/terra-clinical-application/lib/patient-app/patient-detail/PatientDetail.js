@@ -194,7 +194,7 @@ var PatientDetail = function (_React$Component) {
 }(_react2.default.Component);
 
 PatientDetail.propTypes = {
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default),
+  app: _AppDelegate2.default.propType,
   physicianId: _react.PropTypes.string,
   patientId: _react.PropTypes.string
 };

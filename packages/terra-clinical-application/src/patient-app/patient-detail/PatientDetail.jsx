@@ -137,7 +137,7 @@ class PatientDetail extends React.Component {
 }
 
 PatientDetail.propTypes = {
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
   physicianId: PropTypes.string,
   patientId: PropTypes.string,
 };

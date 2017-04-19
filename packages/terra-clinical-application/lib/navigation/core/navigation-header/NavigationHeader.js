@@ -94,7 +94,7 @@ var NavigationHeader = function NavigationHeader(_ref) {
 NavigationHeader.propTypes = {
   title: _react.PropTypes.string,
   children: _react.PropTypes.node,
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default),
+  app: _AppDelegate2.default.propType,
   hasBottomBorder: _react.PropTypes.bool
 };
 

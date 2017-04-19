@@ -1,4 +1,6 @@
-class AppDelegate {
+import { PropTypes } from 'react';
+
+class App {
   /**
    * disclose(options) - A function that presents the given content using the specified progressive disclosure method.
    *   options - An Object containing values for the following keys:
@@ -25,26 +27,40 @@ class AppDelegate {
     // Required API's
     this.disclose = data.disclose;
     this.dismiss = data.dismiss;
-    this.state = data.state;
 
     // Optional API's
     this.closeDisclosure = data.closeDisclosure;
     this.goBack = data.goBack;
     this.maximize = data.maximize;
+
+    // State
+    this.disclosedAs = data.disclosedAs;
+    this.availableDisclosureTypes = data.availableDisclosureTypes;
+    this.isMaximized = data.isMaxized;
   }
 
-  static mergeDelegate(delegate, data) {
+  static merge(delegate, data) {
     const baseDelegate = delegate || {};
 
-    return new AppDelegate({
+    return new App({
       disclose: data.disclose || baseDelegate.disclose,
       dismiss: data.dismiss || baseDelegate.dismiss,
       maximize: data.maximize || baseDelegate.maximize,
       closeDisclosure: data.closeDisclosure || baseDelegate.closeDisclosure,
       goBack: data.goBack || baseDelegate.goBack,
-      state: data.state || baseDelegate.state,
     });
   }
 }
+
+const AppDelegate = {
+  create: (data) => {
+    const newAppDelegate = new App(data);
+    return Object.freeze(newAppDelegate);
+  },
+  merge: (baseDelegate, data) => (
+    Object.freeze(App.merge(baseDelegate, data))
+  ),
+  propType: PropTypes.instanceOf(App),
+};
 
 export default AppDelegate;

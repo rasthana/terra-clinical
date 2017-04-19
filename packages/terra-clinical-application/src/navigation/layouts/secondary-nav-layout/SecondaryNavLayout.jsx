@@ -56,7 +56,7 @@ SecondaryNavLayout.defaultProps = {
 };
 
 SecondaryNavLayout.propTypes = {
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
   header: PropTypes.node,
   navPanelIsOpen: PropTypes.bool,
   navPanelContent: PropTypes.node,

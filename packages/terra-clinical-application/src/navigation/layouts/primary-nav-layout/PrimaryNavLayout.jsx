@@ -47,7 +47,7 @@ PrimaryNavLayout.propTypes = {
   headerButtons: PropTypes.arrayOf(PropTypes.node),
   children: PropTypes.node,
   fill: PropTypes.bool,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
 };
 
 export default PrimaryNavLayout;

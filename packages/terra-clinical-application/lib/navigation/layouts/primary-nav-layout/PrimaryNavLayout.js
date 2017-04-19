@@ -93,7 +93,7 @@ PrimaryNavLayout.propTypes = {
   headerButtons: _react.PropTypes.arrayOf(_react.PropTypes.node),
   children: _react.PropTypes.node,
   fill: _react.PropTypes.bool,
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default)
+  app: _AppDelegate2.default.propType
 };
 
 exports.default = PrimaryNavLayout;

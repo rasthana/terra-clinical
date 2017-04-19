@@ -151,7 +151,7 @@ class PatientList extends React.Component {
 
 PatientList.propTypes = {
   physicianId: PropTypes.string,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
 };
 
 export default PatientList;

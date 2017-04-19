@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = require('react');
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AppDelegate = function () {
+var App = function () {
   /**
    * disclose(options) - A function that presents the given content using the specified progressive disclosure method.
    *   options - An Object containing values for the following keys:
@@ -31,37 +33,51 @@ var AppDelegate = function () {
    *   options - An Object used to pass arbitrary data.
    *
    */
-  function AppDelegate(data) {
-    _classCallCheck(this, AppDelegate);
+  function App(data) {
+    _classCallCheck(this, App);
 
     // Required API's
     this.disclose = data.disclose;
     this.dismiss = data.dismiss;
-    this.state = data.state;
 
     // Optional API's
     this.closeDisclosure = data.closeDisclosure;
     this.goBack = data.goBack;
     this.maximize = data.maximize;
+
+    // State
+    this.disclosedAs = data.disclosedAs;
+    this.availableDisclosureTypes = data.availableDisclosureTypes;
+    this.isMaximized = data.isMaxized;
   }
 
-  _createClass(AppDelegate, null, [{
-    key: "mergeDelegate",
-    value: function mergeDelegate(delegate, data) {
+  _createClass(App, null, [{
+    key: 'merge',
+    value: function merge(delegate, data) {
       var baseDelegate = delegate || {};
 
-      return new AppDelegate({
+      return new App({
         disclose: data.disclose || baseDelegate.disclose,
         dismiss: data.dismiss || baseDelegate.dismiss,
         maximize: data.maximize || baseDelegate.maximize,
         closeDisclosure: data.closeDisclosure || baseDelegate.closeDisclosure,
-        goBack: data.goBack || baseDelegate.goBack,
-        state: data.state || baseDelegate.state
+        goBack: data.goBack || baseDelegate.goBack
       });
     }
   }]);
 
-  return AppDelegate;
+  return App;
 }();
+
+var AppDelegate = {
+  create: function create(data) {
+    var newAppDelegate = new App(data);
+    return Object.freeze(newAppDelegate);
+  },
+  merge: function merge(baseDelegate, data) {
+    return Object.freeze(App.merge(baseDelegate, data));
+  },
+  propType: _react.PropTypes.instanceOf(App)
+};
 
 exports.default = AppDelegate;

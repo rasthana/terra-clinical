@@ -32,7 +32,7 @@ class SlidePanelLayout extends React.Component {
       },
       main: {
         componentStack: React.Children.map(props.children, (component, index) => {
-          const appDelegate = new AppDelegate({
+          const appDelegate = AppDelegate.create({
             disclose: this.mainDisclose,
             dismiss: (index > 0) ? this.mainDismiss : this.popMainComponent,
             closeDisclosure: undefined,
@@ -78,7 +78,7 @@ class SlidePanelLayout extends React.Component {
 
     const newComponentStack = Object.assign([], this.state.main.componentStack);
 
-    const appDelegate = new AppDelegate({
+    const appDelegate = AppDelegate.create({
       disclose: this.mainDisclose,
       dismiss: this.popMainComponent,
       closeDisclosure: undefined,
@@ -127,7 +127,7 @@ class SlidePanelLayout extends React.Component {
     const newContent = componentFromDiscloseOptions(options);
     if (!newContent) { return; }
 
-    const appDelegate = new AppDelegate({
+    const appDelegate = AppDelegate.create({
       disclose: this.panelDisclose,
       dismiss: this.closeSlidePanel,
       closeDisclosure: this.closeSlidePanel,
@@ -165,7 +165,7 @@ class SlidePanelLayout extends React.Component {
 
     const newComponentStack = Object.assign([], this.state.slidePanel.componentStack);
 
-    const appDelegate = new AppDelegate({
+    const appDelegate = AppDelegate.create({
       disclose: this.panelDisclose,
       dismiss: this.popSlidePanelComponent,
       closeDisclosure: this.closeSlidePanel,
@@ -211,7 +211,7 @@ class SlidePanelLayout extends React.Component {
 
 SlidePanelLayout.propTypes = {
   children: PropTypes.node,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
 };
 
 export default SlidePanelLayout;

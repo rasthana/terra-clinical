@@ -13,7 +13,7 @@ const ClinicalBase = ({ app, children, ...customProps }) => (
 
 ClinicalBase.propTypes = {
   children: PropTypes.node,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
 };
 
 export default ClinicalBase;

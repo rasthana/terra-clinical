@@ -60,7 +60,7 @@ class PatientUpdate extends React.Component {
 }
 
 PatientUpdate.propTypes = {
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
   physicianId: PropTypes.string,
   patientId: PropTypes.string,
 };

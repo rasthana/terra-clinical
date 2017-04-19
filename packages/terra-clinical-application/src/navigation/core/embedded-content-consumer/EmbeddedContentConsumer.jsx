@@ -102,7 +102,7 @@ class EmbeddedContentConsumer extends React.Component {
 
 EmbeddedContentConsumer.propTypes = {
   src: PropTypes.string,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
 };
 
 export default EmbeddedContentConsumer;

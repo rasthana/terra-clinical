@@ -38,7 +38,7 @@ var ClinicalBase = function ClinicalBase(_ref) {
 
 ClinicalBase.propTypes = {
   children: _react.PropTypes.node,
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default)
+  app: _AppDelegate2.default.propType
 };
 
 exports.default = ClinicalBase;

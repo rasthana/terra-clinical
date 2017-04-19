@@ -58,7 +58,7 @@ const NavigationHeader = ({
 NavigationHeader.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
   hasBottomBorder: PropTypes.bool,
 };
 

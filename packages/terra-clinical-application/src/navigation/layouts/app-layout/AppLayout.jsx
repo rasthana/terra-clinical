@@ -78,7 +78,7 @@ class AppLayout extends React.Component {
     const newContent = componentFromDiscloseOptions(options);
     if (!newContent) { return; }
 
-    const appDelegate = new AppDelegate({
+    const appDelegate = AppDelegate.create({
       disclose: this.push,
       dismiss: this.close,
       closeDisclosure: this.close,
@@ -110,7 +110,7 @@ class AppLayout extends React.Component {
 
     const newComponentStack = Object.assign([], this.state.componentStack);
 
-    const appDelegate = new AppDelegate({
+    const appDelegate = AppDelegate.create({
       disclose: this.push,
       dismiss: this.pop,
       closeDisclosure: this.close,
@@ -151,7 +151,7 @@ class AppLayout extends React.Component {
     return (
       <div className="terra-AppLayout">
         {React.Children.map(this.props.children, (child) => {
-          const appDelegate = AppDelegate.mergeDelegate(this.props.app, {
+          const appDelegate = AppDelegate.merge(this.props.app, {
             disclose: this.childDisclose,
             dismiss: this.close,
           });
@@ -173,7 +173,7 @@ class AppLayout extends React.Component {
 
 AppLayout.propTypes = {
   children: PropTypes.node,
-  app: PropTypes.instanceOf(AppDelegate),
+  app: AppDelegate.propType,
 };
 
 export default AppLayout;

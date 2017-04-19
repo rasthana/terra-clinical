@@ -152,7 +152,7 @@ var EmbeddedContentConsumer = function (_React$Component) {
 
 EmbeddedContentConsumer.propTypes = {
   src: _react.PropTypes.string,
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default)
+  app: _AppDelegate2.default.propType
 };
 
 exports.default = EmbeddedContentConsumer;

@@ -129,7 +129,7 @@ var AppLayout = function (_React$Component) {
         return;
       }
 
-      var appDelegate = new _AppDelegate2.default({
+      var appDelegate = _AppDelegate2.default.create({
         disclose: this.push,
         dismiss: this.close,
         closeDisclosure: this.close,
@@ -165,7 +165,7 @@ var AppLayout = function (_React$Component) {
 
       var newComponentStack = _extends([], this.state.componentStack);
 
-      var appDelegate = new _AppDelegate2.default({
+      var appDelegate = _AppDelegate2.default.create({
         disclose: this.push,
         dismiss: this.pop,
         closeDisclosure: this.close,
@@ -206,7 +206,7 @@ var AppLayout = function (_React$Component) {
         'div',
         { className: 'terra-AppLayout' },
         _react2.default.Children.map(this.props.children, function (child) {
-          var appDelegate = _AppDelegate2.default.mergeDelegate(_this3.props.app, {
+          var appDelegate = _AppDelegate2.default.merge(_this3.props.app, {
             disclose: _this3.childDisclose,
             dismiss: _this3.close
           });
@@ -232,7 +232,7 @@ var AppLayout = function (_React$Component) {
 
 AppLayout.propTypes = {
   children: _react.PropTypes.node,
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default)
+  app: _AppDelegate2.default.propType
 };
 
 exports.default = AppLayout;

@@ -61,7 +61,7 @@ var BottomPanelLayout = function (_React$Component) {
       },
       main: {
         componentStack: _react2.default.Children.map(props.children, function (component, index) {
-          var appDelegate = new _AppDelegate2.default({
+          var appDelegate = _AppDelegate2.default.create({
             disclose: _this.mainDisclose,
             dismiss: index > 0 ? _this.mainDismiss : _this.popMainComponent,
             closeDisclosure: undefined,
@@ -115,7 +115,7 @@ var BottomPanelLayout = function (_React$Component) {
 
       var newComponentStack = _extends([], this.state.main.componentStack);
 
-      var appDelegate = new _AppDelegate2.default({
+      var appDelegate = _AppDelegate2.default.create({
         disclose: this.mainDisclose,
         dismiss: this.popMainComponent,
         closeDisclosure: undefined,
@@ -169,7 +169,7 @@ var BottomPanelLayout = function (_React$Component) {
         return;
       }
 
-      var appDelegate = new _AppDelegate2.default({
+      var appDelegate = _AppDelegate2.default.create({
         disclose: this.panelDisclose,
         dismiss: this.closeSlidePanel,
         closeDisclosure: this.closeSlidePanel
@@ -210,7 +210,7 @@ var BottomPanelLayout = function (_React$Component) {
 
       var newComponentStack = _extends([], this.state.slidePanel.componentStack);
 
-      var appDelegate = new _AppDelegate2.default({
+      var appDelegate = _AppDelegate2.default.create({
         disclose: this.panelDisclose,
         dismiss: this.popSlidePanelComponent,
         closeDisclosure: this.closeSlidePanel,
@@ -266,7 +266,7 @@ var BottomPanelLayout = function (_React$Component) {
 
 BottomPanelLayout.propTypes = {
   children: _react.PropTypes.node,
-  app: _react.PropTypes.instanceOf(_AppDelegate2.default)
+  app: _AppDelegate2.default.propType
 };
 
 exports.default = BottomPanelLayout;

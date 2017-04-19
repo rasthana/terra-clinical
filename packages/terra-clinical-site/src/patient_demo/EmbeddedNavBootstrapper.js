@@ -4,7 +4,7 @@ import { Provider } from 'xfc';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 
 const bootstrappedAppDelegate = data => (
-  new AppDelegate({
+  AppDelegate.create({
     disclose: (options) => {
       Provider.trigger('providerApplication.disclose', { options });
     },
