@@ -10,8 +10,10 @@ import NavigationHeader from '../../navigation/core/navigation-header/Navigation
 import ActivityIndicator from '../../generic-components/activity-indicator/ActivityIndicator';
 import ContentContainer from '../../generic-components/content-container/ContentContainer';
 
-import PatientDetail from '../patient-detail/PatientDetail';
-import PatientStore from './data/PatientStore';
+// import PatientDetail from '../patient-detail/PatientDetail';
+// import PatientStore from './data/PatientStore';
+
+// import refreshable from '../../hoc/refreshable/refreshable';
 
 let patientListId = 0;
 
@@ -19,87 +21,38 @@ class PatientList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.showPatientDetail = this.showPatientDetail.bind(this);
+    this.showPatientList = this.showPatientList.bind(this);
+
     this.state = {
       id: patientListId += 1,
-      isLoading: true,
-      patientList: undefined,
     };
-
-    this.refresh = this.refresh.bind(this);
-    this.showPatientDetail = this.showPatientDetail.bind(this);
-    this.showIn = this.showIn.bind(this);
-  }
-
-  componentDidMount() {
-    this.refresh();
-
-    this.unsubscribeFromStore = PatientStore.subscribe(() => this.refresh());
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromStore();
-
-    clearTimeout(this.refreshTimeout);
-  }
-
-  refresh() {
-    const newState = Object.assign({}, this.state);
-
-    newState.isLoading = true;
-
-    this.setState(newState);
-
-    this.refreshTimeout = setTimeout(() => {
-      const newDataState = Object.assign({}, this.state);
-
-      newDataState.isLoading = false;
-      newDataState.patientList = PatientStore.getPatientList(this.props.physicianId);
-
-      this.setState(newDataState);
-    }, 0);
   }
 
   showPatientDetail(patient, type) {
     return () => {
-      const patientDetailComponent = (
-        <PatientDetail
-          key={`PATIENT_DETAIL:${patient.id}`}
-          physicianId={this.props.physicianId}
-          patientId={patient.id}
-        />
-      );
-
-      this.props.app.disclose({ content: patientDetailComponent, preferredType: type });
+      this.props.onSelectPatientDetail(patient, type);
     };
   }
 
-  showIn(type) {
+  showPatientList(patient, type) {
+    // debugger;
     return () => {
-      // const modalPatientList = (
-      //   <PatientList
-      //     key={`PATIENT_LIST:${this.state.id + 1}`}
-      //     physicianId={this.props.physicianId}
-      //   />
-      // );
-
-      this.props.app.disclose({
-        // content: modalPatientList,
-        fallbackUrl: `${window.location.origin}/?type=${type}`,
-        preferredType: type,
-        size: 'large',
-        panelBehavior: 'overlay' });
+      this.props.onShowPatientList(type);
     };
   }
 
   render() {
     let loadingIndicator;
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       loadingIndicator = <ActivityIndicator />;
     }
 
+    const patientList = this.props.data;
+
     const patientListItems = [];
-    if (this.state.patientList && this.state.patientList.length) {
-      this.state.patientList.forEach((patient) => {
+    if (patientList && patientList.patients && patientList.patients.length) {
+      patientList.patients.forEach((patient) => {
         patientListItems.push((
           <List.Item
             key={patient.id}
@@ -132,10 +85,10 @@ class PatientList extends React.Component {
         className="orion-PatientList"
         header={(
           <NavigationHeader title={`Patient List - ${this.state.id}`} app={this.props.app}>
-            <Button key="Refresh" onClick={this.refresh} icon={<IconRefresh isSpin={this.state.isLoading} />} />
-            <Button key="Modal" onClick={this.showIn('modal')} text="Launch Modal" />
-            <Button key="Panel" onClick={this.showIn('panel')} text="Launch Panel" />
-            <Button key="Main" onClick={this.showIn('main')} text="Launch Main" />
+            {this.props.onRefresh && <Button key="Refresh" onClick={this.props.onRefresh} icon={<IconRefresh isSpin={this.props.isLoading} />} />}
+            <Button key="Modal" onClick={this.showPatientList('modal')} text="Launch Modal" />
+            <Button key="Panel" onClick={this.showPatientList('panel')} text="Launch Panel" />
+            <Button key="Main" onClick={this.showPatientList('main')} text="Launch Main" />
           </NavigationHeader>
         )}
         fill
@@ -150,8 +103,14 @@ class PatientList extends React.Component {
 }
 
 PatientList.propTypes = {
-  physicianId: PropTypes.string,
+  // physicianId: PropTypes.string,
   app: AppDelegate.propType,
+  data: PropTypes.object,
+  isLoading: PropTypes.bool,
+  onRefresh: PropTypes.func,
+  onSelectPatientDetail: PropTypes.func,
+  onShowPatientList: PropTypes.func,
+  // onSelectPatientUpdate: PropTypes.function,
 };
 
 export default PatientList;

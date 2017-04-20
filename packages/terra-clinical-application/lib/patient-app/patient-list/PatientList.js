@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -44,14 +42,6 @@ var _ContentContainer = require('../../generic-components/content-container/Cont
 
 var _ContentContainer2 = _interopRequireDefault(_ContentContainer);
 
-var _PatientDetail = require('../patient-detail/PatientDetail');
-
-var _PatientDetail2 = _interopRequireDefault(_PatientDetail);
-
-var _PatientStore = require('./data/PatientStore');
-
-var _PatientStore2 = _interopRequireDefault(_PatientStore);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59,6 +49,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import PatientDetail from '../patient-detail/PatientDetail';
+// import PatientStore from './data/PatientStore';
+
+// import refreshable from '../../hoc/refreshable/refreshable';
 
 var patientListId = 0;
 
@@ -70,105 +65,49 @@ var PatientList = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (PatientList.__proto__ || Object.getPrototypeOf(PatientList)).call(this, props));
 
-    _this.state = {
-      id: patientListId += 1,
-      isLoading: true,
-      patientList: undefined
-    };
-
-    _this.refresh = _this.refresh.bind(_this);
     _this.showPatientDetail = _this.showPatientDetail.bind(_this);
-    _this.showIn = _this.showIn.bind(_this);
+    _this.showPatientList = _this.showPatientList.bind(_this);
+
+    _this.state = {
+      id: patientListId += 1
+    };
     return _this;
   }
 
   _createClass(PatientList, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.refresh();
-
-      this.unsubscribeFromStore = _PatientStore2.default.subscribe(function () {
-        return _this2.refresh();
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.unsubscribeFromStore();
-
-      clearTimeout(this.refreshTimeout);
-    }
-  }, {
-    key: 'refresh',
-    value: function refresh() {
-      var _this3 = this;
-
-      var newState = _extends({}, this.state);
-
-      newState.isLoading = true;
-
-      this.setState(newState);
-
-      this.refreshTimeout = setTimeout(function () {
-        var newDataState = _extends({}, _this3.state);
-
-        newDataState.isLoading = false;
-        newDataState.patientList = _PatientStore2.default.getPatientList(_this3.props.physicianId);
-
-        _this3.setState(newDataState);
-      }, 0);
-    }
-  }, {
     key: 'showPatientDetail',
     value: function showPatientDetail(patient, type) {
-      var _this4 = this;
+      var _this2 = this;
 
       return function () {
-        var patientDetailComponent = _react2.default.createElement(_PatientDetail2.default, {
-          key: 'PATIENT_DETAIL:' + patient.id,
-          physicianId: _this4.props.physicianId,
-          patientId: patient.id
-        });
-
-        _this4.props.app.disclose({ content: patientDetailComponent, preferredType: type });
+        _this2.props.onSelectPatientDetail(patient, type);
       };
     }
   }, {
-    key: 'showIn',
-    value: function showIn(type) {
-      var _this5 = this;
+    key: 'showPatientList',
+    value: function showPatientList(patient, type) {
+      var _this3 = this;
 
+      // debugger;
       return function () {
-        // const modalPatientList = (
-        //   <PatientList
-        //     key={`PATIENT_LIST:${this.state.id + 1}`}
-        //     physicianId={this.props.physicianId}
-        //   />
-        // );
-
-        _this5.props.app.disclose({
-          // content: modalPatientList,
-          fallbackUrl: window.location.origin + '/?type=' + type,
-          preferredType: type,
-          size: 'large',
-          panelBehavior: 'overlay' });
+        _this3.props.onShowPatientList(type);
       };
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this4 = this;
 
       var loadingIndicator = void 0;
-      if (this.state.isLoading) {
+      if (this.props.isLoading) {
         loadingIndicator = _react2.default.createElement(_ActivityIndicator2.default, null);
       }
 
+      var patientList = this.props.data;
+
       var patientListItems = [];
-      if (this.state.patientList && this.state.patientList.length) {
-        this.state.patientList.forEach(function (patient) {
+      if (patientList && patientList.patients && patientList.patients.length) {
+        patientList.patients.forEach(function (patient) {
           patientListItems.push(_react2.default.createElement(_terraList2.default.Item, {
             key: patient.id,
             content: _react2.default.createElement(_terraClinicalItemView2.default, {
@@ -178,9 +117,9 @@ var PatientList = function (_React$Component) {
               endAccessory: _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_terraButton2.default, { onClick: _this6.showPatientDetail(patient, 'modal'), text: 'View (Modal)' }),
-                _react2.default.createElement(_terraButton2.default, { onClick: _this6.showPatientDetail(patient, 'panel'), text: 'View (Panel)' }),
-                _react2.default.createElement(_terraButton2.default, { onClick: _this6.showPatientDetail(patient, 'main'), text: 'View (Main)' })
+                _react2.default.createElement(_terraButton2.default, { onClick: _this4.showPatientDetail(patient, 'modal'), text: 'View (Modal)' }),
+                _react2.default.createElement(_terraButton2.default, { onClick: _this4.showPatientDetail(patient, 'panel'), text: 'View (Panel)' }),
+                _react2.default.createElement(_terraButton2.default, { onClick: _this4.showPatientDetail(patient, 'main'), text: 'View (Main)' })
               )
             })
           }));
@@ -194,10 +133,10 @@ var PatientList = function (_React$Component) {
           header: _react2.default.createElement(
             _NavigationHeader2.default,
             { title: 'Patient List - ' + this.state.id, app: this.props.app },
-            _react2.default.createElement(_terraButton2.default, { key: 'Refresh', onClick: this.refresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.state.isLoading }) }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Modal', onClick: this.showIn('modal'), text: 'Launch Modal' }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Panel', onClick: this.showIn('panel'), text: 'Launch Panel' }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Main', onClick: this.showIn('main'), text: 'Launch Main' })
+            this.props.onRefresh && _react2.default.createElement(_terraButton2.default, { key: 'Refresh', onClick: this.props.onRefresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.props.isLoading }) }),
+            _react2.default.createElement(_terraButton2.default, { key: 'Modal', onClick: this.showPatientList('modal'), text: 'Launch Modal' }),
+            _react2.default.createElement(_terraButton2.default, { key: 'Panel', onClick: this.showPatientList('panel'), text: 'Launch Panel' }),
+            _react2.default.createElement(_terraButton2.default, { key: 'Main', onClick: this.showPatientList('main'), text: 'Launch Main' })
           ),
           fill: true
         },
@@ -215,8 +154,13 @@ var PatientList = function (_React$Component) {
 }(_react2.default.Component);
 
 PatientList.propTypes = {
-  physicianId: _react.PropTypes.string,
-  app: _AppDelegate2.default.propType
+  // physicianId: PropTypes.string,
+  app: _AppDelegate2.default.propType,
+  data: _react.PropTypes.object,
+  isLoading: _react.PropTypes.bool,
+  onRefresh: _react.PropTypes.func,
+  onSelectPatientDetail: _react.PropTypes.func,
+  onShowPatientList: _react.PropTypes.func
 };
 
 exports.default = PatientList;

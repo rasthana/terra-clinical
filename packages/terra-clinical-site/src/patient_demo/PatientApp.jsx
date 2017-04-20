@@ -18,6 +18,7 @@ import SecondaryNavLayout from 'terra-clinical-application/src/navigation/layout
 import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/slide-panel-layout/SlidePanelLayout';
 import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
 import PatientStore from 'terra-clinical-application/src/patient-app/patient-list/data/PatientStore';
+import PatientListLoader from 'terra-clinical-application/src/patient-app/patient-list/PatientListLoader';
 
 const physicianId = 'physician1';
 
@@ -72,9 +73,9 @@ const ButtonLink = ({ title, ...rest }) => (
 
 const PatientListRoute = ({ app }) => (
   <BottomPanelLayout app={app}>
-    <PatientList
+    <PatientListLoader
       id="my-patient-list"
-      physicianId={physicianId}
+      url={physicianId}
       key={'PATIENT_LIST_APP'}
     />
   </BottomPanelLayout>
