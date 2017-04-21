@@ -66,7 +66,7 @@ class PatientDetail extends React.Component {
         <DetailView
           title={patient.name}
           subtitles={[patient.status]}
-          graph={<img style={{ width: '200px' }} alt="patient-img" src={patient.photo} />}
+          graph={<img style={{ width: '280px' }} alt="patient-img" src={patient.photo} />}
           details={[
             <div key="UPDATE_BUTTONS">
               <Button
