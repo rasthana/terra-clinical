@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Button from 'terra-button';
+import ButtonGroup from 'terra-button-group';
 import DetailView from 'terra-clinical-detail-view';
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
 
@@ -69,48 +70,50 @@ class PatientDetail extends React.Component {
           graph={<img style={{ width: '280px' }} alt="patient-img" src={patient.photo} />}
           details={[
             <div key="UPDATE_BUTTONS">
-              <Button
-                text="Update (Panel)"
-                onClick={() => (
-                  this.props.app.disclose({
-                    content: (
-                      <PatientUpdate
-                        key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
-                        physicianId={this.props.physicianId}
-                        patientId={this.props.patientId}
-                      />
-                    ),
-                    preferredType: 'panel' })
-                )}
-              />
-              <Button
-                text="Update (Modal)"
-                onClick={() => (
-                  this.props.app.disclose({
-                    content: (
-                      <PatientUpdate
-                        key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
-                        physicianId={this.props.physicianId}
-                        patientId={this.props.patientId}
-                      />
-                    ),
-                    preferredType: 'modal' })
-                )}
-              />
-              <Button
-                text="Update (Main)"
-                onClick={() => (
-                  this.props.app.disclose({
-                    content: (
-                      <PatientUpdate
-                        key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
-                        physicianId={this.props.physicianId}
-                        patientId={this.props.patientId}
-                      />
-                    ),
-                    preferredType: 'main' })
-                )}
-              />
+              <ButtonGroup size="small">
+                <ButtonGroup.Button
+                  text="Update (Panel)"
+                  onClick={() => (
+                    this.props.app.disclose({
+                      content: (
+                        <PatientUpdate
+                          key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
+                          physicianId={this.props.physicianId}
+                          patientId={this.props.patientId}
+                        />
+                      ),
+                      preferredType: 'panel' })
+                  )}
+                />
+                <ButtonGroup.Button
+                  text="Update (Modal)"
+                  onClick={() => (
+                    this.props.app.disclose({
+                      content: (
+                        <PatientUpdate
+                          key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
+                          physicianId={this.props.physicianId}
+                          patientId={this.props.patientId}
+                        />
+                      ),
+                      preferredType: 'modal' })
+                  )}
+                />
+                <ButtonGroup.Button
+                  text="Update (Main)"
+                  onClick={() => (
+                    this.props.app.disclose({
+                      content: (
+                        <PatientUpdate
+                          key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
+                          physicianId={this.props.physicianId}
+                          patientId={this.props.patientId}
+                        />
+                      ),
+                      preferredType: 'main' })
+                  )}
+                />
+              </ButtonGroup>
             </div>,
           ]}
           footer={patient.comment}

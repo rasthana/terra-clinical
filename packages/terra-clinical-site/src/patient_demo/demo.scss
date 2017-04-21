@@ -21,3 +21,8 @@ body {
 .terraClinical-ItemView-accessory {
   max-width: 50%;
 }
+
+[dir='ltr'] .terra-ButtonGroupButton {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

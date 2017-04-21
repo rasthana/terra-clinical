@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Button from 'terra-button';
+import ButtonGroup from 'terra-button-group';
 import List from 'terra-list';
 import ClinicalItemView from 'terra-clinical-item-view';
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
@@ -114,11 +114,11 @@ class PatientList extends React.Component {
                   <ClinicalItemView.Comment text={patient.comment} />
                 }
                 endAccessory={
-                  <div>
-                    <Button onClick={this.showPatientDetail(patient, 'modal')} text="View (Modal)" />
-                    <Button onClick={this.showPatientDetail(patient, 'panel')} text="View (Panel)" />
-                    <Button onClick={this.showPatientDetail(patient, 'main')} text="View (Main)" />
-                  </div>
+                  <ButtonGroup size="small" variant="secondary">
+                    <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'modal')} text="View (Modal)" key="MODAL" />
+                    <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'panel')} text="View (Panel)" key="PANEL" />
+                    <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'main')} text="View (Main)" key="MAIN" />
+                  </ButtonGroup>
                 }
               />
             }
@@ -132,10 +132,12 @@ class PatientList extends React.Component {
         className="orion-PatientList"
         header={(
           <NavigationHeader title={`Patient List - ${this.state.id}`} app={this.props.app}>
-            <Button key="Refresh" onClick={this.refresh} icon={<IconRefresh isSpin={this.state.isLoading} />} />
-            <Button key="Modal" onClick={this.showIn('modal')} text="Launch Modal" />
-            <Button key="Panel" onClick={this.showIn('panel')} text="Launch Panel" />
-            <Button key="Main" onClick={this.showIn('main')} text="Launch Main" />
+            <ButtonGroup>
+              <ButtonGroup.Button key="Refresh" onClick={this.refresh} icon={<IconRefresh isSpin={this.state.isLoading} />} />
+              <ButtonGroup.Button key="Modal" onClick={this.showIn('modal')} text="Launch Modal" />
+              <ButtonGroup.Button key="Panel" onClick={this.showIn('panel')} text="Launch Panel" />
+              <ButtonGroup.Button key="Main" onClick={this.showIn('main')} text="Launch Main" />
+            </ButtonGroup>
           </NavigationHeader>
         )}
         fill

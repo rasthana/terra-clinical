@@ -12,9 +12,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _terraButton = require('terra-button');
+var _terraButtonGroup = require('terra-button-group');
 
-var _terraButton2 = _interopRequireDefault(_terraButton);
+var _terraButtonGroup2 = _interopRequireDefault(_terraButtonGroup);
 
 var _terraList = require('terra-list');
 
@@ -176,11 +176,11 @@ var PatientList = function (_React$Component) {
               displays: [_react2.default.createElement(_terraClinicalItemView2.default.Display, { text: patient.name }), _react2.default.createElement(_terraClinicalItemView2.default.Display, { text: patient.status })],
               comment: _react2.default.createElement(_terraClinicalItemView2.default.Comment, { text: patient.comment }),
               endAccessory: _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_terraButton2.default, { onClick: _this6.showPatientDetail(patient, 'modal'), text: 'View (Modal)' }),
-                _react2.default.createElement(_terraButton2.default, { onClick: _this6.showPatientDetail(patient, 'panel'), text: 'View (Panel)' }),
-                _react2.default.createElement(_terraButton2.default, { onClick: _this6.showPatientDetail(patient, 'main'), text: 'View (Main)' })
+                _terraButtonGroup2.default,
+                { size: 'small', variant: 'secondary' },
+                _react2.default.createElement(_terraButtonGroup2.default.Button, { onClick: _this6.showPatientDetail(patient, 'modal'), text: 'View (Modal)', key: 'MODAL' }),
+                _react2.default.createElement(_terraButtonGroup2.default.Button, { onClick: _this6.showPatientDetail(patient, 'panel'), text: 'View (Panel)', key: 'PANEL' }),
+                _react2.default.createElement(_terraButtonGroup2.default.Button, { onClick: _this6.showPatientDetail(patient, 'main'), text: 'View (Main)', key: 'MAIN' })
               )
             })
           }));
@@ -194,10 +194,14 @@ var PatientList = function (_React$Component) {
           header: _react2.default.createElement(
             _NavigationHeader2.default,
             { title: 'Patient List - ' + this.state.id, app: this.props.app },
-            _react2.default.createElement(_terraButton2.default, { key: 'Refresh', onClick: this.refresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.state.isLoading }) }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Modal', onClick: this.showIn('modal'), text: 'Launch Modal' }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Panel', onClick: this.showIn('panel'), text: 'Launch Panel' }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Main', onClick: this.showIn('main'), text: 'Launch Main' })
+            _react2.default.createElement(
+              _terraButtonGroup2.default,
+              null,
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Refresh', onClick: this.refresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.state.isLoading }) }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Modal', onClick: this.showIn('modal'), text: 'Launch Modal' }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Panel', onClick: this.showIn('panel'), text: 'Launch Panel' }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Main', onClick: this.showIn('main'), text: 'Launch Main' })
+            )
           ),
           fill: true
         },

@@ -16,6 +16,10 @@ var _terraButton = require('terra-button');
 
 var _terraButton2 = _interopRequireDefault(_terraButton);
 
+var _terraButtonGroup = require('terra-button-group');
+
+var _terraButtonGroup2 = _interopRequireDefault(_terraButtonGroup);
+
 var _terraClinicalDetailView = require('terra-clinical-detail-view');
 
 var _terraClinicalDetailView2 = _interopRequireDefault(_terraClinicalDetailView);
@@ -131,42 +135,46 @@ var PatientDetail = function (_React$Component) {
           details: [_react2.default.createElement(
             'div',
             { key: 'UPDATE_BUTTONS' },
-            _react2.default.createElement(_terraButton2.default, {
-              text: 'Update (Panel)',
-              onClick: function onClick() {
-                return _this4.props.app.disclose({
-                  content: _react2.default.createElement(_PatientUpdate2.default, {
-                    key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
-                    physicianId: _this4.props.physicianId,
-                    patientId: _this4.props.patientId
-                  }),
-                  preferredType: 'panel' });
-              }
-            }),
-            _react2.default.createElement(_terraButton2.default, {
-              text: 'Update (Modal)',
-              onClick: function onClick() {
-                return _this4.props.app.disclose({
-                  content: _react2.default.createElement(_PatientUpdate2.default, {
-                    key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
-                    physicianId: _this4.props.physicianId,
-                    patientId: _this4.props.patientId
-                  }),
-                  preferredType: 'modal' });
-              }
-            }),
-            _react2.default.createElement(_terraButton2.default, {
-              text: 'Update (Main)',
-              onClick: function onClick() {
-                return _this4.props.app.disclose({
-                  content: _react2.default.createElement(_PatientUpdate2.default, {
-                    key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
-                    physicianId: _this4.props.physicianId,
-                    patientId: _this4.props.patientId
-                  }),
-                  preferredType: 'main' });
-              }
-            })
+            _react2.default.createElement(
+              _terraButtonGroup2.default,
+              { size: 'small' },
+              _react2.default.createElement(_terraButtonGroup2.default.Button, {
+                text: 'Update (Panel)',
+                onClick: function onClick() {
+                  return _this4.props.app.disclose({
+                    content: _react2.default.createElement(_PatientUpdate2.default, {
+                      key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
+                      physicianId: _this4.props.physicianId,
+                      patientId: _this4.props.patientId
+                    }),
+                    preferredType: 'panel' });
+                }
+              }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, {
+                text: 'Update (Modal)',
+                onClick: function onClick() {
+                  return _this4.props.app.disclose({
+                    content: _react2.default.createElement(_PatientUpdate2.default, {
+                      key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
+                      physicianId: _this4.props.physicianId,
+                      patientId: _this4.props.patientId
+                    }),
+                    preferredType: 'modal' });
+                }
+              }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, {
+                text: 'Update (Main)',
+                onClick: function onClick() {
+                  return _this4.props.app.disclose({
+                    content: _react2.default.createElement(_PatientUpdate2.default, {
+                      key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
+                      physicianId: _this4.props.physicianId,
+                      patientId: _this4.props.patientId
+                    }),
+                    preferredType: 'main' });
+                }
+              })
+            )
           )],
           footer: patient.comment,
           isDivided: true
