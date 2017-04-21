@@ -139,6 +139,7 @@ var PatientDetail = function (_React$Component) {
               _terraButtonGroup2.default,
               { size: 'small' },
               _react2.default.createElement(_terraButtonGroup2.default.Button, {
+                key: 'PANEL',
                 text: 'Update (Panel)',
                 onClick: function onClick() {
                   return _this4.props.app.disclose({
@@ -151,6 +152,7 @@ var PatientDetail = function (_React$Component) {
                 }
               }),
               _react2.default.createElement(_terraButtonGroup2.default.Button, {
+                key: 'MODAL',
                 text: 'Update (Modal)',
                 onClick: function onClick() {
                   return _this4.props.app.disclose({
@@ -163,6 +165,7 @@ var PatientDetail = function (_React$Component) {
                 }
               }),
               _react2.default.createElement(_terraButtonGroup2.default.Button, {
+                key: 'MAIN',
                 text: 'Update (Main)',
                 onClick: function onClick() {
                   return _this4.props.app.disclose({

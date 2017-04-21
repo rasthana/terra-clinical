@@ -12,6 +12,14 @@ import './demo.scss';
 
 Consumer.init();
 
+// document.addEventListener("ready", function(event) {
+//   const modalDiv = document.getElementsByClassName('ReactModalPortal');
+
+//   modalDiv.addEvenListener("touchmove", function(event) {
+//     event.preventDefault();
+//   });
+// });
+
 // Initialize provider when embedded.
 if (window.top !== window) {
   Provider.init({

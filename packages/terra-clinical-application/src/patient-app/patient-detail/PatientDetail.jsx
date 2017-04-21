@@ -72,6 +72,7 @@ class PatientDetail extends React.Component {
             <div key="UPDATE_BUTTONS">
               <ButtonGroup size="small">
                 <ButtonGroup.Button
+                  key="PANEL"
                   text="Update (Panel)"
                   onClick={() => (
                     this.props.app.disclose({
@@ -86,6 +87,7 @@ class PatientDetail extends React.Component {
                   )}
                 />
                 <ButtonGroup.Button
+                  key="MODAL"
                   text="Update (Modal)"
                   onClick={() => (
                     this.props.app.disclose({
@@ -100,6 +102,7 @@ class PatientDetail extends React.Component {
                   )}
                 />
                 <ButtonGroup.Button
+                  key="MAIN"
                   text="Update (Main)"
                   onClick={() => (
                     this.props.app.disclose({
