@@ -3,10 +3,20 @@
 // @import 'node_modules/terra-application/src/terra-application';
 // $terra-bidi: true;
 
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  // -webkit-overflow-scrolling: touch;
+}
+
 body {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
   margin: 0;
+  overflow: auto;
+  width: 100vw;
+  // postion: fixed;
+  // -webkit-overflow-scrolling: touch;
 }
 
 #orion-application-default {
@@ -19,5 +29,18 @@ body {
 }
 
 .terraClinical-ItemView-accessory {
-  max-width: 50%;
+  max-width: 70%;
+}
+
+[dir='ltr'] .terra-ButtonGroupButton {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.terra-ListItem {
+  border-color: lightgrey;
+}
+
+.terra-List-divided:first-child {
+  border-color: lightgrey;
 }

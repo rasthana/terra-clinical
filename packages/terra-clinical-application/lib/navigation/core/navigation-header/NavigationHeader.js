@@ -44,7 +44,7 @@ var NavigationHeader = function NavigationHeader(_ref) {
 
   var headerCloseButton = void 0;
   if (app.closeDisclosure) {
-    headerCloseButton = _react2.default.createElement(_terraButton2.default, { onClick: function onClick() {
+    headerCloseButton = _react2.default.createElement(_terraButton2.default, { style: { marginLeft: '5px' }, onClick: function onClick() {
         app.closeDisclosure();
       }, icon: _react2.default.createElement(_IconClose2.default, null) });
   }

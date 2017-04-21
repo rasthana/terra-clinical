@@ -72,6 +72,16 @@ const ButtonLink = ({ title, ...rest }) => (
 );
 
 const PatientListRoute = ({ app }) => (
+  <SlidePanelLayout app={app}>
+    <PatientList
+      id="my-patient-list"
+      physicianId={physicianId}
+      key={'PATIENT_LIST_APP'}
+    />
+  </SlidePanelLayout>
+);
+
+const AlternatePatientListRoute = ({ app }) => (
   <BottomPanelLayout app={app}>
     <PatientListLoader
       id="my-patient-list"
@@ -111,12 +121,14 @@ const PatientApp = () => (
         <PrimaryNavLayout
           headerTitle="Patient Application"
           headerButtons={[
-            <ButtonLink to="/" title="List" key="/list" />,
-            <ButtonLink to="/details/0" title="Details" key="/details" />,
+            <ButtonLink to="/" title="Patient List" key="/list" />,
+            <ButtonLink to="/list_alternate" title="Alternate List" key="/list_alternate" />,
+            <ButtonLink to="/details/0" title="Patient Details" key="/details" />,
           ]}
           fill
         >
           <LayoutRoute exact path="/" component={PatientListRoute} />
+          <LayoutRoute path="/list_alternate" component={AlternatePatientListRoute} />
           <LayoutRoute path="/details" component={PatientDetailsRoute} />
         </PrimaryNavLayout>
       </AppLayout>
