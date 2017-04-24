@@ -5,8 +5,6 @@ class PatientLoader extends Loader {
   constructor(data) {
     super(data);
 
-    this.getPatientList = this.getPatientList.bind(this);
-
     if (data.onStoreUpdate) {
       this.unsubscribeFromStore = PatientStore.subscribe(data.onStoreUpdate);
     }

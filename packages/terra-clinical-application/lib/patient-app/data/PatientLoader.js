@@ -30,8 +30,6 @@ var PatientLoader = function (_Loader) {
 
     var _this = _possibleConstructorReturn(this, (PatientLoader.__proto__ || Object.getPrototypeOf(PatientLoader)).call(this, data));
 
-    _this.getPatientList = _this.getPatientList.bind(_this);
-
     if (data.onStoreUpdate) {
       _this.unsubscribeFromStore = _PatientStore2.default.subscribe(data.onStoreUpdate);
     }
