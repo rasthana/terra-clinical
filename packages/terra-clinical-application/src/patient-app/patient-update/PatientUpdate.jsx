@@ -23,13 +23,13 @@ class PatientUpdate extends React.Component {
     };
 
     if (this.props.onSubmit) {
-      this.props.onSubmit(this.props.app, this.props.patient, changeData);
+      this.props.onSubmit(this.props.patient, changeData);
     }
   }
 
   handleCancel() {
     if (this.props.onCancel) {
-      this.props.onCancel(this.props.app, this.props.patient);
+      this.props.onCancel(this.props.patient);
     }
   }
 

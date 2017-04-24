@@ -4,10 +4,10 @@ import { Consumer, Provider } from 'xfc';
 
 import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-layout/AppLayout';
 import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
+import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
 import { embeddedNavHandshake } from './EmbeddedNavBootstrapper';
 import { PatientApp } from './PatientApp';
-import PatientListWorkflow from './PatientListWorkflow';
 
 import './demo.scss';
 
@@ -30,7 +30,7 @@ if (window.top !== window) {
       const embeddedComponent = (
         <ClinicalBase style={{ height: '100%', width: '100%' }}>
           <AppLayout>
-            <PatientListWorkflow physicianId="physician1" />
+            <PatientListController physicianId="physician1" />
           </AppLayout>
         </ClinicalBase>
       );

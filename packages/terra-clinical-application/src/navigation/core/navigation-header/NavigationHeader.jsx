@@ -16,7 +16,9 @@ const NavigationHeader = ({
   }) => {
   if (!app) {
     return (
-      <header className="terra-NavigationHeader" />
+      <header className="terra-NavigationHeader">
+        <h2>{title}</h2>
+      </header>
     );
   }
 

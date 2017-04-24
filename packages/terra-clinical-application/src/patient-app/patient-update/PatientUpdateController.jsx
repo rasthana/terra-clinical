@@ -4,18 +4,19 @@ import Button from 'terra-button';
 import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
 import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
 
-import ContentContainer from '../../generic-components/content-container/ContentContainer';
+import Placeholder from '../../generic-components/placeholder/Placeholder';
 
 import PatientStore from '../patient-list/data/PatientStore';
 
 import PatientUpdate from './PatientUpdate';
 
-class PatientUpdateLoader extends React.Component {
+class PatientUpdateController extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultPlaceholderComponent = this.defaultPlaceholderComponent.bind(this);
     this.getData = this.getData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
       isLoading: false,
@@ -29,34 +30,30 @@ class PatientUpdateLoader extends React.Component {
     }
   }
 
-
   getData(url) {
     this.setState({ isLoading: true });
 
     // GET DATA WITH URL
     this.getDataTimeout = setTimeout(() => {
-      this.setState({ patientUpdateData: PatientStore.getPatient('physician1', this.props.url), isLoading: false });
+      this.setState({ patientUpdateData: PatientStore.getPatient(this.props.physicianId, this.props.patientId), isLoading: false });
     }, 3000);
   }
 
-  defaultPlaceholderComponent() {
-    return (
-      <ContentContainer
-        header={(
-          <NavigationHeader title="Patient Update Placeholder" app={this.props.app} />
-        )}
-        fill
-      >
-        <h2>Loading...</h2>
-      </ContentContainer>
-    )
+  handleSubmit(patient, changeData) {
+    PatientStore.update(this.props.physicianId, patient.id, changeData);
+
+    this.props.app.dismiss();
+  }
+
+  handleCancel() {
+    this.props.app.dismiss();
   }
 
   render() {
     const patient = this.state.patientUpdateData;
 
     if (!patient) {
-      return this.defaultPlaceholderComponent();
+      return <Placeholder app={this.props.app} headerText="Patient Update Placeholder" loadingText="Loading patient..." />;
     }
 
     return (
@@ -64,19 +61,18 @@ class PatientUpdateLoader extends React.Component {
         app={this.props.app}
         patient={patient}
         isLoading={this.state.isLoading}
-        onSubmit={this.props.onSubmit}
-        onCancel={this.props.onCancel}
+        onSubmit={this.handleSubmit}
+        onCancel={this.handleCancel}
       />
     );
   }
 }
 
-PatientUpdateLoader.propTypes = {
+PatientUpdateController.propTypes = {
   app: AppDelegate.propType,
-  url: PropTypes.string,
+  physicianId: PropTypes.string,
+  patientId: PropTypes.string,
   patientUpdateData: PropTypes.object,
-  onSubmit: PropTypes.func,
-  onCancel: PropTypes.func,
 };
 
-export default PatientUpdateLoader;
+export default PatientUpdateController;

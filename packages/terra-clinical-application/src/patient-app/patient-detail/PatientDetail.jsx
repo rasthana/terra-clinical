@@ -26,7 +26,7 @@ class PatientDetail extends React.Component {
   }
 
   render() {
-    const patient = this.props.data.patient;
+    const patient = this.props.patient;
 
     let loadingIndicator;
     if (this.props.isLoading) {
@@ -86,7 +86,7 @@ class PatientDetail extends React.Component {
 
 PatientDetail.propTypes = {
   app: AppDelegate.propType,
-  data: PropTypes.object,
+  patient: PropTypes.object,
   isLoading: PropTypes.bool,
   onRefresh: PropTypes.func,
   onSelectPatientUpdate: PropTypes.func,

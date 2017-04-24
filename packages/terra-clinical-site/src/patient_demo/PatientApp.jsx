@@ -19,8 +19,8 @@ import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/
 import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
 import PatientStore from 'terra-clinical-application/src/patient-app/patient-list/data/PatientStore';
 
-import PatientListWorkflow from './PatientListWorkflow';
-import PatientDetailLoader from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetailLoader';
+import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
+import PatientDetailController from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetailController';
 
 const physicianId = 'physician1';
 
@@ -75,7 +75,7 @@ const ButtonLink = ({ title, ...rest }) => (
 
 const PatientListRoute = ({ app }) => (
   <SlidePanelLayout app={app}>
-    <PatientListWorkflow
+    <PatientListController
       physicianId={physicianId}
       key={'PATIENT_LIST_APP'}
     />
@@ -84,7 +84,7 @@ const PatientListRoute = ({ app }) => (
 
 const AlternatePatientListRoute = ({ app }) => (
   <BottomPanelLayout app={app}>
-    <PatientListWorkflow
+    <PatientListController
       physicianId={physicianId}
       key={'PATIENT_LIST_APP'}
     />
@@ -94,8 +94,9 @@ const AlternatePatientListRoute = ({ app }) => (
 const PatientDetailApp = ({ match, app }) => {
   return (
     <SlidePanelLayout app={app} key={`PATIENT_DETAIL_APP${match.params.id || '0'}`}>
-      <PatientDetailLoader
-        url={match.params.id || '0'}
+      <PatientDetailController
+        physicianId={physicianId}
+        patientId={match.params.id || '0'}
         key={'PATIENT_DETAIL_APP'}
       />
     </SlidePanelLayout>

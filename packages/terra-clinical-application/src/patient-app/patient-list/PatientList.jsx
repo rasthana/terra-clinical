@@ -27,13 +27,13 @@ class PatientList extends React.Component {
 
   showPatientDetail(patient, type) {
     return () => {
-      this.props.onSelectPatientDetail(this.props.app, patient, type);
+      this.props.onSelectPatientDetail(patient, type);
     };
   }
 
   showPatientList(patient, type) {
     return () => {
-      this.props.onShowPatientList(this.props.app, type);
+      this.props.onShowPatientList(type);
     };
   }
 
