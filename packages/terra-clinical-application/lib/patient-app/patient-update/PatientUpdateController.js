@@ -83,14 +83,14 @@ var PatientUpdateController = function (_React$Component) {
       }
     }
   }, {
-    key: 'refresh',
-    value: function refresh() {
-      this.loader.getPatient(this.props.physicianId, this.props.patientId);
-    }
-  }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.loader.destroy();
+    }
+  }, {
+    key: 'refresh',
+    value: function refresh() {
+      this.loader.getPatient(this.props.physicianId, this.props.patientId);
     }
   }, {
     key: 'handleSubmit',
@@ -110,7 +110,7 @@ var PatientUpdateController = function (_React$Component) {
       var patient = this.state.patient;
 
       if (!patient) {
-        return _react2.default.createElement(_Placeholder2.default, { app: this.props.app, headerText: 'Patient Update Placeholder', loadingText: 'Loading patient...' });
+        return _react2.default.createElement(_Placeholder2.default, { app: this.props.app, headerText: 'Patient Update', loadingText: 'Loading patient...' });
       }
 
       return _react2.default.createElement(_PatientUpdate2.default, {

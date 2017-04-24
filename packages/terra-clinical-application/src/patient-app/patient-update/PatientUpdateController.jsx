@@ -41,12 +41,12 @@ class PatientUpdateController extends React.Component {
     }
   }
 
-  refresh() {
-    this.loader.getPatient(this.props.physicianId, this.props.patientId);
-  }
-
   componentWillUnmount() {
     this.loader.destroy();
+  }
+
+  refresh() {
+    this.loader.getPatient(this.props.physicianId, this.props.patientId);
   }
 
   handleSubmit(patient, changeData) {
@@ -63,7 +63,7 @@ class PatientUpdateController extends React.Component {
     const patient = this.state.patient;
 
     if (!patient) {
-      return <Placeholder app={this.props.app} headerText="Patient Update Placeholder" loadingText="Loading patient..." />;
+      return <Placeholder app={this.props.app} headerText="Patient Update" loadingText="Loading patient..." />;
     }
 
     return (

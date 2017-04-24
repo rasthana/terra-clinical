@@ -66,7 +66,7 @@ class PatientDetailController extends React.Component {
     const { app, patient, physicianId, patientId, ...customProps } = this.props;
 
     if (!this.state.patient) {
-      return <Placeholder app={app} headerText="Patient Detail Placeholder" loadingText="Loading patient..." />;
+      return <Placeholder app={app} headerText="Patient Detail" loadingText="Loading patient..." />;
     } else {
       return (
         <PatientDetail

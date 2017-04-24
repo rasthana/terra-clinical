@@ -116,7 +116,7 @@ var PatientDetailController = function (_React$Component) {
           customProps = _objectWithoutProperties(_props, ['app', 'patient', 'physicianId', 'patientId']);
 
       if (!this.state.patient) {
-        return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient Detail Placeholder', loadingText: 'Loading patient...' });
+        return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient Detail', loadingText: 'Loading patient...' });
       } else {
         return _react2.default.createElement(_PatientDetail2.default, _extends({}, customProps, {
           app: app,

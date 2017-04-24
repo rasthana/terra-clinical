@@ -16,6 +16,10 @@ class PatientListController extends React.Component {
   constructor(props) {
     super(props);
 
+    this.refresh = this.refresh.bind(this);
+    this.presentPatientDetail = this.presentPatientDetail.bind(this);
+    this.presentNestedPatientList = this.presentNestedPatientList.bind(this);
+
     this.state = {
       isLoading: false,
       patientListData: props.patientListData,
@@ -30,10 +34,6 @@ class PatientListController extends React.Component {
         this.setState(loaderState);
       }
     })
-
-    this.refresh = this.refresh.bind(this);
-    this.presentPatientDetail = this.presentPatientDetail.bind(this);
-    this.presentNestedPatientList = this.presentNestedPatientList.bind(this);
   }
 
   componentDidMount() {
@@ -76,7 +76,7 @@ class PatientListController extends React.Component {
     const { app, physicianId, patientListData, ...customProps } = this.props;
 
     if (!this.state.patientListData) {
-      return <Placeholder app={app} headerText="Patient List Placeholder" loadingText="Loading patients..." />;
+      return <Placeholder app={app} headerText="Patient List" loadingText="Loading patients..." />;
     } else {
       return (
         <PatientList

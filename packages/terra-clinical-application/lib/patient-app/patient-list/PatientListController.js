@@ -56,6 +56,10 @@ var PatientListController = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (PatientListController.__proto__ || Object.getPrototypeOf(PatientListController)).call(this, props));
 
+    _this.refresh = _this.refresh.bind(_this);
+    _this.presentPatientDetail = _this.presentPatientDetail.bind(_this);
+    _this.presentNestedPatientList = _this.presentNestedPatientList.bind(_this);
+
     _this.state = {
       isLoading: false,
       patientListData: props.patientListData
@@ -70,10 +74,6 @@ var PatientListController = function (_React$Component) {
         _this.setState(loaderState);
       }
     });
-
-    _this.refresh = _this.refresh.bind(_this);
-    _this.presentPatientDetail = _this.presentPatientDetail.bind(_this);
-    _this.presentNestedPatientList = _this.presentNestedPatientList.bind(_this);
     return _this;
   }
 
@@ -126,7 +126,7 @@ var PatientListController = function (_React$Component) {
           customProps = _objectWithoutProperties(_props, ['app', 'physicianId', 'patientListData']);
 
       if (!this.state.patientListData) {
-        return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient List Placeholder', loadingText: 'Loading patients...' });
+        return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient List', loadingText: 'Loading patients...' });
       } else {
         return _react2.default.createElement(_PatientList2.default, _extends({}, customProps, {
           app: app,
