@@ -76,11 +76,7 @@ var PatientUpdateLoader = function (_React$Component) {
 
       // GET DATA WITH URL
       this.getDataTimeout = setTimeout(function () {
-        debugger;
-
-        var patientUpdateData = { patientUpdateData: _PatientStore2.default.getPatient('physician1', _this2.props.url) };
-
-        _this2.setState({ patientUpdateData: patientUpdateData, isLoading: false });
+        _this2.setState({ patientUpdateData: _PatientStore2.default.getPatient('physician1', _this2.props.url), isLoading: false });
       }, 3000);
     }
   }, {
@@ -107,8 +103,6 @@ var PatientUpdateLoader = function (_React$Component) {
       if (!patient) {
         return this.defaultPlaceholderComponent();
       }
-
-      debugger;
 
       return _react2.default.createElement(_PatientUpdate2.default, {
         app: this.props.app,

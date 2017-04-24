@@ -35,11 +35,7 @@ class PatientUpdateLoader extends React.Component {
 
     // GET DATA WITH URL
     this.getDataTimeout = setTimeout(() => {
-      debugger;
-
-      const patientUpdateData = { patientUpdateData: PatientStore.getPatient('physician1', this.props.url) };
-
-      this.setState({ patientUpdateData, isLoading: false });
+      this.setState({ patientUpdateData: PatientStore.getPatient('physician1', this.props.url), isLoading: false });
     }, 3000);
   }
 
@@ -62,8 +58,6 @@ class PatientUpdateLoader extends React.Component {
     if (!patient) {
       return this.defaultPlaceholderComponent();
     }
-
-    debugger;
 
     return (
       <PatientUpdate

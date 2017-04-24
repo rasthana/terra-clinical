@@ -6,6 +6,8 @@ import PatientListLoader from 'terra-clinical-application/src/patient-app/patien
 import PatientDetailLoader from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetailLoader';
 import PatientUpdateLoader from 'terra-clinical-application/src/patient-app/patient-update/PatientUpdateLoader';
 
+import PatientStore from 'terra-clinical-application/src/patient-app/patient-list/data/PatientStore';
+
 class PatientListWorkflow extends React.Component {
   render() {
     const { app, physicianId, key } = this.props;

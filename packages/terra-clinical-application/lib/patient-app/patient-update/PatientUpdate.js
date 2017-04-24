@@ -83,8 +83,6 @@ var PatientUpdate = function (_React$Component) {
         loadingIndicator = _react2.default.createElement(_ActivityIndicator2.default, null);
       }
 
-      debugger;
-
       return _react2.default.createElement(
         _ContentContainer2.default,
         {

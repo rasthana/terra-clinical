@@ -41,8 +41,6 @@ class PatientUpdate extends React.Component {
       loadingIndicator = <ActivityIndicator />;
     }
 
-    debugger;
-
     return (
       <ContentContainer
         id="orion-PatientUpdate"
