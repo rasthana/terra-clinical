@@ -5,8 +5,7 @@ import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
 import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
 
 import ContentContainer from '../../generic-components/content-container/ContentContainer';
-
-import PatientStore from '../patient-list/data/PatientStore';
+import ActivityIndicator from '../../generic-components/activity-indicator/ActivityIndicator';
 
 class PatientUpdate extends React.Component {
   constructor(props) {
@@ -23,17 +22,26 @@ class PatientUpdate extends React.Component {
       comment: this.commentTextAreaElement.value,
     };
 
-    PatientStore.update(this.props.physicianId, this.props.patientId, changeData);
-
-    this.props.app.dismiss();
+    if (this.props.onSubmit) {
+      this.props.onSubmit(this.props.app, this.props.patient, changeData);
+    }
   }
 
   handleCancel() {
-    this.props.app.dismiss();
+    if (this.props.onCancel) {
+      this.props.onCancel(this.props.app, this.props.patient);
+    }
   }
 
   render() {
-    const patient = PatientStore.getPatient(this.props.physicianId, this.props.patientId);
+    const patient = this.props.patient;
+
+    let loadingIndicator;
+    if (this.props.isLoading) {
+      loadingIndicator = <ActivityIndicator />;
+    }
+
+    debugger;
 
     return (
       <ContentContainer
@@ -41,6 +49,7 @@ class PatientUpdate extends React.Component {
         header={<NavigationHeader title="Patient Update" app={this.props.app} />}
         fill
       >
+        {loadingIndicator}
         <div style={{ margin: '10px' }}>
           <h4>Update</h4>
           <p>Name</p>
@@ -61,8 +70,10 @@ class PatientUpdate extends React.Component {
 
 PatientUpdate.propTypes = {
   app: AppDelegate.propType,
-  physicianId: PropTypes.string,
-  patientId: PropTypes.string,
+  patient: PropTypes.object,
+  isLoading: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
 };
 
 export default PatientUpdate;

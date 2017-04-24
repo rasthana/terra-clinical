@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -44,14 +42,6 @@ var _ActivityIndicator = require('../../generic-components/activity-indicator/Ac
 
 var _ActivityIndicator2 = _interopRequireDefault(_ActivityIndicator);
 
-var _PatientUpdate = require('../patient-update/PatientUpdate');
-
-var _PatientUpdate2 = _interopRequireDefault(_PatientUpdate);
-
-var _PatientStore = require('../patient-list/data/PatientStore');
-
-var _PatientStore2 = _interopRequireDefault(_PatientStore);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68,61 +58,28 @@ var PatientDetail = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (PatientDetail.__proto__ || Object.getPrototypeOf(PatientDetail)).call(this, props));
 
-    _this.state = {
-      isLoading: true,
-      patient: undefined
-    };
-
-    _this.refresh = _this.refresh.bind(_this);
+    _this.showPatientUpdate = _this.showPatientUpdate.bind(_this);
     return _this;
   }
 
   _createClass(PatientDetail, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'showPatientUpdate',
+    value: function showPatientUpdate(patient, type) {
       var _this2 = this;
 
-      this.refresh();
-
-      this.unsubscribeFromStore = _PatientStore2.default.subscribe(function () {
-        return _this2.refresh();
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.unsubscribeFromStore();
-      clearTimeout(this.refreshTimeout);
-    }
-  }, {
-    key: 'refresh',
-    value: function refresh() {
-      var _this3 = this;
-
-      var newState = _extends({}, this.state);
-
-      newState.isLoading = true;
-
-      this.setState(newState);
-
-      this.refreshTimeout = setTimeout(function () {
-        var newDataState = _extends({}, _this3.state);
-
-        newDataState.isLoading = false;
-        newDataState.patient = _PatientStore2.default.getPatient(_this3.props.physicianId, _this3.props.patientId);
-
-        _this3.setState(newDataState);
-      }, 0);
+      return function () {
+        if (_this2.props.onSelectPatientUpdate) {
+          _this2.props.onSelectPatientUpdate(_this2.props.app, patient, type);
+        }
+      };
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
-
-      var patient = this.state.patient;
+      var patient = this.props.data.patient;
 
       var loadingIndicator = void 0;
-      if (this.state.isLoading) {
+      if (this.props.isLoading) {
         loadingIndicator = _react2.default.createElement(_ActivityIndicator2.default, null);
       }
 
@@ -141,41 +98,17 @@ var PatientDetail = function (_React$Component) {
               _react2.default.createElement(_terraButtonGroup2.default.Button, {
                 key: 'PANEL',
                 text: 'Update (Panel)',
-                onClick: function onClick() {
-                  return _this4.props.app.disclose({
-                    content: _react2.default.createElement(_PatientUpdate2.default, {
-                      key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
-                      physicianId: _this4.props.physicianId,
-                      patientId: _this4.props.patientId
-                    }),
-                    preferredType: 'panel' });
-                }
+                onClick: this.showPatientUpdate(patient, 'panel')
               }),
               _react2.default.createElement(_terraButtonGroup2.default.Button, {
                 key: 'MODAL',
                 text: 'Update (Modal)',
-                onClick: function onClick() {
-                  return _this4.props.app.disclose({
-                    content: _react2.default.createElement(_PatientUpdate2.default, {
-                      key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
-                      physicianId: _this4.props.physicianId,
-                      patientId: _this4.props.patientId
-                    }),
-                    preferredType: 'modal' });
-                }
+                onClick: this.showPatientUpdate(patient, 'modal')
               }),
               _react2.default.createElement(_terraButtonGroup2.default.Button, {
                 key: 'MAIN',
                 text: 'Update (Main)',
-                onClick: function onClick() {
-                  return _this4.props.app.disclose({
-                    content: _react2.default.createElement(_PatientUpdate2.default, {
-                      key: 'PATIENT_UPDATE:' + _this4.props.physicianId + ':' + _this4.props.patientId,
-                      physicianId: _this4.props.physicianId,
-                      patientId: _this4.props.patientId
-                    }),
-                    preferredType: 'main' });
-                }
+                onClick: this.showPatientUpdate(patient, 'main')
               })
             )
           )],
@@ -191,7 +124,7 @@ var PatientDetail = function (_React$Component) {
           header: _react2.default.createElement(
             _NavigationHeader2.default,
             { title: 'Patient Detail', app: this.props.app },
-            _react2.default.createElement(_terraButton2.default, { onClick: this.refresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.state.isLoading }) })
+            this.props.onRefresh && _react2.default.createElement(_terraButton2.default, { onClick: this.props.onRefresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.props.isLoading }) })
           ),
           fill: true
         },
@@ -206,8 +139,10 @@ var PatientDetail = function (_React$Component) {
 
 PatientDetail.propTypes = {
   app: _AppDelegate2.default.propType,
-  physicianId: _react.PropTypes.string,
-  patientId: _react.PropTypes.string
+  data: _react.PropTypes.object,
+  isLoading: _react.PropTypes.bool,
+  onRefresh: _react.PropTypes.func,
+  onSelectPatientUpdate: _react.PropTypes.func
 };
 
 exports.default = PatientDetail;

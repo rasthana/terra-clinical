@@ -10,15 +10,17 @@ import ClinicalItemView from 'terra-clinical-item-view';
 import Button from 'terra-button';
 
 import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
-import PatientList from 'terra-clinical-application/src/patient-app/patient-list/PatientList';
-import PatientDetail from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetail';
+// import PatientList from 'terra-clinical-application/src/patient-app/patient-list/PatientList';
+// import PatientDetail from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetail';
 import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-layout/AppLayout';
 import PrimaryNavLayout from 'terra-clinical-application/src/navigation/layouts/primary-nav-layout/PrimaryNavLayout';
 import SecondaryNavLayout from 'terra-clinical-application/src/navigation/layouts/secondary-nav-layout/SecondaryNavLayout';
 import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/slide-panel-layout/SlidePanelLayout';
 import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
 import PatientStore from 'terra-clinical-application/src/patient-app/patient-list/data/PatientStore';
-import PatientListLoader from 'terra-clinical-application/src/patient-app/patient-list/PatientListLoader';
+
+import PatientListWorkflow from './PatientListWorkflow';
+import PatientDetailLoader from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetailLoader';
 
 const physicianId = 'physician1';
 
@@ -73,8 +75,7 @@ const ButtonLink = ({ title, ...rest }) => (
 
 const PatientListRoute = ({ app }) => (
   <SlidePanelLayout app={app}>
-    <PatientList
-      id="my-patient-list"
+    <PatientListWorkflow
       physicianId={physicianId}
       key={'PATIENT_LIST_APP'}
     />
@@ -83,9 +84,8 @@ const PatientListRoute = ({ app }) => (
 
 const AlternatePatientListRoute = ({ app }) => (
   <BottomPanelLayout app={app}>
-    <PatientListLoader
-      id="my-patient-list"
-      url={physicianId}
+    <PatientListWorkflow
+      physicianId={physicianId}
       key={'PATIENT_LIST_APP'}
     />
   </BottomPanelLayout>
@@ -94,9 +94,8 @@ const AlternatePatientListRoute = ({ app }) => (
 const PatientDetailApp = ({ match, app }) => {
   return (
     <SlidePanelLayout app={app} key={`PATIENT_DETAIL_APP${match.params.id || '0'}`}>
-      <PatientDetail
-        physicianId={physicianId}
-        patientId={match.params.id || '0'}
+      <PatientDetailLoader
+        url={match.params.id || '0'}
         key={'PATIENT_DETAIL_APP'}
       />
     </SlidePanelLayout>

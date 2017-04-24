@@ -1,22 +1,20 @@
 import React, { PropTypes } from 'react';
 
+import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
 import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
+
 import ContentContainer from '../../generic-components/content-container/ContentContainer';
 
-import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
+import PatientStore from '../patient-list/data/PatientStore';
+import PatientDetail from './PatientDetail';
 
-import PatientStore from './data/PatientStore';
-import PatientList from './PatientList';
-
-let patientListId = 0;
-
-class PatientListLoader extends React.Component {
+class PatientDetailLoader extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isLoading: false,
-      patientListData: props.patientListData,
+      patientDetailData: props.patientDetailData,
     };
 
     this.getData = this.getData.bind(this);
@@ -24,8 +22,9 @@ class PatientListLoader extends React.Component {
     this.defaultPlaceholderComponent = this.defaultPlaceholderComponent.bind(this);
   }
 
+
   componentDidMount() {
-    if (!this.state.patientListData) {
+    if (!this.state.patientDetailData) {
       this.getData();
     }
   }
@@ -35,9 +34,7 @@ class PatientListLoader extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.patientListData) {
-      this.setState({ patientListData: nextProps.patientListData });
-    }
+    this.setState({ patientDetailData: nextProps.patientDetailData });
   }
 
   getData() {
@@ -45,9 +42,9 @@ class PatientListLoader extends React.Component {
 
     // GET DATA WITH URL
     this.getDataTimeout = setTimeout(() => {
-      const patientListData = { patients: PatientStore.getPatientList(this.props.url) };
+      const patientDetailData = { patient: PatientStore.getPatient('physician1', this.props.url) };
 
-      this.setState({ patientListData, isLoading: false });
+      this.setState({ patientDetailData, isLoading: false });
     }, 3000);
   }
 
@@ -59,7 +56,7 @@ class PatientListLoader extends React.Component {
     return (
       <ContentContainer
         header={(
-          <NavigationHeader title="Patient List Placeholder" app={this.props.app} />
+          <NavigationHeader title="Patient Detail Placeholder" app={this.props.app} />
         )}
         fill
       >
@@ -69,33 +66,32 @@ class PatientListLoader extends React.Component {
   }
 
   render() {
-    const { app, patientListData, url, ...customProps } = this.props;
+    const { app, patientDetailData, url, ...customProps } = this.props;
 
-    if (!this.state.patientListData) {
+    if (!this.state.patientDetailData) {
       return this.defaultPlaceholderComponent();
     } else {
       return (
-        <PatientList
+        <PatientDetail
           {...customProps}
           app={app}
-          data={this.state.patientListData}
+          data={this.state.patientDetailData}
           isLoading={this.state.isLoading}
           onRefresh={this.onRefresh}
-          onSelectPatientDetail={this.props.onSelectPatientDetail}
-          onShowPatientList={this.props.onShowPatientList}
+          onSelectPatientUpdate={this.props.onSelectPatientUpdate}
         />
       )
     }
   }
 }
 
-PatientListLoader.propTypes = {
+PatientDetailLoader.propTypes = {
   app: AppDelegate.propType,
-  patientListData: PropTypes.object,
+  patientDetailData: PropTypes.object,
   url: PropTypes.string,
   placeholderComponent: PropTypes.node,
-  onSelectPatientDetail: PropTypes.func,
-  onShowPatientList: PropTypes.func,
+  onSelectPatientUpdate: PropTypes.func,
 };
 
-export default PatientListLoader;
+export default PatientDetailLoader;
+

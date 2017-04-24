@@ -10,54 +10,26 @@ import NavigationHeader from '../../navigation/core/navigation-header/Navigation
 import ContentContainer from '../../generic-components/content-container/ContentContainer';
 import ActivityIndicator from '../../generic-components/activity-indicator/ActivityIndicator';
 
-import PatientUpdate from '../patient-update/PatientUpdate';
-import PatientStore from '../patient-list/data/PatientStore';
-
 class PatientDetail extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isLoading: true,
-      patient: undefined,
+    this.showPatientUpdate = this.showPatientUpdate.bind(this);
+  }
+
+  showPatientUpdate(patient, type) {
+    return () => {
+      if (this.props.onSelectPatientUpdate) {
+        this.props.onSelectPatientUpdate(this.props.app, patient, type);
+      }
     };
-
-    this.refresh = this.refresh.bind(this);
-  }
-
-  componentDidMount() {
-    this.refresh();
-
-    this.unsubscribeFromStore = PatientStore.subscribe(() => this.refresh());
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromStore();
-    clearTimeout(this.refreshTimeout);
-  }
-
-  refresh() {
-    const newState = Object.assign({}, this.state);
-
-    newState.isLoading = true;
-
-    this.setState(newState);
-
-    this.refreshTimeout = setTimeout(() => {
-      const newDataState = Object.assign({}, this.state);
-
-      newDataState.isLoading = false;
-      newDataState.patient = PatientStore.getPatient(this.props.physicianId, this.props.patientId);
-
-      this.setState(newDataState);
-    }, 0);
   }
 
   render() {
-    const patient = this.state.patient;
+    const patient = this.props.data.patient;
 
     let loadingIndicator;
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       loadingIndicator = <ActivityIndicator />;
     }
 
@@ -74,47 +46,17 @@ class PatientDetail extends React.Component {
                 <ButtonGroup.Button
                   key="PANEL"
                   text="Update (Panel)"
-                  onClick={() => (
-                    this.props.app.disclose({
-                      content: (
-                        <PatientUpdate
-                          key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
-                          physicianId={this.props.physicianId}
-                          patientId={this.props.patientId}
-                        />
-                      ),
-                      preferredType: 'panel' })
-                  )}
+                  onClick={this.showPatientUpdate(patient, 'panel')}
                 />
                 <ButtonGroup.Button
                   key="MODAL"
                   text="Update (Modal)"
-                  onClick={() => (
-                    this.props.app.disclose({
-                      content: (
-                        <PatientUpdate
-                          key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
-                          physicianId={this.props.physicianId}
-                          patientId={this.props.patientId}
-                        />
-                      ),
-                      preferredType: 'modal' })
-                  )}
+                  onClick={this.showPatientUpdate(patient, 'modal')}
                 />
                 <ButtonGroup.Button
                   key="MAIN"
                   text="Update (Main)"
-                  onClick={() => (
-                    this.props.app.disclose({
-                      content: (
-                        <PatientUpdate
-                          key={`PATIENT_UPDATE:${this.props.physicianId}:${this.props.patientId}`}
-                          physicianId={this.props.physicianId}
-                          patientId={this.props.patientId}
-                        />
-                      ),
-                      preferredType: 'main' })
-                  )}
+                  onClick={this.showPatientUpdate(patient, 'main')}
                 />
               </ButtonGroup>
             </div>,
@@ -130,7 +72,7 @@ class PatientDetail extends React.Component {
         id="orion-PatientDetail"
         header={(
           <NavigationHeader title="Patient Detail" app={this.props.app}>
-            <Button onClick={this.refresh} icon={<IconRefresh isSpin={this.state.isLoading} />} />
+            {this.props.onRefresh && <Button onClick={this.props.onRefresh} icon={<IconRefresh isSpin={this.props.isLoading} />} />}
           </NavigationHeader>
         )}
         fill
@@ -144,8 +86,10 @@ class PatientDetail extends React.Component {
 
 PatientDetail.propTypes = {
   app: AppDelegate.propType,
-  physicianId: PropTypes.string,
-  patientId: PropTypes.string,
+  data: PropTypes.object,
+  isLoading: PropTypes.bool,
+  onRefresh: PropTypes.func,
+  onSelectPatientUpdate: PropTypes.func,
 };
 
 export default PatientDetail;

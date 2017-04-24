@@ -14,6 +14,10 @@ var _terraButton = require('terra-button');
 
 var _terraButton2 = _interopRequireDefault(_terraButton);
 
+var _terraButtonGroup = require('terra-button-group');
+
+var _terraButtonGroup2 = _interopRequireDefault(_terraButtonGroup);
+
 var _terraList = require('terra-list');
 
 var _terraList2 = _interopRequireDefault(_terraList);
@@ -50,11 +54,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// import PatientDetail from '../patient-detail/PatientDetail';
-// import PatientStore from './data/PatientStore';
-
-// import refreshable from '../../hoc/refreshable/refreshable';
-
 var patientListId = 0;
 
 var PatientList = function (_React$Component) {
@@ -80,7 +79,7 @@ var PatientList = function (_React$Component) {
       var _this2 = this;
 
       return function () {
-        _this2.props.onSelectPatientDetail(patient, type);
+        _this2.props.onSelectPatientDetail(_this2.props.app, patient, type);
       };
     }
   }, {
@@ -88,9 +87,8 @@ var PatientList = function (_React$Component) {
     value: function showPatientList(patient, type) {
       var _this3 = this;
 
-      // debugger;
       return function () {
-        _this3.props.onShowPatientList(type);
+        _this3.props.onShowPatientList(_this3.props.app, type);
       };
     }
   }, {
@@ -117,9 +115,13 @@ var PatientList = function (_React$Component) {
               endAccessory: _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_terraButton2.default, { onClick: _this4.showPatientDetail(patient, 'modal'), text: 'View (Modal)' }),
-                _react2.default.createElement(_terraButton2.default, { onClick: _this4.showPatientDetail(patient, 'panel'), text: 'View (Panel)' }),
-                _react2.default.createElement(_terraButton2.default, { onClick: _this4.showPatientDetail(patient, 'main'), text: 'View (Main)' })
+                _react2.default.createElement(
+                  _terraButtonGroup2.default,
+                  { size: 'medium', variant: 'secondary' },
+                  _react2.default.createElement(_terraButtonGroup2.default.Button, { onClick: _this4.showPatientDetail(patient, 'modal'), text: 'View (Modal)', key: 'MODAL' }),
+                  _react2.default.createElement(_terraButtonGroup2.default.Button, { onClick: _this4.showPatientDetail(patient, 'panel'), text: 'View (Panel)', key: 'PANEL' }),
+                  _react2.default.createElement(_terraButtonGroup2.default.Button, { onClick: _this4.showPatientDetail(patient, 'main'), text: 'View (Main)', key: 'MAIN' })
+                )
               )
             })
           }));
@@ -134,9 +136,13 @@ var PatientList = function (_React$Component) {
             _NavigationHeader2.default,
             { title: 'Patient List - ' + this.state.id, app: this.props.app },
             this.props.onRefresh && _react2.default.createElement(_terraButton2.default, { key: 'Refresh', onClick: this.props.onRefresh, icon: _react2.default.createElement(_IconRefresh2.default, { isSpin: this.props.isLoading }) }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Modal', onClick: this.showPatientList('modal'), text: 'Launch Modal' }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Panel', onClick: this.showPatientList('panel'), text: 'Launch Panel' }),
-            _react2.default.createElement(_terraButton2.default, { key: 'Main', onClick: this.showPatientList('main'), text: 'Launch Main' })
+            _react2.default.createElement(
+              _terraButtonGroup2.default,
+              null,
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Modal', onClick: this.showPatientList('modal'), text: 'Launch Modal' }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Panel', onClick: this.showPatientList('panel'), text: 'Launch Panel' }),
+              _react2.default.createElement(_terraButtonGroup2.default.Button, { key: 'Main', onClick: this.showPatientList('main'), text: 'Launch Main' })
+            )
           ),
           fill: true
         },
@@ -154,7 +160,6 @@ var PatientList = function (_React$Component) {
 }(_react2.default.Component);
 
 PatientList.propTypes = {
-  // physicianId: PropTypes.string,
   app: _AppDelegate2.default.propType,
   data: _react.PropTypes.object,
   isLoading: _react.PropTypes.bool,

@@ -26,9 +26,9 @@ var _ContentContainer = require('../../generic-components/content-container/Cont
 
 var _ContentContainer2 = _interopRequireDefault(_ContentContainer);
 
-var _PatientStore = require('../patient-list/data/PatientStore');
+var _ActivityIndicator = require('../../generic-components/activity-indicator/ActivityIndicator');
 
-var _PatientStore2 = _interopRequireDefault(_PatientStore);
+var _ActivityIndicator2 = _interopRequireDefault(_ActivityIndicator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60,21 +60,30 @@ var PatientUpdate = function (_React$Component) {
         comment: this.commentTextAreaElement.value
       };
 
-      _PatientStore2.default.update(this.props.physicianId, this.props.patientId, changeData);
-
-      this.props.app.dismiss();
+      if (this.props.onSubmit) {
+        this.props.onSubmit(this.props.app, this.props.patient, changeData);
+      }
     }
   }, {
     key: 'handleCancel',
     value: function handleCancel() {
-      this.props.app.dismiss();
+      if (this.props.onCancel) {
+        this.props.onCancel(this.props.app, this.props.patient);
+      }
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var patient = _PatientStore2.default.getPatient(this.props.physicianId, this.props.patientId);
+      var patient = this.props.patient;
+
+      var loadingIndicator = void 0;
+      if (this.props.isLoading) {
+        loadingIndicator = _react2.default.createElement(_ActivityIndicator2.default, null);
+      }
+
+      debugger;
 
       return _react2.default.createElement(
         _ContentContainer2.default,
@@ -83,6 +92,7 @@ var PatientUpdate = function (_React$Component) {
           header: _react2.default.createElement(_NavigationHeader2.default, { title: 'Patient Update', app: this.props.app }),
           fill: true
         },
+        loadingIndicator,
         _react2.default.createElement(
           'div',
           { style: { margin: '10px' } },
@@ -131,8 +141,10 @@ var PatientUpdate = function (_React$Component) {
 
 PatientUpdate.propTypes = {
   app: _AppDelegate2.default.propType,
-  physicianId: _react.PropTypes.string,
-  patientId: _react.PropTypes.string
+  patient: _react.PropTypes.object,
+  isLoading: _react.PropTypes.bool,
+  onSubmit: _react.PropTypes.func,
+  onCancel: _react.PropTypes.func
 };
 
 exports.default = PatientUpdate;
