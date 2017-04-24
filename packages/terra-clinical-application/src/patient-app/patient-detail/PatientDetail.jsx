@@ -20,7 +20,7 @@ class PatientDetail extends React.Component {
   showPatientUpdate(patient, type) {
     return () => {
       if (this.props.onSelectPatientUpdate) {
-        this.props.onSelectPatientUpdate(this.props.app, patient, type);
+        this.props.onSelectPatientUpdate(patient, type);
       }
     };
   }

@@ -6,7 +6,8 @@ import NavigationHeader from '../../navigation/core/navigation-header/Navigation
 
 import Placeholder from '../../generic-components/placeholder/Placeholder';
 
-import PatientStore from '../patient-list/data/PatientStore';
+import PatientLoader from '../data/PatientLoader';
+import PatientStore from '../data/PatientStore';
 
 import PatientUpdate from './PatientUpdate';
 
@@ -14,29 +15,38 @@ class PatientUpdateController extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.refresh = this.refresh.bind(this);
 
     this.state = {
       isLoading: false,
-      patientUpdateData: props.patientUpdateData,
+      patient: props.patient,
     };
+
+    this.loader = new PatientLoader({
+      dataKey: 'patient',
+      onStoreUpdate: () => {
+        this.refresh();
+      },
+      onChange: (newState) => {
+        this.setState(newState);
+      }
+    })
   }
 
   componentDidMount() {
     if (!this.state.patientUpdateData) {
-      this.getData();
+      this.refresh();
     }
   }
 
-  getData(url) {
-    this.setState({ isLoading: true });
+  refresh() {
+    this.loader.getPatient(this.props.physicianId, this.props.patientId);
+  }
 
-    // GET DATA WITH URL
-    this.getDataTimeout = setTimeout(() => {
-      this.setState({ patientUpdateData: PatientStore.getPatient(this.props.physicianId, this.props.patientId), isLoading: false });
-    }, 3000);
+  componentWillUnmount() {
+    this.loader.destroy();
   }
 
   handleSubmit(patient, changeData) {
@@ -50,7 +60,7 @@ class PatientUpdateController extends React.Component {
   }
 
   render() {
-    const patient = this.state.patientUpdateData;
+    const patient = this.state.patient;
 
     if (!patient) {
       return <Placeholder app={this.props.app} headerText="Patient Update Placeholder" loadingText="Loading patient..." />;

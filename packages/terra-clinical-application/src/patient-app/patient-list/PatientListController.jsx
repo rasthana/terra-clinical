@@ -6,7 +6,7 @@ import NavigationHeader from '../../navigation/core/navigation-header/Navigation
 import Placeholder from '../../generic-components/placeholder/Placeholder';
 
 import PatientList from './PatientList';
-import PatientStore from './data/PatientStore';
+import PatientLoader from '../data/PatientLoader';
 
 import PatientDetailController from '../patient-detail/PatientDetailController';
 
@@ -21,35 +21,33 @@ class PatientListController extends React.Component {
       patientListData: props.patientListData,
     };
 
-    this.getData = this.getData.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
+    this.loader = new PatientLoader({
+      dataKey: 'patientListData',
+      onStoreUpdate: () => {
+        this.refresh();
+      },
+      onChange: (loaderState) => {
+        this.setState(loaderState);
+      }
+    })
+
+    this.refresh = this.refresh.bind(this);
     this.presentPatientDetail = this.presentPatientDetail.bind(this);
     this.presentNestedPatientList = this.presentNestedPatientList.bind(this);
   }
 
   componentDidMount() {
     if (!this.state.patientListData) {
-      this.getData();
+      this.refresh();
     }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.getDataTimeout);
+    this.loader.destroy();
   }
 
-  getData() {
-    this.setState({ isLoading: true });
-
-    // GET DATA WITH URL
-    this.getDataTimeout = setTimeout(() => {
-      const patientListData = { patients: PatientStore.getPatientList(this.props.physicianId) };
-
-      this.setState({ patientListData, isLoading: false });
-    }, 3000);
-  }
-
-  onRefresh() {
-    this.getData();
+  refresh() {
+    this.loader.getPatientList(this.props.physicianId);
   }
 
   presentPatientDetail(patient, type) {
@@ -84,9 +82,9 @@ class PatientListController extends React.Component {
         <PatientList
           {...customProps}
           app={app}
-          data={this.state.patientListData}
+          data={{ patients: this.state.patientListData}}
           isLoading={this.state.isLoading}
-          onRefresh={this.onRefresh}
+          onRefresh={this.refresh}
           onSelectPatientDetail={this.presentPatientDetail}
           onShowPatientList={this.presentNestedPatientList}
         />

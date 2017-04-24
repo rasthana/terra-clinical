@@ -39,7 +39,15 @@ var NavigationHeader = function NavigationHeader(_ref) {
       hasBottomBorder = _ref.hasBottomBorder;
 
   if (!app) {
-    return _react2.default.createElement('header', { className: 'terra-NavigationHeader' });
+    return _react2.default.createElement(
+      'header',
+      { className: 'terra-NavigationHeader' },
+      _react2.default.createElement(
+        'h2',
+        null,
+        title
+      )
+    );
   }
 
   var headerCloseButton = void 0;

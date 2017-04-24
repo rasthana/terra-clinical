@@ -22,11 +22,15 @@ var _NavigationHeader = require('../../navigation/core/navigation-header/Navigat
 
 var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
 
-var _ContentContainer = require('../../generic-components/content-container/ContentContainer');
+var _Placeholder = require('../../generic-components/placeholder/Placeholder');
 
-var _ContentContainer2 = _interopRequireDefault(_ContentContainer);
+var _Placeholder2 = _interopRequireDefault(_Placeholder);
 
-var _PatientStore = require('../patient-list/data/PatientStore');
+var _PatientLoader = require('../data/PatientLoader');
+
+var _PatientLoader2 = _interopRequireDefault(_PatientLoader);
+
+var _PatientStore = require('../data/PatientStore');
 
 var _PatientStore2 = _interopRequireDefault(_PatientStore);
 
@@ -42,87 +46,91 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PatientUpdateLoader = function (_React$Component) {
-  _inherits(PatientUpdateLoader, _React$Component);
+var PatientUpdateController = function (_React$Component) {
+  _inherits(PatientUpdateController, _React$Component);
 
-  function PatientUpdateLoader(props) {
-    _classCallCheck(this, PatientUpdateLoader);
+  function PatientUpdateController(props) {
+    _classCallCheck(this, PatientUpdateController);
 
-    var _this = _possibleConstructorReturn(this, (PatientUpdateLoader.__proto__ || Object.getPrototypeOf(PatientUpdateLoader)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (PatientUpdateController.__proto__ || Object.getPrototypeOf(PatientUpdateController)).call(this, props));
 
-    _this.defaultPlaceholderComponent = _this.defaultPlaceholderComponent.bind(_this);
-    _this.getData = _this.getData.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleCancel = _this.handleCancel.bind(_this);
+    _this.refresh = _this.refresh.bind(_this);
 
     _this.state = {
       isLoading: false,
-      patientUpdateData: props.patientUpdateData
+      patient: props.patient
     };
+
+    _this.loader = new _PatientLoader2.default({
+      dataKey: 'patient',
+      onStoreUpdate: function onStoreUpdate() {
+        _this.refresh();
+      },
+      onChange: function onChange(newState) {
+        _this.setState(newState);
+      }
+    });
     return _this;
   }
 
-  _createClass(PatientUpdateLoader, [{
+  _createClass(PatientUpdateController, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (!this.state.patientUpdateData) {
-        this.getData();
+        this.refresh();
       }
     }
   }, {
-    key: 'getData',
-    value: function getData(url) {
-      var _this2 = this;
-
-      this.setState({ isLoading: true });
-
-      // GET DATA WITH URL
-      this.getDataTimeout = setTimeout(function () {
-        _this2.setState({ patientUpdateData: _PatientStore2.default.getPatient('physician1', _this2.props.url), isLoading: false });
-      }, 3000);
+    key: 'refresh',
+    value: function refresh() {
+      this.loader.getPatient(this.props.physicianId, this.props.patientId);
     }
   }, {
-    key: 'defaultPlaceholderComponent',
-    value: function defaultPlaceholderComponent() {
-      return _react2.default.createElement(
-        _ContentContainer2.default,
-        {
-          header: _react2.default.createElement(_NavigationHeader2.default, { title: 'Patient Update Placeholder', app: this.props.app }),
-          fill: true
-        },
-        _react2.default.createElement(
-          'h2',
-          null,
-          'Loading...'
-        )
-      );
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.loader.destroy();
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(patient, changeData) {
+      _PatientStore2.default.update(this.props.physicianId, patient.id, changeData);
+
+      this.props.app.dismiss();
+    }
+  }, {
+    key: 'handleCancel',
+    value: function handleCancel() {
+      this.props.app.dismiss();
     }
   }, {
     key: 'render',
     value: function render() {
-      var patient = this.state.patientUpdateData;
+      var patient = this.state.patient;
 
       if (!patient) {
-        return this.defaultPlaceholderComponent();
+        return _react2.default.createElement(_Placeholder2.default, { app: this.props.app, headerText: 'Patient Update Placeholder', loadingText: 'Loading patient...' });
       }
 
       return _react2.default.createElement(_PatientUpdate2.default, {
         app: this.props.app,
         patient: patient,
         isLoading: this.state.isLoading,
-        onSubmit: this.props.onSubmit,
-        onCancel: this.props.onCancel
+        onSubmit: this.handleSubmit,
+        onCancel: this.handleCancel
       });
     }
   }]);
 
-  return PatientUpdateLoader;
+  return PatientUpdateController;
 }(_react2.default.Component);
 
-PatientUpdateLoader.propTypes = {
+PatientUpdateController.propTypes = {
   app: _AppDelegate2.default.propType,
-  url: _react.PropTypes.string,
-  patientUpdateData: _react.PropTypes.object,
-  onSubmit: _react.PropTypes.func,
-  onCancel: _react.PropTypes.func
+  physicianId: _react.PropTypes.string,
+  patientId: _react.PropTypes.string,
+  patientUpdateData: _react.PropTypes.object
 };
 
-exports.default = PatientUpdateLoader;
+exports.default = PatientUpdateController;

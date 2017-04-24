@@ -5,8 +5,8 @@ import NavigationHeader from '../../navigation/core/navigation-header/Navigation
 
 import Placeholder from '../../generic-components/placeholder/Placeholder';
 
-import PatientStore from '../patient-list/data/PatientStore';
 import PatientDetail from './PatientDetail';
+import PatientLoader from '../data/PatientLoader';
 
 import PatientUpdateController from '../patient-update/PatientUpdateController';
 
@@ -14,40 +14,42 @@ class PatientDetailController extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getData = this.getData.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
+    this.refresh = this.refresh.bind(this);
     this.presentPatientUpdate = this.presentPatientUpdate.bind(this);
 
     this.state = {
       isLoading: false,
       patient: props.patient,
     };
+
+    this.loader = new PatientLoader({
+      dataKey: 'patient',
+      onStoreUpdate: () => {
+        this.refresh();
+      },
+      onChange: (loaderState) => {
+        this.setState(loaderState);
+      }
+    })
   }
 
   componentDidMount() {
-    if (!this.state.patientDetailData) {
-      this.getData();
+    if (!this.state.patient) {
+      this.refresh();
     }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.getDataTimeout);
+    this.loader.destroy();
   }
 
-  getData() {
-    this.setState({ isLoading: true });
-
-    // GET DATA WITH URL
-    this.getDataTimeout = setTimeout(() => {
-      this.setState({ patient: PatientStore.getPatient(this.props.physicianId, this.props.patientId), isLoading: false });
-    }, 3000);
-  }
-
-  onRefresh() {
-    this.getData();
+  refresh() {
+    this.loader.getPatient(this.props.physicianId, this.props.patientId);
   }
 
   presentPatientUpdate(patient, type) {
+    debugger;
+
     this.props.app.disclose({
       content: (
         <PatientUpdateController
@@ -72,7 +74,7 @@ class PatientDetailController extends React.Component {
           app={app}
           patient={this.state.patient}
           isLoading={this.state.isLoading}
-          onRefresh={this.onRefresh}
+          onRefresh={this.refresh}
           onSelectPatientUpdate={this.presentPatientUpdate}
         />
       )

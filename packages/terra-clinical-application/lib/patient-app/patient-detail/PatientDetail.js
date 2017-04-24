@@ -69,14 +69,14 @@ var PatientDetail = function (_React$Component) {
 
       return function () {
         if (_this2.props.onSelectPatientUpdate) {
-          _this2.props.onSelectPatientUpdate(_this2.props.app, patient, type);
+          _this2.props.onSelectPatientUpdate(patient, type);
         }
       };
     }
   }, {
     key: 'render',
     value: function render() {
-      var patient = this.props.data.patient;
+      var patient = this.props.patient;
 
       var loadingIndicator = void 0;
       if (this.props.isLoading) {
@@ -139,7 +139,7 @@ var PatientDetail = function (_React$Component) {
 
 PatientDetail.propTypes = {
   app: _AppDelegate2.default.propType,
-  data: _react.PropTypes.object,
+  patient: _react.PropTypes.object,
   isLoading: _react.PropTypes.bool,
   onRefresh: _react.PropTypes.func,
   onSelectPatientUpdate: _react.PropTypes.func

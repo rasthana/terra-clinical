@@ -61,14 +61,14 @@ var PatientUpdate = function (_React$Component) {
       };
 
       if (this.props.onSubmit) {
-        this.props.onSubmit(this.props.app, this.props.patient, changeData);
+        this.props.onSubmit(this.props.patient, changeData);
       }
     }
   }, {
     key: 'handleCancel',
     value: function handleCancel() {
       if (this.props.onCancel) {
-        this.props.onCancel(this.props.app, this.props.patient);
+        this.props.onCancel(this.props.patient);
       }
     }
   }, {

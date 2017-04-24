@@ -12,25 +12,29 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _NavigationHeader = require('../../navigation/core/navigation-header/NavigationHeader');
-
-var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
-
-var _ContentContainer = require('../../generic-components/content-container/ContentContainer');
-
-var _ContentContainer2 = _interopRequireDefault(_ContentContainer);
-
 var _AppDelegate = require('../../navigation/core/app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
 
-var _PatientStore = require('./data/PatientStore');
+var _NavigationHeader = require('../../navigation/core/navigation-header/NavigationHeader');
 
-var _PatientStore2 = _interopRequireDefault(_PatientStore);
+var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
+
+var _Placeholder = require('../../generic-components/placeholder/Placeholder');
+
+var _Placeholder2 = _interopRequireDefault(_Placeholder);
 
 var _PatientList = require('./PatientList');
 
 var _PatientList2 = _interopRequireDefault(_PatientList);
+
+var _PatientLoader = require('../data/PatientLoader');
+
+var _PatientLoader2 = _interopRequireDefault(_PatientLoader);
+
+var _PatientDetailController = require('../patient-detail/PatientDetailController');
+
+var _PatientDetailController2 = _interopRequireDefault(_PatientDetailController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,113 +48,105 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var patientListId = 0;
 
-var PatientListLoader = function (_React$Component) {
-  _inherits(PatientListLoader, _React$Component);
+var PatientListController = function (_React$Component) {
+  _inherits(PatientListController, _React$Component);
 
-  function PatientListLoader(props) {
-    _classCallCheck(this, PatientListLoader);
+  function PatientListController(props) {
+    _classCallCheck(this, PatientListController);
 
-    var _this = _possibleConstructorReturn(this, (PatientListLoader.__proto__ || Object.getPrototypeOf(PatientListLoader)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (PatientListController.__proto__ || Object.getPrototypeOf(PatientListController)).call(this, props));
 
     _this.state = {
       isLoading: false,
       patientListData: props.patientListData
     };
 
-    _this.getData = _this.getData.bind(_this);
-    _this.onRefresh = _this.onRefresh.bind(_this);
-    _this.defaultPlaceholderComponent = _this.defaultPlaceholderComponent.bind(_this);
+    _this.loader = new _PatientLoader2.default({
+      dataKey: 'patientListData',
+      onStoreUpdate: function onStoreUpdate() {
+        _this.refresh();
+      },
+      onChange: function onChange(loaderState) {
+        _this.setState(loaderState);
+      }
+    });
+
+    _this.refresh = _this.refresh.bind(_this);
+    _this.presentPatientDetail = _this.presentPatientDetail.bind(_this);
+    _this.presentNestedPatientList = _this.presentNestedPatientList.bind(_this);
     return _this;
   }
 
-  _createClass(PatientListLoader, [{
+  _createClass(PatientListController, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (!this.state.patientListData) {
-        this.getData();
+        this.refresh();
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      clearTimeout(this.getDataTimeout);
+      this.loader.destroy();
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.patientListData) {
-        this.setState({ patientListData: nextProps.patientListData });
-      }
+    key: 'refresh',
+    value: function refresh() {
+      this.loader.getPatientList(this.props.physicianId);
     }
   }, {
-    key: 'getData',
-    value: function getData() {
-      var _this2 = this;
-
-      this.setState({ isLoading: true });
-
-      // GET DATA WITH URL
-      this.getDataTimeout = setTimeout(function () {
-        var patientListData = { patients: _PatientStore2.default.getPatientList(_this2.props.url) };
-
-        _this2.setState({ patientListData: patientListData, isLoading: false });
-      }, 3000);
+    key: 'presentPatientDetail',
+    value: function presentPatientDetail(patient, type) {
+      this.props.app.disclose({
+        content: _react2.default.createElement(_PatientDetailController2.default, {
+          key: 'detail_' + patient.id,
+          physicianId: this.props.physicianId,
+          patientId: patient.id
+        }),
+        preferredType: type
+      });
     }
   }, {
-    key: 'onRefresh',
-    value: function onRefresh() {
-      this.getData();
-    }
-  }, {
-    key: 'defaultPlaceholderComponent',
-    value: function defaultPlaceholderComponent() {
-      return _react2.default.createElement(
-        _ContentContainer2.default,
-        {
-          header: _react2.default.createElement(_NavigationHeader2.default, { title: 'Patient List Placeholder', app: this.props.app }),
-          fill: true
-        },
-        _react2.default.createElement(
-          'h2',
-          null,
-          'Loading...'
-        )
-      );
+    key: 'presentNestedPatientList',
+    value: function presentNestedPatientList(type) {
+      this.props.app.disclose({
+        fallbackUrl: window.location.origin + '/?type=' + type + Math.random(),
+        preferredType: type,
+        size: 'large',
+        panelBehavior: 'overlay'
+      });
     }
   }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
           app = _props.app,
+          physicianId = _props.physicianId,
           patientListData = _props.patientListData,
-          url = _props.url,
-          customProps = _objectWithoutProperties(_props, ['app', 'patientListData', 'url']);
+          customProps = _objectWithoutProperties(_props, ['app', 'physicianId', 'patientListData']);
 
       if (!this.state.patientListData) {
-        return this.defaultPlaceholderComponent();
+        return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient List Placeholder', loadingText: 'Loading patients...' });
       } else {
         return _react2.default.createElement(_PatientList2.default, _extends({}, customProps, {
           app: app,
-          data: this.state.patientListData,
+          data: { patients: this.state.patientListData },
           isLoading: this.state.isLoading,
-          onRefresh: this.onRefresh,
-          onSelectPatientDetail: this.props.onSelectPatientDetail,
-          onShowPatientList: this.props.onShowPatientList
+          onRefresh: this.refresh,
+          onSelectPatientDetail: this.presentPatientDetail,
+          onShowPatientList: this.presentNestedPatientList
         }));
       }
     }
   }]);
 
-  return PatientListLoader;
+  return PatientListController;
 }(_react2.default.Component);
 
-PatientListLoader.propTypes = {
+PatientListController.propTypes = {
   app: _AppDelegate2.default.propType,
-  patientListData: _react.PropTypes.object,
-  url: _react.PropTypes.string,
-  placeholderComponent: _react.PropTypes.node,
-  onSelectPatientDetail: _react.PropTypes.func,
-  onShowPatientList: _react.PropTypes.func
+  physicianId: _react.PropTypes.string,
+  patientListData: _react.PropTypes.object
 };
 
-exports.default = PatientListLoader;
+exports.default = PatientListController;

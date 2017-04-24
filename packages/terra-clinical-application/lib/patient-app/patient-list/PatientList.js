@@ -79,7 +79,7 @@ var PatientList = function (_React$Component) {
       var _this2 = this;
 
       return function () {
-        _this2.props.onSelectPatientDetail(_this2.props.app, patient, type);
+        _this2.props.onSelectPatientDetail(patient, type);
       };
     }
   }, {
@@ -88,7 +88,7 @@ var PatientList = function (_React$Component) {
       var _this3 = this;
 
       return function () {
-        _this3.props.onShowPatientList(_this3.props.app, type);
+        _this3.props.onShowPatientList(type);
       };
     }
   }, {
