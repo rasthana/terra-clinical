@@ -130,7 +130,7 @@ var PatientListController = function (_React$Component) {
       } else {
         return _react2.default.createElement(_PatientList2.default, _extends({}, customProps, {
           app: app,
-          data: { patients: this.state.patientListData },
+          patients: { patients: this.state.patientListData },
           isLoading: this.state.isLoading,
           onRefresh: this.refresh,
           onSelectPatientDetail: this.presentPatientDetail,

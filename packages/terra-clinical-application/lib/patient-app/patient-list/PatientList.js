@@ -84,7 +84,7 @@ var PatientList = function (_React$Component) {
     }
   }, {
     key: 'showPatientList',
-    value: function showPatientList(patient, type) {
+    value: function showPatientList(type) {
       var _this3 = this;
 
       return function () {
@@ -101,7 +101,7 @@ var PatientList = function (_React$Component) {
         loadingIndicator = _react2.default.createElement(_ActivityIndicator2.default, null);
       }
 
-      var patientList = this.props.data;
+      var patientList = this.props.patients;
 
       var patientListItems = [];
       if (patientList && patientList.patients && patientList.patients.length) {
@@ -161,7 +161,7 @@ var PatientList = function (_React$Component) {
 
 PatientList.propTypes = {
   app: _AppDelegate2.default.propType,
-  data: _react.PropTypes.object,
+  patients: _react.PropTypes.object,
   isLoading: _react.PropTypes.bool,
   onRefresh: _react.PropTypes.func,
   onSelectPatientDetail: _react.PropTypes.func,

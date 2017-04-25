@@ -31,7 +31,7 @@ class PatientList extends React.Component {
     };
   }
 
-  showPatientList(patient, type) {
+  showPatientList(type) {
     return () => {
       this.props.onShowPatientList(type);
     };
@@ -43,7 +43,7 @@ class PatientList extends React.Component {
       loadingIndicator = <ActivityIndicator />;
     }
 
-    const patientList = this.props.data;
+    const patientList = this.props.patients;
 
     const patientListItems = [];
     if (patientList && patientList.patients && patientList.patients.length) {
@@ -103,7 +103,7 @@ class PatientList extends React.Component {
 
 PatientList.propTypes = {
   app: AppDelegate.propType,
-  data: PropTypes.object,
+  patients: PropTypes.object,
   isLoading: PropTypes.bool,
   onRefresh: PropTypes.func,
   onSelectPatientDetail: PropTypes.func,

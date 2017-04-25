@@ -17,7 +17,7 @@ import PrimaryNavLayout from 'terra-clinical-application/src/navigation/layouts/
 import SecondaryNavLayout from 'terra-clinical-application/src/navigation/layouts/secondary-nav-layout/SecondaryNavLayout';
 import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/slide-panel-layout/SlidePanelLayout';
 import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
-import PatientStore from 'terra-clinical-application/src/patient-app/patient-list/data/PatientStore';
+import PatientStore from 'terra-clinical-application/src/patient-app/data/PatientStore';
 
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 import PatientDetailController from 'terra-clinical-application/src/patient-app/patient-detail/PatientDetailController';

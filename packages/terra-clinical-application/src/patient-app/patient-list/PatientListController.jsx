@@ -82,7 +82,7 @@ class PatientListController extends React.Component {
         <PatientList
           {...customProps}
           app={app}
-          data={{ patients: this.state.patientListData}}
+          patients={{ patients: this.state.patientListData}}
           isLoading={this.state.isLoading}
           onRefresh={this.refresh}
           onSelectPatientDetail={this.presentPatientDetail}
