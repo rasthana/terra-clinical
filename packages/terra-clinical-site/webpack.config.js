@@ -65,6 +65,8 @@ module.exports = {
     alias: {
       react: path.resolve(path.join(__dirname, 'node_modules', 'react')),
       xfc: path.resolve(path.join(__dirname, 'node_modules', 'xfc')),
+      redux: path.resolve(path.join(__dirname, 'node_modules', 'redux')),
+      'react-redux': path.resolve(path.join(__dirname, 'node_modules', 'react-redux')),
       'react-modal': path.resolve(path.join(__dirname, 'node_modules', 'react-modal')),
       'react-dom': path.resolve(path.join(__dirname, 'node_modules', 'react-dom')),
     },

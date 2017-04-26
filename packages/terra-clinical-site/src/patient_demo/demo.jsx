@@ -7,19 +7,11 @@ import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clin
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
 import { embeddedNavHandshake } from './EmbeddedNavBootstrapper';
-import { PatientApp } from './PatientApp';
+import PatientApp from './PatientApp';
 
 import './demo.scss';
 
 Consumer.init();
-
-// document.addEventListener("ready", function(event) {
-//   const modalDiv = document.getElementsByClassName('ReactModalPortal');
-
-//   modalDiv.addEvenListener("touchmove", function(event) {
-//     event.preventDefault();
-//   });
-// });
 
 // Initialize provider when embedded.
 if (window.top !== window) {

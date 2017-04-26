@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -20,23 +18,9 @@ var _reactModal = require('react-modal');
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
-var _AppDelegate = require('../../core/app-delegate/AppDelegate');
-
-var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
-
-var _NavigationHeader = require('../../core/navigation-header/NavigationHeader');
-
-var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
-
-var _ContentContainer = require('../../../generic-components/content-container/ContentContainer');
-
-var _ContentContainer2 = _interopRequireDefault(_ContentContainer);
-
 var _NavStack = require('../../../generic-components/nav-stack/NavStack');
 
 var _NavStack2 = _interopRequireDefault(_NavStack);
-
-var _NavigatorUtils = require('../../core/util/NavigatorUtils');
 
 require('./AppLayout.scss');
 
@@ -51,177 +35,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AppLayout = function (_React$Component) {
   _inherits(AppLayout, _React$Component);
 
-  function AppLayout(props) {
+  function AppLayout() {
     _classCallCheck(this, AppLayout);
 
-    var _this = _possibleConstructorReturn(this, (AppLayout.__proto__ || Object.getPrototypeOf(AppLayout)).call(this, props));
-
-    _this.modalShouldBeFullscreen = false;
-
-    _this.updateFullscreenState = _this.updateFullscreenState.bind(_this);
-    _this.childDisclose = _this.childDisclose.bind(_this);
-    _this.childDismiss = _this.childDismiss.bind(_this);
-
-    _this.open = _this.open.bind(_this);
-    _this.close = _this.close.bind(_this);
-    _this.push = _this.push.bind(_this);
-    _this.pop = _this.pop.bind(_this);
-
-    _this.state = {
-      isOpen: false,
-      isFullscreen: false,
-      size: 'small',
-      componentStack: []
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (AppLayout.__proto__ || Object.getPrototypeOf(AppLayout)).apply(this, arguments));
   }
 
   _createClass(AppLayout, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.updateFullscreenState();
-
-      window.addEventListener('resize', function () {
-        _this2.updateFullscreenState();
-      });
-    }
-  }, {
-    key: 'updateFullscreenState',
-    value: function updateFullscreenState() {
-      var currentFullscreenValue = this.modalShouldBeFullscreen;
-
-      this.modalShouldBeFullscreen = window.innerWidth < 1024;
-
-      if (this.state.isOpen && currentFullscreenValue !== this.modalShouldBeFullscreen) {
-        this.forceUpdate();
-      }
-    }
-  }, {
-    key: 'childDisclose',
-    value: function childDisclose(options) {
-      if (options.fallbackUrl) {
-        if (this.props.app && this.props.app.disclose) {
-          var modifiedOptions = _extends({}, options);
-          modifiedOptions.content = undefined;
-
-          this.props.app.disclose(modifiedOptions);
-
-          return;
-        }
-      }
-
-      this.open(options);
-    }
-  }, {
-    key: 'childDismiss',
-    value: function childDismiss(options) {
-      if (this.props.app && this.props.app.dismiss) {
-        this.props.app.dismiss(options);
-      }
-    }
-  }, {
-    key: 'open',
-    value: function open(options) {
-      var newContent = (0, _NavigatorUtils.componentFromDiscloseOptions)(options);
-      if (!newContent) {
-        return;
-      }
-
-      var appDelegate = _AppDelegate2.default.create({
-        disclose: this.push,
-        dismiss: this.close,
-        closeDisclosure: this.close,
-        goBack: undefined
-      });
-
-      var newState = {
-        isOpen: true,
-        size: options.size || 'small',
-        componentStack: [_react2.default.cloneElement(newContent, { app: appDelegate })]
-      };
-
-      this.setState(newState);
-    }
-  }, {
-    key: 'close',
-    value: function close() {
-      var newState = {
-        isOpen: false,
-        size: 'small',
-        componentStack: []
-      };
-
-      this.setState(newState);
-    }
-  }, {
-    key: 'push',
-    value: function push(options) {
-      var newContent = (0, _NavigatorUtils.componentFromDiscloseOptions)(options);
-      if (!newContent) {
-        return;
-      }
-
-      var newComponentStack = _extends([], this.state.componentStack);
-
-      var appDelegate = _AppDelegate2.default.create({
-        disclose: this.push,
-        dismiss: this.pop,
-        closeDisclosure: this.close,
-        goBack: this.pop
-      });
-
-      newComponentStack.push(_react2.default.cloneElement(newContent, { app: appDelegate }));
-
-      var newState = {
-        componentStack: newComponentStack
-      };
-
-      this.setState(newState);
-    }
-  }, {
-    key: 'pop',
-    value: function pop() {
-      if (this.state.componentStack.length > 1) {
-        var newComponentStack = _extends([], this.state.componentStack);
-
-        newComponentStack.pop();
-
-        var newState = {
-          componentStack: newComponentStack
-        };
-
-        this.setState(newState);
-      }
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var modalState = this.props.modalState;
 
-      var modalClassNames = (0, _classnames2.default)(['terra-AppLayout-modal', { 'terra-AppLayout-modal--small': !this.modalShouldBeFullscreen && this.state.size === 'small' }, { 'terra-AppLayout-modal--large': !this.modalShouldBeFullscreen && this.state.size === 'large' }, { 'terra-AppLayout-modal--fullscreen': this.modalShouldBeFullscreen }]);
+      var modalClassNames = (0, _classnames2.default)(['terra-AppLayout-modal', { 'terra-AppLayout-modal--small': modalState.size === 'small' || !modalState.size }, { 'terra-AppLayout-modal--large': modalState.size === 'large' }]);
 
       return _react2.default.createElement(
         'div',
         { className: 'terra-AppLayout' },
-        _react2.default.Children.map(this.props.children, function (child) {
-          var appDelegate = _AppDelegate2.default.merge(_this3.props.app, {
-            disclose: _this3.childDisclose,
-            dismiss: _this3.close
-          });
-
-          return _react2.default.cloneElement(child, { app: appDelegate });
-        }),
+        this.props.children,
         _react2.default.createElement(
           _reactModal2.default,
           {
-            isOpen: this.state.isOpen,
+            isOpen: modalState.isOpen,
             className: modalClassNames,
             overlayClassName: 'terra-AppLayout-modalOverlay',
             contentLabel: ''
           },
-          _react2.default.createElement(_NavStack2.default, { items: this.state.componentStack })
+          _react2.default.createElement(_NavStack2.default, { items: modalState.componentStack })
         )
       );
     }
@@ -232,7 +71,7 @@ var AppLayout = function (_React$Component) {
 
 AppLayout.propTypes = {
   children: _react.PropTypes.node,
-  app: _AppDelegate2.default.propType
+  modalState: _react.PropTypes.object
 };
 
 exports.default = AppLayout;

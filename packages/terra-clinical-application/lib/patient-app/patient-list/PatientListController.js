@@ -36,6 +36,10 @@ var _PatientDetailController = require('../patient-detail/PatientDetailControlle
 
 var _PatientDetailController2 = _interopRequireDefault(_PatientDetailController);
 
+var _ComponentRegistry = require('../../navigation/core/registry/ComponentRegistry');
+
+var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -47,6 +51,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var patientListId = 0;
+
+_ComponentRegistry2.default['PatientDetailController'] = _PatientDetailController2.default;
 
 var PatientListController = function (_React$Component) {
   _inherits(PatientListController, _React$Component);
@@ -98,13 +104,28 @@ var PatientListController = function (_React$Component) {
     key: 'presentPatientDetail',
     value: function presentPatientDetail(patient, type) {
       this.props.app.disclose({
-        content: _react2.default.createElement(_PatientDetailController2.default, {
-          key: 'detail_' + patient.id,
-          physicianId: this.props.physicianId,
-          patientId: patient.id
-        }),
-        preferredType: type
+        preferredType: type,
+        content: {
+          key: 'PatientDetailController',
+          name: 'PatientDetailController',
+          props: {
+            key: 'detail_' + patient.id,
+            physicianId: this.props.physicianId,
+            patientId: patient.id
+          }
+        }
       });
+
+      // this.props.app.disclose({
+      //   content: (
+      //     <PatientDetailController
+      //       key={`detail_${patient.id}`}
+      //       physicianId={this.props.physicianId}
+      //       patientId={patient.id}
+      //     />
+      //   ),
+      //   preferredType: type,
+      // });
     }
   }, {
     key: 'presentNestedPatientList',

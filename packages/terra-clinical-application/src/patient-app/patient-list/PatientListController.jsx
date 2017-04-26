@@ -10,7 +10,11 @@ import PatientLoader from '../data/PatientLoader';
 
 import PatientDetailController from '../patient-detail/PatientDetailController';
 
+import ComponentRegistry from '../../navigation/core/registry/ComponentRegistry';
+
 let patientListId = 0;
+
+ComponentRegistry['PatientDetailController'] = PatientDetailController;
 
 class PatientListController extends React.Component {
   constructor(props) {
@@ -52,15 +56,28 @@ class PatientListController extends React.Component {
 
   presentPatientDetail(patient, type) {
     this.props.app.disclose({
-      content: (
-        <PatientDetailController
-          key={`detail_${patient.id}`}
-          physicianId={this.props.physicianId}
-          patientId={patient.id}
-        />
-      ),
       preferredType: type,
-    });
+      content: {
+        key: 'PatientDetailController',
+        name: 'PatientDetailController',
+        props: {
+          key: `detail_${patient.id}`,
+          physicianId: this.props.physicianId,
+          patientId: patient.id,
+        },
+      }
+    })
+
+    // this.props.app.disclose({
+    //   content: (
+    //     <PatientDetailController
+    //       key={`detail_${patient.id}`}
+    //       physicianId={this.props.physicianId}
+    //       patientId={patient.id}
+    //     />
+    //   ),
+    //   preferredType: type,
+    // });
   }
 
   presentNestedPatientList(type) {
