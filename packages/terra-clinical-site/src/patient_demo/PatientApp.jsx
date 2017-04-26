@@ -155,7 +155,7 @@ class PatientAppViewController extends React.Component {
           () => { this.props.popModal(); } :
           undefined
         ),
-        close: () => { this.props.dismissModal(); },
+        closeDisclosure: () => { this.props.dismissModal(); },
       });
 
       return <ComponentClass {...componentData.props} app={appDelegate} />;

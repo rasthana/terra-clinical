@@ -52,10 +52,10 @@ const modalManager = (state = defaultModalState, action) => {
       return defaultModalState;
     case PUSH_MODAL:
       newState.componentKeys = Object.assign([], newState.componentKeys);
-      newState.componentKeys.push(action.discloseInfo.content.key);
-      newState.components[action.discloseInfo.content.key] = {
-        name: action.discloseInfo.content.name,
-        props: action.discloseInfo.content.props,
+      newState.componentKeys.push(action.pushInfo.content.key);
+      newState.components[action.pushInfo.content.key] = {
+        name: action.pushInfo.content.name,
+        props: action.pushInfo.content.props,
       };
 
       return newState;

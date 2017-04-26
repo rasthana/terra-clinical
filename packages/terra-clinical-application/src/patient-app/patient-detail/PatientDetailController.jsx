@@ -10,6 +10,10 @@ import PatientLoader from '../data/PatientLoader';
 
 import PatientUpdateController from '../patient-update/PatientUpdateController';
 
+import ComponentRegistry from '../../navigation/core/registry/ComponentRegistry';
+
+ComponentRegistry['PatientUpdateController'] = PatientUpdateController;
+
 class PatientDetailController extends React.Component {
   constructor(props) {
     super(props);
@@ -48,18 +52,29 @@ class PatientDetailController extends React.Component {
   }
 
   presentPatientUpdate(patient, type) {
-    debugger;
-
     this.props.app.disclose({
-      content: (
-        <PatientUpdateController
-          key={`update_${patient.id}`}
-          physicianId={this.props.physicianId}
-          patientId={this.props.patientId}
-        />
-      ),
       preferredType: type,
-    })
+      content: {
+        key: 'PatientUpdateController',
+        name: 'PatientUpdateController',
+        props: {
+          key: `update_${patient.id}`,
+          physicianId: this.props.physicianId,
+          patientId: patient.id,
+        },
+      }
+    });
+
+    // this.props.app.disclose({
+    //   content: (
+    //     <PatientUpdateController
+    //       key={`update_${patient.id}`}
+    //       physicianId={this.props.physicianId}
+    //       patientId={this.props.patientId}
+    //     />
+    //   ),
+    //   preferredType: type,
+    // })
   }
 
   render() {

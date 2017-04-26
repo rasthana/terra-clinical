@@ -36,6 +36,10 @@ var _PatientUpdateController = require('../patient-update/PatientUpdateControlle
 
 var _PatientUpdateController2 = _interopRequireDefault(_PatientUpdateController);
 
+var _ComponentRegistry = require('../../navigation/core/registry/ComponentRegistry');
+
+var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -45,6 +49,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_ComponentRegistry2.default['PatientUpdateController'] = _PatientUpdateController2.default;
 
 var PatientDetailController = function (_React$Component) {
   _inherits(PatientDetailController, _React$Component);
@@ -94,16 +100,29 @@ var PatientDetailController = function (_React$Component) {
   }, {
     key: 'presentPatientUpdate',
     value: function presentPatientUpdate(patient, type) {
-      debugger;
-
       this.props.app.disclose({
-        content: _react2.default.createElement(_PatientUpdateController2.default, {
-          key: 'update_' + patient.id,
-          physicianId: this.props.physicianId,
-          patientId: this.props.patientId
-        }),
-        preferredType: type
+        preferredType: type,
+        content: {
+          key: 'PatientUpdateController',
+          name: 'PatientUpdateController',
+          props: {
+            key: 'update_' + patient.id,
+            physicianId: this.props.physicianId,
+            patientId: patient.id
+          }
+        }
       });
+
+      // this.props.app.disclose({
+      //   content: (
+      //     <PatientUpdateController
+      //       key={`update_${patient.id}`}
+      //       physicianId={this.props.physicianId}
+      //       patientId={this.props.patientId}
+      //     />
+      //   ),
+      //   preferredType: type,
+      // })
     }
   }, {
     key: 'render',
