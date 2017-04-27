@@ -119,11 +119,11 @@ const PatientApp = () => (
     <ClinicalBase style={{ height: '100%', width: '100%' }}>
       <AppLayout>
         <PrimaryNavLayout
-          headerTitle="Patient Application"
+          headerTitle="Application"
           headerButtons={[
-            <ButtonLink to="/" title="Patient List" key="/list" />,
+            <ButtonLink to="/" title="List" key="/list" />,
             <ButtonLink to="/list_alternate" title="Alternate List" key="/list_alternate" />,
-            <ButtonLink to="/details/0" title="Patient Details" key="/details" />,
+            <ButtonLink to="/details/0" title="Details" key="/details" />,
           ]}
           fill
         >
