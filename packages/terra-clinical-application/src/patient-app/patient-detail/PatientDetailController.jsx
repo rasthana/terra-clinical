@@ -10,9 +10,7 @@ import PatientLoader from '../data/PatientLoader';
 
 import PatientUpdateController from '../patient-update/PatientUpdateController';
 
-import ComponentRegistry from '../../navigation/core/registry/ComponentRegistry';
-
-ComponentRegistry['PatientUpdateController'] = PatientUpdateController;
+import disclosable from '../hoc/disclosable';
 
 class PatientDetailController extends React.Component {
   constructor(props) {
@@ -55,8 +53,8 @@ class PatientDetailController extends React.Component {
     this.props.app.disclose({
       preferredType: type,
       content: {
-        key: 'PatientUpdateController',
-        name: 'PatientUpdateController',
+        key: PatientUpdateController.disclosureKey,
+        name: PatientUpdateController.disclosureKey,
         props: {
           key: `update_${patient.id}`,
           physicianId: this.props.physicianId,
@@ -104,5 +102,5 @@ PatientDetailController.propTypes = {
   patient: PropTypes.object,
 };
 
-export default PatientDetailController;
+export default disclosable()(PatientDetailController);
 

@@ -36,9 +36,9 @@ var _PatientDetailController = require('../patient-detail/PatientDetailControlle
 
 var _PatientDetailController2 = _interopRequireDefault(_PatientDetailController);
 
-var _ComponentRegistry = require('../../navigation/core/registry/ComponentRegistry');
+var _disclosable = require('../hoc/disclosable');
 
-var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
+var _disclosable2 = _interopRequireDefault(_disclosable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51,8 +51,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var patientListId = 0;
-
-_ComponentRegistry2.default['PatientDetailController'] = _PatientDetailController2.default;
 
 var PatientListController = function (_React$Component) {
   _inherits(PatientListController, _React$Component);
@@ -107,8 +105,7 @@ var PatientListController = function (_React$Component) {
         preferredType: type,
         panelBehavior: 'squish',
         content: {
-          key: 'PatientDetailController',
-          name: 'PatientDetailController',
+          key: _PatientDetailController2.default.disclosureKey,
           props: {
             key: 'detail_' + patient.id,
             physicianId: this.props.physicianId,
@@ -171,4 +168,4 @@ PatientListController.propTypes = {
   patientListData: _react.PropTypes.object
 };
 
-exports.default = PatientListController;
+exports.default = (0, _disclosable2.default)()(PatientListController);
