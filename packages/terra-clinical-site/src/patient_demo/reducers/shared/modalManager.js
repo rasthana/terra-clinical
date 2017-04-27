@@ -1,28 +1,9 @@
-import { combineReducers } from 'redux';
-
 import {
   DISCLOSE_MODAL,
-  DISCLOSE_PANEL,
-  DISCLOSE_MAIN,
   DISMISS_MODAL,
-  DISMISS_PANEL,
-  DISMISS_MAIN,
   PUSH_MODAL,
   POP_MODAL,
-  PUSH_PANEL,
-  POP_PANEL,
-  PUSH_MAIN,
-  POP_MAIN,
-} from '../actions/actions';
-
-// const ComponentStateEntry = {
-//   key: 'COMPONENT_KEY',
-//   name: 'Component',
-//   props: {
-//     prop1: 'hi',
-//     prop2: 42,
-//   },
-// };
+} from '../../actions/actions';
 
 const defaultModalState = {
   isOpen: false,
@@ -67,49 +48,4 @@ const modalManager = (state = defaultModalState, action) => {
   }
 };
 
-const defaultPanelState = {
-  isOpen: false,
-  size: 'small',
-  behavior: 'squish',
-  componentStack: [],
-};
-const panelManager = (state = defaultPanelState, action) => {
-  switch (action.type) {
-    case DISCLOSE_PANEL:
-      return state;
-    case DISMISS_PANEL:
-      return state;
-    case PUSH_PANEL:
-      return state;
-    case POP_PANEL:
-      return state;
-    default:
-      return state;
-  }
-};
-
-const defaultMainState = {
-  componentStack: [],
-};
-const mainManager = (state = defaultMainState, action) => {
-  switch (action.type) {
-    case DISCLOSE_MAIN:
-      return state;
-    case DISMISS_MAIN:
-      return state;
-    case PUSH_MAIN:
-      return state;
-    case POP_MAIN:
-      return state;
-    default:
-      return state;
-  }
-};
-
-const patientApp = combineReducers({
-  modalManager,
-  panelManager,
-  mainManager,
-});
-
-export default patientApp;
+export default modalManager;

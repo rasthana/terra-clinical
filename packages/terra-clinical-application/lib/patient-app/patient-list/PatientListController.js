@@ -105,6 +105,7 @@ var PatientListController = function (_React$Component) {
     value: function presentPatientDetail(patient, type) {
       this.props.app.disclose({
         preferredType: type,
+        panelBehavior: 'squish',
         content: {
           key: 'PatientDetailController',
           name: 'PatientDetailController',

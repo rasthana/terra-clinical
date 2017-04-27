@@ -3,7 +3,6 @@ export const DISCLOSE_PANEL = 'DISCLOSE_PANEL';
 export const DISCLOSE_MAIN = 'DISCLOSE_MAIN';
 
 export function discloseModal(discloseInfo) {
-  debugger;
   return { type: DISCLOSE_MODAL, discloseInfo };
 }
 
