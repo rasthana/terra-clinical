@@ -101,26 +101,14 @@ var PatientDetailController = function (_React$Component) {
       this.props.app.disclose({
         preferredType: type,
         content: {
-          key: _PatientUpdateController2.default.disclosureKey,
+          key: 'UPDATE_' + this.props.physicianId + '_' + patient.id,
           name: _PatientUpdateController2.default.disclosureKey,
           props: {
-            key: 'update_' + patient.id,
             physicianId: this.props.physicianId,
             patientId: patient.id
           }
         }
       });
-
-      // this.props.app.disclose({
-      //   content: (
-      //     <PatientUpdateController
-      //       key={`update_${patient.id}`}
-      //       physicianId={this.props.physicianId}
-      //       patientId={this.props.patientId}
-      //     />
-      //   ),
-      //   preferredType: type,
-      // })
     }
   }, {
     key: 'render',

@@ -57,25 +57,14 @@ class PatientListController extends React.Component {
       preferredType: type,
       panelBehavior: 'squish',
       content: {
-        key: PatientDetailController.disclosureKey,
+        key: `DETAIL_${this.props.physicianId}_${patient.id}`,
+        name: PatientDetailController.disclosureKey,
         props: {
-          key: `detail_${patient.id}`,
           physicianId: this.props.physicianId,
           patientId: patient.id,
         },
       }
     })
-
-    // this.props.app.disclose({
-    //   content: (
-    //     <PatientDetailController
-    //       key={`detail_${patient.id}`}
-    //       physicianId={this.props.physicianId}
-    //       patientId={patient.id}
-    //     />
-    //   ),
-    //   preferredType: type,
-    // });
   }
 
   presentNestedPatientList(type) {

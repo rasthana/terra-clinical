@@ -53,26 +53,14 @@ class PatientDetailController extends React.Component {
     this.props.app.disclose({
       preferredType: type,
       content: {
-        key: PatientUpdateController.disclosureKey,
+        key: `UPDATE_${this.props.physicianId}_${patient.id}`,
         name: PatientUpdateController.disclosureKey,
         props: {
-          key: `update_${patient.id}`,
           physicianId: this.props.physicianId,
           patientId: patient.id,
         },
       }
     });
-
-    // this.props.app.disclose({
-    //   content: (
-    //     <PatientUpdateController
-    //       key={`update_${patient.id}`}
-    //       physicianId={this.props.physicianId}
-    //       patientId={this.props.patientId}
-    //     />
-    //   ),
-    //   preferredType: type,
-    // })
   }
 
   render() {

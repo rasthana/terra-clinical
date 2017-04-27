@@ -105,25 +105,14 @@ var PatientListController = function (_React$Component) {
         preferredType: type,
         panelBehavior: 'squish',
         content: {
-          key: _PatientDetailController2.default.disclosureKey,
+          key: 'DETAIL_' + this.props.physicianId + '_' + patient.id,
+          name: _PatientDetailController2.default.disclosureKey,
           props: {
-            key: 'detail_' + patient.id,
             physicianId: this.props.physicianId,
             patientId: patient.id
           }
         }
       });
-
-      // this.props.app.disclose({
-      //   content: (
-      //     <PatientDetailController
-      //       key={`detail_${patient.id}`}
-      //       physicianId={this.props.physicianId}
-      //       patientId={patient.id}
-      //     />
-      //   ),
-      //   preferredType: type,
-      // });
     }
   }, {
     key: 'presentNestedPatientList',

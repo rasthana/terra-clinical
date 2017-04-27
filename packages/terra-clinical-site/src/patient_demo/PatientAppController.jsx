@@ -67,7 +67,7 @@ class PatientAppController extends React.Component {
         closeDisclosure: () => { this.props.dismissModal(); },
       });
 
-      return <ComponentClass {...componentData.props} app={appDelegate} />;
+      return <ComponentClass key={componentKey} {...componentData.props} app={appDelegate} />;
     });
 
     return {
@@ -133,7 +133,11 @@ class PatientAppController extends React.Component {
         closeDisclosure: () => { this.props.dismissPanel(); },
       });
 
-      return <ComponentClass {...componentData.props} app={appDelegate} />;
+      // TODO: Validate key approach
+      // It'd be nice if we could use the componentKey as the actual key, as it would most likely mirror that of
+      // one that would be given through props anyway. With this setup, a separate key set in props would take
+      // precedent, if present.
+      return <ComponentClass key={componentKey} {...componentData.props} app={appDelegate} />;
     });
 
     return {
