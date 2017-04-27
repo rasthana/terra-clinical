@@ -7,7 +7,7 @@ import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clin
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
 import { embeddedNavHandshake } from './EmbeddedNavBootstrapper';
-import { PatientApp } from './PatientApp';
+import PatientApp from './PatientApp';
 
 import './demo.scss';
 
