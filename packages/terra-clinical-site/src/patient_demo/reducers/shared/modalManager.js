@@ -3,7 +3,7 @@ import {
   DISMISS_MODAL,
   PUSH_MODAL,
   POP_MODAL,
-} from '../../actions/actions';
+} from '../../actions/shared/modalManager';
 
 const defaultModalState = {
   isOpen: false,

@@ -6,12 +6,13 @@ import ComponentRegistry from 'terra-clinical-application/src/navigation/core/re
 import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
 import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-layout/AppLayout';
 import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/slide-panel-layout/SlidePanelLayout';
-import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
+// import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
-import { discloseModal, dismissModal, pushModal, popModal, disclosePanel, dismissPanel, pushPanel, popPanel, } from './actions/actions';
+import { discloseModal, dismissModal, pushModal, popModal } from './actions/shared/modalManager';
+import { disclosePanel, dismissPanel, pushPanel, popPanel } from './actions/shared/panelManager';
 
 const physicianId = 'physician1';
 
@@ -178,13 +179,13 @@ class PatientAppController extends React.Component {
     return (
       <ClinicalBase style={{ height: '100%', width: '100%' }}>
         <AppLayout modalState={this.dataForModalState()}>
-          <BottomPanelLayout panelState={this.dataForPanelState()}>
+          <SlidePanelLayout panelState={this.dataForPanelState()}>
             <PatientListController
               app={rootAppDelegate}
               physicianId={physicianId}
               key={'PATIENT_LIST_APP'}
             />
-          </BottomPanelLayout>
+          </SlidePanelLayout>
         </AppLayout>
       </ClinicalBase>
     );

@@ -5,7 +5,7 @@ import {
   DISMISS_PANEL,
   PUSH_PANEL,
   POP_PANEL,
-} from '../../actions/actions';
+} from '../../actions/shared/panelManager';
 
 const defaultPanelState = {
   isOpen: false,
