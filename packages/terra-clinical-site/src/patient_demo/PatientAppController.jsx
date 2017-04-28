@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ComponentRegistry from 'terra-clinical-application/src/navigation/core/registry/ComponentRegistry';
 
 import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
-import AppLayout from 'terra-clinical-application/src/navigation/layouts/app-layout/AppLayout';
+import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 import SlidePanelLayout from 'terra-clinical-application/src/navigation/layouts/slide-panel-layout/SlidePanelLayout';
 // import BottomPanelLayout from 'terra-clinical-application/src/navigation/layouts/bottom-panel-layout/BottomPanelLayout';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
@@ -178,7 +178,7 @@ class PatientAppController extends React.Component {
 
     return (
       <ClinicalBase style={{ height: '100%', width: '100%' }}>
-        <AppLayout modalState={this.dataForModalState()}>
+        <ModalDisclosurePresenter modalState={this.dataForModalState()}>
           <SlidePanelLayout panelState={this.dataForPanelState()}>
             <PatientListController
               app={rootAppDelegate}
@@ -186,7 +186,7 @@ class PatientAppController extends React.Component {
               key={'PATIENT_LIST_APP'}
             />
           </SlidePanelLayout>
-        </AppLayout>
+        </ModalDisclosurePresenter>
       </ClinicalBase>
     );
   }

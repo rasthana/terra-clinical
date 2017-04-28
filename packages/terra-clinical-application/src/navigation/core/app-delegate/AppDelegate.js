@@ -41,24 +41,7 @@ class App {
     this.availableDisclosureTypes = data.availableDisclosureTypes;
     this.isMaximized = data.isMaximized;
   }
-
-  static merge(delegate, data) {
-    // Required API's
-    this.disclose = data.disclose || delegate.disclose;
-    this.dismiss = data.dismiss || delegate.dismiss;
-
-    // Optional API's
-    this.closeDisclosure = data.closeDisclosure || delegate.closeDelegate;
-    this.maximize = data.maximize || delegate.maximize;
-
-    // Application State
-    this.canGoBack = data.canGoBack || delegate.canGoBack;
-    this.disclosedAs = data.disclosedAs || delegate.disclosedAs;
-    this.availableDisclosureTypes = data.availableDisclosureTypes || delegate.availableDisclosureTypes;
-    this.isMaximized = data.isMaximized || delegate.isMaximized;
-  }
 }
-
 
 // Factory to limit the creation of these App objects.
 const AppDelegate = {
@@ -66,9 +49,6 @@ const AppDelegate = {
     const newAppDelegate = new App(data);
     return Object.freeze(newAppDelegate);
   },
-  merge: (baseDelegate, data) => (
-    Object.freeze(App.merge(baseDelegate, data))
-  ),
   propType: PropTypes.instanceOf(App),
 };
 

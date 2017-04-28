@@ -22,7 +22,7 @@ var _NavStack = require('../../../generic-components/nav-stack/NavStack');
 
 var _NavStack2 = _interopRequireDefault(_NavStack);
 
-require('./AppLayout.scss');
+require('./ModalDisclosurePresenter.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32,32 +32,32 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AppLayout = function (_React$Component) {
-  _inherits(AppLayout, _React$Component);
+var ModalDisclosurePresenter = function (_React$Component) {
+  _inherits(ModalDisclosurePresenter, _React$Component);
 
-  function AppLayout() {
-    _classCallCheck(this, AppLayout);
+  function ModalDisclosurePresenter() {
+    _classCallCheck(this, ModalDisclosurePresenter);
 
-    return _possibleConstructorReturn(this, (AppLayout.__proto__ || Object.getPrototypeOf(AppLayout)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ModalDisclosurePresenter.__proto__ || Object.getPrototypeOf(ModalDisclosurePresenter)).apply(this, arguments));
   }
 
-  _createClass(AppLayout, [{
+  _createClass(ModalDisclosurePresenter, [{
     key: 'render',
     value: function render() {
       var modalState = this.props.modalState;
 
-      var modalClassNames = (0, _classnames2.default)(['terra-AppLayout-modal', { 'terra-AppLayout-modal--small': !modalState.isMaximized && (modalState.size === 'small' || !modalState.size) }, { 'terra-AppLayout-modal--large': !modalState.isMaximized && modalState.size === 'large' }, { 'terra-AppLayout-modal--fullscreen': modalState.isMaximized }]);
+      var modalClassNames = (0, _classnames2.default)(['terra-ModalDisclosurePresenter-modal', { 'terra-ModalDisclosurePresenter-modal--small': !modalState.isMaximized && (modalState.size === 'small' || !modalState.size) }, { 'terra-ModalDisclosurePresenter-modal--large': !modalState.isMaximized && modalState.size === 'large' }, { 'terra-ModalDisclosurePresenter-modal--fullscreen': modalState.isMaximized }]);
 
       return _react2.default.createElement(
         'div',
-        { className: 'terra-AppLayout' },
+        { className: 'terra-ModalDisclosurePresenter' },
         this.props.children,
         _react2.default.createElement(
           _reactModal2.default,
           {
             isOpen: modalState.isOpen,
             className: modalClassNames,
-            overlayClassName: 'terra-AppLayout-modalOverlay',
+            overlayClassName: 'terra-ModalDisclosurePresenter-modalOverlay',
             contentLabel: ''
           },
           _react2.default.createElement(_NavStack2.default, { items: modalState.componentStack })
@@ -66,12 +66,12 @@ var AppLayout = function (_React$Component) {
     }
   }]);
 
-  return AppLayout;
+  return ModalDisclosurePresenter;
 }(_react2.default.Component);
 
-AppLayout.propTypes = {
+ModalDisclosurePresenter.propTypes = {
   children: _react.PropTypes.node,
   modalState: _react.PropTypes.object
 };
 
-exports.default = AppLayout;
+exports.default = ModalDisclosurePresenter;
