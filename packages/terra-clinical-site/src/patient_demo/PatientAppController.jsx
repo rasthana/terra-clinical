@@ -11,7 +11,7 @@ import AppDelegate from 'terra-clinical-application/src/navigation/core/app-dele
 
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
-import { discloseModal, dismissModal, pushModal, popModal } from './actions/shared/modalManager';
+import { discloseModal, dismissModal, pushModal, popModal, maximizeModal } from './actions/shared/modalManager';
 import { disclosePanel, dismissPanel, pushPanel, popPanel, maximizePanel } from './actions/shared/panelManager';
 
 const physicianId = 'physician1';
@@ -62,7 +62,9 @@ class PatientAppController extends React.Component {
           }
         ),
         closeDisclosure: () => { this.props.dismissModal(); },
+        maximize: () => { this.props.maximizeModal(); },
         canGoBack: index > 0,
+        isMaximized: modalState.isMaximized,
       });
 
       return <ComponentClass key={componentKey} {...componentData.props} app={appDelegate} />;
@@ -70,8 +72,9 @@ class PatientAppController extends React.Component {
 
     return {
       isOpen: true,
-      size: modalState.size,
+      isMaximized: modalState.isMaximized,
       componentStack: components,
+      size: modalState.size,
     };
   }
 
@@ -195,6 +198,7 @@ PatientAppController.propTypes = {
   dismissModal: PropTypes.func,
   pushModal: PropTypes.func,
   popModal: PropTypes.func,
+  maximizeModal: PropTypes.func,
   disclosePanel: PropTypes.func,
   dismissPanel: PropTypes.func,
   pushPanel: PropTypes.func,
@@ -215,6 +219,7 @@ const mapDispatchToProps = dispatch => (
     dismissModal: (data) => { dispatch(dismissModal(data)); },
     pushModal: (data) => { dispatch(pushModal(data)); },
     popModal: (data) => { dispatch(popModal(data)); },
+    maximizeModal: (data) => { dispatch(maximizeModal(data)); },
     disclosePanel: (data) => { dispatch(disclosePanel(data)); },
     dismissPanel: (data) => { dispatch(dismissPanel(data)); },
     pushPanel: (data) => { dispatch(pushPanel(data)); },

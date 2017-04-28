@@ -46,7 +46,7 @@ var AppLayout = function (_React$Component) {
     value: function render() {
       var modalState = this.props.modalState;
 
-      var modalClassNames = (0, _classnames2.default)(['terra-AppLayout-modal', { 'terra-AppLayout-modal--small': modalState.size === 'small' || !modalState.size }, { 'terra-AppLayout-modal--large': modalState.size === 'large' }]);
+      var modalClassNames = (0, _classnames2.default)(['terra-AppLayout-modal', { 'terra-AppLayout-modal--small': !modalState.isMaximized && (modalState.size === 'small' || !modalState.size) }, { 'terra-AppLayout-modal--large': !modalState.isMaximized && modalState.size === 'large' }, { 'terra-AppLayout-modal--fullscreen': modalState.isMaximized }]);
 
       return _react2.default.createElement(
         'div',

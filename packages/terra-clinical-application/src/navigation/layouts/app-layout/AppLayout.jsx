@@ -12,8 +12,9 @@ class AppLayout extends React.Component {
 
     const modalClassNames = classNames([
       'terra-AppLayout-modal',
-      { 'terra-AppLayout-modal--small': modalState.size === 'small' || !modalState.size },
-      { 'terra-AppLayout-modal--large': modalState.size === 'large' },
+      { 'terra-AppLayout-modal--small': !modalState.isMaximized && (modalState.size === 'small' || !modalState.size) },
+      { 'terra-AppLayout-modal--large': !modalState.isMaximized && modalState.size === 'large' },
+      { 'terra-AppLayout-modal--fullscreen': modalState.isMaximized },
     ]);
 
     return (

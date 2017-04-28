@@ -1,10 +1,11 @@
-import { disclose, push, pop, defaultState, supportedSizes } from './baseDisclosure';
+import { disclose, push, pop, maximize, defaultState, supportedSizes } from './baseDisclosure';
 
 import {
   DISCLOSE_MODAL,
   DISMISS_MODAL,
   PUSH_MODAL,
   POP_MODAL,
+  TOGGLE_MAXIMIZE_MODAL,
 } from '../../actions/shared/modalManager';
 
 const defaultModalState = Object.assign({}, defaultState, {
@@ -20,6 +21,8 @@ const modalManager = (state = defaultModalState, action) => {
       return push(state, action);
     case POP_MODAL:
       return pop(state, action);
+    case TOGGLE_MAXIMIZE_MODAL:
+      return maximize(state, action);
     default:
       return state;
   }
