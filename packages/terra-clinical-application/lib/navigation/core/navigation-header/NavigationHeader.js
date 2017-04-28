@@ -24,6 +24,10 @@ var _IconMaximize = require('terra-icon/lib/icon/IconMaximize');
 
 var _IconMaximize2 = _interopRequireDefault(_IconMaximize);
 
+var _IconMinimize = require('terra-icon/lib/icon/IconMinimize');
+
+var _IconMinimize2 = _interopRequireDefault(_IconMinimize);
+
 var _AppDelegate = require('../app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
@@ -58,17 +62,18 @@ var NavigationHeader = function NavigationHeader(_ref) {
   }
 
   var headerBackButton = void 0;
-  if (app.goBack) {
+  if (app.canGoBack) {
     headerBackButton = _react2.default.createElement(_terraButton2.default, { onClick: function onClick() {
-        app.goBack();
+        app.dismiss();
       }, icon: _react2.default.createElement(_IconLeft2.default, null) });
   }
 
   var maximizeButton = void 0;
   if (app.maximize) {
+    var maximizeButtonIcon = app.isMaximized ? _react2.default.createElement(_IconMinimize2.default, null) : _react2.default.createElement(_IconMaximize2.default, null);
     maximizeButton = _react2.default.createElement(_terraButton2.default, { onClick: function onClick() {
         app.maximize();
-      }, icon: _react2.default.createElement(_IconMaximize2.default, null) });
+      }, icon: maximizeButtonIcon });
   }
 
   var className = 'terra-NavigationHeader';

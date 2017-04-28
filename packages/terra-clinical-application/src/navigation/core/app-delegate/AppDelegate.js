@@ -3,12 +3,7 @@ import { PropTypes } from 'react';
 class App {
   /**
    * disclose(options) - A function that presents the given content using the specified progressive disclosure method.
-   *   options - An Object containing values for the following keys:
-   *     content - A React component that will safely handle a 'navigator' prop getting passed to it. Optional,
-   *     fallbackUrl - A string URL that can be used to load the desired component. Optional.
-   *     preferredType - A string indicating the desired disclose type. One of 'modal', 'panel', 'main'. Optional.
-   *     size - A string indicating the desired size of the disclosure. One of 'small', 'large'. Optional.
-   *     panelBehavior - A string indicating the desired panel behavior, if used. One of 'overlay', 'squish'. Optional.
+   *   options - An Object containing disclosure data.
    *
    * dismiss(options) - A function that will dismiss the calling component while maintaining the current disclosure state.
    *   options - An Object used to pass arbitrary data.
@@ -17,11 +12,19 @@ class App {
    *                            This will reset the state of that disclosure mechanism completely. This should be used to as a click handler for Close buttons in headers, footers, etc.
    *   options - An Object used to pass arbitrary data.
    *
-   * goBack(options) - A function that will dismiss the calling component and return to the previously displayed component in the disclosure stack. In all likelihood, this function
-   *                   is the same as the dismiss function; the only difference is that this function will not be provided when the component is the first item of the stack. Thus,
-   *                   components can use the presence of this function to determine whether or not they should create a Back button in their component.
+   * maximize(options) - A function that can be used to 'maximize' the current disclosure type. Could be alternatively called 'fullscreen' or something'.
    *   options - An Object used to pass arbitrary data.
    *
+   * canGoBack - A boolean indicating whether or not a component has the ability to go back to another component in the same disclosure type. Basically,
+   *             it's a "Should I display a Back button" flag.
+   *
+   * disclosedAs - A string indicating the current disclosure type in which the component is displayed as. Can be undefined. Can be used by components
+   *               to tweak workflows if desired, but the applications should work regardless.
+   *
+   * availableDisclosureTypes - An array of disclosure types available to the Component. Can be used to tweak disclosure workflows if desired.
+   *
+   * isMaximized - A boolean indicating whether or not the current disclosure is "maximized". Can be used to render different content, or simply
+   *               change an icon from maximize to minimize and vice versa.
    */
   constructor(data) {
     // Required API's
@@ -30,28 +33,34 @@ class App {
 
     // Optional API's
     this.closeDisclosure = data.closeDisclosure;
-    this.goBack = data.goBack;
     this.maximize = data.maximize;
 
-    // State
+    // Application State
+    this.canGoBack = data.canGoBack;
     this.disclosedAs = data.disclosedAs;
     this.availableDisclosureTypes = data.availableDisclosureTypes;
-    this.isMaximized = data.isMaxized;
+    this.isMaximized = data.isMaximized;
   }
 
   static merge(delegate, data) {
-    const baseDelegate = delegate || {};
+    // Required API's
+    this.disclose = data.disclose || delegate.disclose;
+    this.dismiss = data.dismiss || delegate.dismiss;
 
-    return new App({
-      disclose: data.disclose || baseDelegate.disclose,
-      dismiss: data.dismiss || baseDelegate.dismiss,
-      maximize: data.maximize || baseDelegate.maximize,
-      closeDisclosure: data.closeDisclosure || baseDelegate.closeDisclosure,
-      goBack: data.goBack || baseDelegate.goBack,
-    });
+    // Optional API's
+    this.closeDisclosure = data.closeDisclosure || delegate.closeDelegate;
+    this.maximize = data.maximize || delegate.maximize;
+
+    // Application State
+    this.canGoBack = data.canGoBack || delegate.canGoBack;
+    this.disclosedAs = data.disclosedAs || delegate.disclosedAs;
+    this.availableDisclosureTypes = data.availableDisclosureTypes || delegate.availableDisclosureTypes;
+    this.isMaximized = data.isMaximized || delegate.isMaximized;
   }
 }
 
+
+// Factory to limit the creation of these App objects.
 const AppDelegate = {
   create: (data) => {
     const newAppDelegate = new App(data);

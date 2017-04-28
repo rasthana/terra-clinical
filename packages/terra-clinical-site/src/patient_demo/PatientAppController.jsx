@@ -12,7 +12,7 @@ import AppDelegate from 'terra-clinical-application/src/navigation/core/app-dele
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
 import { discloseModal, dismissModal, pushModal, popModal } from './actions/shared/modalManager';
-import { disclosePanel, dismissPanel, pushPanel, popPanel } from './actions/shared/panelManager';
+import { disclosePanel, dismissPanel, pushPanel, popPanel, maximizePanel } from './actions/shared/panelManager';
 
 const physicianId = 'physician1';
 
@@ -61,11 +61,8 @@ class PatientAppController extends React.Component {
             this.props.dismissModal();
           }
         ),
-        goBack: (index > 0 ?
-          () => { this.props.popModal(); } :
-          undefined
-        ),
         closeDisclosure: () => { this.props.dismissModal(); },
+        canGoBack: index > 0,
       });
 
       return <ComponentClass key={componentKey} {...componentData.props} app={appDelegate} />;
@@ -127,11 +124,10 @@ class PatientAppController extends React.Component {
             this.props.dismissPanel();
           }
         ),
-        goBack: (index > 0 ?
-          () => { this.props.popPanel(); } :
-          undefined
-        ),
         closeDisclosure: () => { this.props.dismissPanel(); },
+        maximize: () => { this.props.maximizePanel(); },
+        canGoBack: index > 0,
+        isMaximized: panelState.isMaximized,
       });
 
       // TODO: Validate key approach
@@ -142,7 +138,8 @@ class PatientAppController extends React.Component {
     });
 
     return {
-      isOpen: true,
+      isOpen: panelState.isOpen,
+      isMaximized: panelState.isMaximized,
       behavior: panelState.behavior,
       size: panelState.size,
       componentStack: components,
@@ -202,6 +199,7 @@ PatientAppController.propTypes = {
   dismissPanel: PropTypes.func,
   pushPanel: PropTypes.func,
   popPanel: PropTypes.func,
+  maximizePanel: PropTypes.func,
 };
 
 const mapStateToProps = state => (
@@ -221,6 +219,7 @@ const mapDispatchToProps = dispatch => (
     dismissPanel: (data) => { dispatch(dismissPanel(data)); },
     pushPanel: (data) => { dispatch(pushPanel(data)); },
     popPanel: (data) => { dispatch(popPanel(data)); },
+    maximizePanel: (data) => { dispatch(maximizePanel(data)); },
   }
 );
 

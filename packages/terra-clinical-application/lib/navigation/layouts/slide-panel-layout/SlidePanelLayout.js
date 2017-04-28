@@ -52,7 +52,7 @@ var SlidePanelLayout = function (_React$Component) {
         panelBehavior: panelState.behavior,
         panelSize: panelState.size,
         panelPosition: 'end',
-        isFullscreen: panelState.isFullscreen,
+        isFullscreen: panelState.isMaximized,
         fill: true
       });
     }
