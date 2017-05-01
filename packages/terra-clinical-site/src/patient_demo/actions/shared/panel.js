@@ -4,22 +4,22 @@ export const PUSH_PANEL = 'PUSH_PANEL';
 export const POP_PANEL = 'POP_PANEL';
 export const TOGGLE_MAXIMIZE_PANEL = 'TOGGLE_MAXIMIZE_PANEL';
 
-export function disclosePanel(data) {
+export function disclose(data) {
   return { type: DISCLOSE_PANEL, data };
 }
 
-export function dismissPanel(data) {
+export function dismiss(data) {
   return { type: DISMISS_PANEL, data };
 }
 
-export function pushPanel(data) {
+export function push(data) {
   return { type: PUSH_PANEL, data };
 }
 
-export function popPanel(data) {
+export function pop(data) {
   return { type: POP_PANEL, data };
 }
 
-export function maximizePanel(data) {
+export function toggleMaximize(data) {
   return { type: TOGGLE_MAXIMIZE_PANEL, data };
 }

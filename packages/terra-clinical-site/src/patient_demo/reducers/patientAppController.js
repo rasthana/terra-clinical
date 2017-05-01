@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import modalManager from './shared/modalManager';
-import panelManager from './shared/panelManager';
+import modal from './shared/modal';
+import panel from './shared/panel';
 
-const patientApp = combineReducers({
-  modalManager,
-  panelManager,
+const patientAppController = combineReducers({
+  modalManager: modal,
+  panelManager: panel,
 });
 
-export default patientApp;
+export default patientAppController;

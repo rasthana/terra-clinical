@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
-import { dismissModal, pushModal, popModal, maximizeModal } from './actions/shared/modalManager';
+import { dismiss, push, pop, toggleMaximize } from './actions/shared/modal';
 
 AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
 
@@ -114,10 +114,10 @@ const modalDisclosureController = stateKey => (
 
     const mapDispatchToProps = dispatch => (
       {
-        dismissModal: (data) => { dispatch(dismissModal(data)); },
-        pushModal: (data) => { dispatch(pushModal(data)); },
-        popModal: (data) => { dispatch(popModal(data)); },
-        maximizeModal: (data) => { dispatch(maximizeModal(data)); },
+        dismissModal: (data) => { dispatch(dismiss(data)); },
+        pushModal: (data) => { dispatch(push(data)); },
+        popModal: (data) => { dispatch(pop(data)); },
+        maximizeModal: (data) => { dispatch(toggleMaximize(data)); },
       }
     );
 

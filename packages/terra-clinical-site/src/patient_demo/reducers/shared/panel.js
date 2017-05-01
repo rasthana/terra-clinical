@@ -1,4 +1,4 @@
-import { disclose, push, pop, maximize, defaultState, supportedSizes } from './baseDisclosure';
+import { disclose, push, pop, maximize, defaultState, supportedSizes } from './disclosure';
 
 import {
   DISCLOSE_PANEL,
@@ -6,18 +6,23 @@ import {
   PUSH_PANEL,
   POP_PANEL,
   TOGGLE_MAXIMIZE_PANEL,
-} from '../../actions/shared/panelManager';
+} from '../../actions/shared/panel';
+
+const supportedBehaviors = {
+  squish: 'squish',
+  overlay: 'overlay',
+};
 
 const defaultPanelState = Object.assign({}, defaultState, {
   size: supportedSizes.small,
-  behavior: 'squish',
+  behavior: supportedBehaviors.squish,
 });
 const panelManager = (state = defaultPanelState, action) => {
   switch (action.type) {
     case DISCLOSE_PANEL:
       return Object.assign({}, disclose(state, action), {
         size: action.data.size || supportedSizes.small,
-        behavior: action.data.behavior || 'squish',
+        behavior: action.data.behavior || supportedBehaviors.squish,
       });
     case DISMISS_PANEL:
       return defaultPanelState;

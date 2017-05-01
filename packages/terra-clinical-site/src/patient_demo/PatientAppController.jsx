@@ -14,21 +14,19 @@ import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/
 import modalDisclosureController from './modalDisclosureController';
 import panelDisclosureController from './panelDisclosureController';
 
-import { discloseModal } from './actions/shared/modalManager';
-import { disclosePanel } from './actions/shared/panelManager';
+import { disclose as discloseModal } from './actions/shared/modal';
+import { disclose as disclosePanel } from './actions/shared/panel';
 
 const physicianId = 'physician1';
 
+// Create Redux-aware containers with the correct state mappings
 const PatientAppModalController = modalDisclosureController('modalManager')(ModalDisclosurePresenter);
 const PatientAppPanelController = panelDisclosureController('panelManager')(BottomPanelDisclosurePresenter);
 
+// Ensure EmbeddedContentConsumer is registered for disclosures
 AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
 
 class PatientAppController extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const rootAppDelegate = AppDelegate.create({
       disclose: (data) => {

@@ -14,9 +14,6 @@ const bootstrappedAppDelegate = data => (
     closeDisclosure: data.navigator.closeDisclosure ? (options) => {
       Provider.trigger('providerApplication.closeDisclosure', { options });
     } : null,
-    // goBack: data.navigator.goBack ? (options) => {
-    //   Provider.trigger('providerApplication.goBack', { options });
-    // } : null,
     maximize: data.navigator.maximize ? (options) => {
       Provider.trigger('providerApplication.maximize', { options });
     } : null,

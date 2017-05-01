@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
-import { dismissPanel, pushPanel, popPanel, maximizePanel } from './actions/shared/panelManager';
+import { dismiss, push, pop, toggleMaximize } from './actions/shared/panel';
 
 AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
 
@@ -124,10 +124,10 @@ const panelDisclosureController = stateKey => (
 
     const mapDispatchToProps = dispatch => (
       {
-        dismissPanel: (data) => { dispatch(dismissPanel(data)); },
-        pushPanel: (data) => { dispatch(pushPanel(data)); },
-        popPanel: (data) => { dispatch(popPanel(data)); },
-        maximizePanel: (data) => { dispatch(maximizePanel(data)); },
+        dismissPanel: (data) => { dispatch(dismiss(data)); },
+        pushPanel: (data) => { dispatch(push(data)); },
+        popPanel: (data) => { dispatch(pop(data)); },
+        maximizePanel: (data) => { dispatch(toggleMaximize(data)); },
       }
     );
 

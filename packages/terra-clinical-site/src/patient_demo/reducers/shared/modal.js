@@ -1,4 +1,4 @@
-import { disclose, push, pop, maximize, defaultState, supportedSizes } from './baseDisclosure';
+import { disclose, push, pop, maximize, defaultState, supportedSizes } from './disclosure';
 
 import {
   DISCLOSE_MODAL,
@@ -6,7 +6,7 @@ import {
   PUSH_MODAL,
   POP_MODAL,
   TOGGLE_MAXIMIZE_MODAL,
-} from '../../actions/shared/modalManager';
+} from '../../actions/shared/modal';
 
 const defaultModalState = Object.assign({}, defaultState, {
   size: supportedSizes.small,
