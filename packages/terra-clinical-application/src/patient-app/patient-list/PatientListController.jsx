@@ -66,10 +66,13 @@ class PatientListController extends React.Component {
 
   presentNestedPatientList(type) {
     this.props.app.disclose({
-      fallbackUrl: `${window.location.origin}/?type=${type}${Math.random()}`,
       preferredType: type,
       size: 'large',
       panelBehavior: 'overlay',
+      content: {
+        key: `LIST_EMBEDDED_${Math.random()}`,
+        fallbackUrl: `${window.location.origin}/?type=${type}${Math.random()}`,
+      },
     });
   }
 

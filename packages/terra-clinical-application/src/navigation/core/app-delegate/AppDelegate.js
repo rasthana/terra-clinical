@@ -29,9 +29,9 @@ class App {
   constructor(data) {
     // Required API's
     this.disclose = data.disclose;
-    this.dismiss = data.dismiss;
 
     // Optional API's
+    this.dismiss = data.dismiss;
     this.closeDisclosure = data.closeDisclosure;
     this.maximize = data.maximize;
 

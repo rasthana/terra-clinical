@@ -11,9 +11,9 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
-const PatientApp = () => (
+const PatientApp = ({ app }) => (
   <Provider store={store}>
-    <PatientAppController />
+    <PatientAppController app={app} />
   </Provider>
 );
 

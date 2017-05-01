@@ -11,6 +11,7 @@ import BottomPanelDisclosurePresenter from 'terra-clinical-application/src/navig
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 
 import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
+import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import modalDisclosureController from './modalDisclosureController';
 import panelDisclosureController from './panelDisclosureController';
@@ -31,28 +32,41 @@ class PatientAppController extends React.Component {
   render() {
     const rootAppDelegate = AppDelegate.create({
       disclose: (data) => {
+        let contentStruct;
+        if (data.content.fallbackUrl) {
+          contentStruct = {
+            content: {
+              key: data.content.key,
+              name: EmbeddedContentConsumer.disclosureKey,
+              props: {
+                src: data.content.fallbackUrl,
+              },
+            },
+          };
+        } else {
+          contentStruct = {
+            content: {
+              key: data.content.key,
+              name: data.content.name,
+              props: data.content.props,
+            },
+          };
+        }
+
         if (data.preferredType === 'modal') {
-          this.props.discloseModal({
-            content: {
-              key: data.content.key,
-              name: data.content.name,
-              props: data.content.props,
-            },
-            size: data.size,
-          });
+          this.props.discloseModal(Object.assign({}, contentStruct, {
+            size: data.size
+          }));
         } else if (data.preferredType === 'panel') {
-          this.props.disclosePanel({
-            content: {
-              key: data.content.key,
-              name: data.content.name,
-              props: data.content.props,
-            },
+          this.props.disclosePanel(Object.assign({}, contentStruct, {
             size: data.size,
             behavior: data.panelBehavior,
-          });
+          }));
         }
       },
-      dismiss: () => {},
+      dismiss: this.props.app && this.props.app.dismiss,
+      closeDisclosure: this.props.app && this.props.app.closeDisclosure,
+      canGoBack: this.props.app && this.props.app.canGoBack,
     });
 
     return (
@@ -72,6 +86,7 @@ class PatientAppController extends React.Component {
 }
 
 PatientAppController.propTypes = {
+  app: AppDelegate.propType,
   discloseModal: PropTypes.func,
   disclosePanel: PropTypes.func,
 };

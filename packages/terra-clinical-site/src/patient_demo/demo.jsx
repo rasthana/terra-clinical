@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Consumer, Provider } from 'xfc';
 
-import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
-import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
+// import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
+// import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
 import { embeddedNavHandshake } from './EmbeddedNavBootstrapper';
 import PatientApp from './PatientApp';
@@ -18,15 +18,15 @@ if (window.top !== window) {
     acls: ['*'],
     secret: () => (Promise.resolve('Success')),
     onReady: () => {
-      const embeddedComponent = (
-        <ClinicalBase style={{ height: '100%', width: '100%' }}>
-          <AppLayout>
-            <PatientListController physicianId="physician1" />
-          </AppLayout>
-        </ClinicalBase>
-      );
+      // const embeddedComponent = (
+      //   <ClinicalBase style={{ height: '100%', width: '100%' }}>
+      //     <AppLayout>
+      //       <PatientListController physicianId="physician1" />
+      //     </AppLayout>
+      //   </ClinicalBase>
+      // );
 
-      embeddedNavHandshake(embeddedComponent, (updatedComponent) => {
+      embeddedNavHandshake(<PatientApp />, (updatedComponent) => {
         ReactDOM.render(updatedComponent, document.getElementById('orion-application-default'));
       });
     },
