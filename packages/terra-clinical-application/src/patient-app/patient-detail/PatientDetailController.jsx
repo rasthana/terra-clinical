@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
-import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
 
 import Placeholder from '../../generic-components/placeholder/Placeholder';
 
@@ -10,7 +9,7 @@ import PatientLoader from '../data/PatientLoader';
 
 import PatientUpdateController from '../patient-update/PatientUpdateController';
 
-import disclosable from '../hoc/disclosable';
+AppDelegate.registerComponent('PatientUpdateController', PatientUpdateController);
 
 class PatientDetailController extends React.Component {
   constructor(props) {
@@ -54,7 +53,7 @@ class PatientDetailController extends React.Component {
       preferredType: type,
       content: {
         key: `UPDATE_${this.props.physicianId}_${patient.id}`,
-        name: PatientUpdateController.disclosureKey,
+        name: 'PatientUpdateController',
         props: {
           physicianId: this.props.physicianId,
           patientId: patient.id,
@@ -90,5 +89,5 @@ PatientDetailController.propTypes = {
   patient: PropTypes.object,
 };
 
-export default disclosable()(PatientDetailController);
+export default PatientDetailController;
 

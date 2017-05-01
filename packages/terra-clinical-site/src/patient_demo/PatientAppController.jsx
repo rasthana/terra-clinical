@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import ComponentRegistry from 'terra-clinical-application/src/navigation/core/registry/ComponentRegistry';
-
 import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
 import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 import PanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/panel-disclosure-presenter/PanelDisclosurePresenter';
@@ -24,6 +22,8 @@ const physicianId = 'physician1';
 const PatientAppModalController = modalDisclosureController('modalManager')(ModalDisclosurePresenter);
 const PatientAppPanelController = panelDisclosureController('panelManager')(BottomPanelDisclosurePresenter);
 
+AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
+
 class PatientAppController extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +42,7 @@ class PatientAppController extends React.Component {
           contentStruct = {
             content: {
               key: data.content.key,
-              name: EmbeddedContentConsumer.disclosureKey,
+              name: 'EmbeddedContentConsumer',
               props: {
                 src: data.content.fallbackUrl,
               },

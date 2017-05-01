@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import ComponentRegistry from 'terra-clinical-application/src/navigation/core/registry/ComponentRegistry';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import { dismissPanel, pushPanel, popPanel, maximizePanel } from './actions/shared/panelManager';
+
+AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
 
 const panelDisclosureController = stateKey => (
   (WrappedComponent) => {
@@ -29,7 +30,7 @@ const panelDisclosureController = stateKey => (
         const components = panelState.componentKeys.map((componentKey, index) => {
           const componentData = panelState.components[componentKey];
 
-          const ComponentClass = ComponentRegistry[componentData.name];
+          const ComponentClass = AppDelegate.getComponent(componentData.name);
 
           if (!ComponentClass) {
             return undefined;
@@ -47,7 +48,7 @@ const panelDisclosureController = stateKey => (
                 contentStruct = {
                   content: {
                     key: data.content.key,
-                    name: EmbeddedContentConsumer.disclosureKey,
+                    name: 'EmbeddedContentConsumer',
                     props: {
                       src: data.content.fallbackUrl,
                     },

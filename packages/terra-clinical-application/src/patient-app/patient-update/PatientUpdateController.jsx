@@ -9,8 +9,6 @@ import PatientStore from '../data/PatientStore';
 
 import PatientUpdate from './PatientUpdate';
 
-import disclosable from '../hoc/disclosable';
-
 class PatientUpdateController extends React.Component {
   constructor(props) {
     super(props);
@@ -85,4 +83,4 @@ PatientUpdateController.propTypes = {
   patientUpdateData: PropTypes.object,
 };
 
-export default disclosable()(PatientUpdateController);
+export default PatientUpdateController;

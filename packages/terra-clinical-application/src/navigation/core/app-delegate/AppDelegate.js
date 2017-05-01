@@ -1,5 +1,15 @@
 import { PropTypes } from 'react';
 
+const ComponentRegistry = {};
+
+const getComponent = key => (
+  ComponentRegistry[key]
+);
+
+const registerComponent = (key, Component) => {
+  ComponentRegistry[key] = Component;
+};
+
 class App {
   /**
    * disclose(options) - A function that presents the given content using the specified progressive disclosure method.
@@ -50,6 +60,8 @@ const AppDelegate = {
     return Object.freeze(newAppDelegate);
   },
   propType: PropTypes.instanceOf(App),
+  registerComponent,
+  getComponent,
 };
 
 export default AppDelegate;

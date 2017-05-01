@@ -24,10 +24,6 @@ var _AppDelegate = require('../../navigation/core/app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
 
-var _disclosable = require('../hoc/disclosable');
-
-var _disclosable2 = _interopRequireDefault(_disclosable);
-
 require('./EmbeddedContentConsumer.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -62,6 +58,8 @@ var EmbeddedContentConsumer = function (_React$Component) {
   _createClass(EmbeddedContentConsumer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       if (this.embeddedContentWrapper) {
         this.xfcFrame = _xfc.Consumer.mount(this.embeddedContentWrapper, this.props.src);
 
@@ -71,11 +69,20 @@ var EmbeddedContentConsumer = function (_React$Component) {
         this.xfcFrame.on('providerApplication.dismiss', this.providerDismiss);
         this.xfcFrame.on('providerApplication.closeDisclosure', this.providerCloseDisclosure);
         this.xfcFrame.on('providerApplication.maximize', this.providerMaximize);
+
+        // Set a timeout to switch the navigation support state flag to false. We don't want to set this immediately,
+        // but if the consumer does not provide navigation support data in 5 seconds, we'll display our header to
+        // ensure the user can close the disclosure.
+        this.fallbackHeaderTimeout = setTimeout(function () {
+          _this2.setState({ contentSupportsNavigation: false });
+        }, 5000);
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      clearTimeout(this.fallbackHeaderTimeout);
+
       if (this.xfcFrame) {
         this.xfcFrame.removeAllListeners('providerApplication.mounted');
         this.xfcFrame.removeAllListeners('providerApplication.disclose');
@@ -86,6 +93,9 @@ var EmbeddedContentConsumer = function (_React$Component) {
   }, {
     key: 'providerMounted',
     value: function providerMounted(data) {
+      // Since the provider responded, we clear the timeout and use the value given in the payload to determine support.
+      clearTimeout(this.fallbackHeaderTimeout);
+
       this.setState({ contentSupportsNavigation: data.navigationSupported });
 
       this.xfcFrame.trigger('consumerApplication.bootstrap', {
@@ -121,7 +131,7 @@ var EmbeddedContentConsumer = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var app = this.props.app;
 
@@ -135,7 +145,7 @@ var EmbeddedContentConsumer = function (_React$Component) {
         _react2.default.createElement('div', {
           className: 'terra-EmbeddedContentConsumer',
           ref: function ref(element) {
-            _this2.embeddedContentWrapper = element;
+            _this3.embeddedContentWrapper = element;
           }
         })
       );
@@ -150,4 +160,4 @@ EmbeddedContentConsumer.propTypes = {
   app: _AppDelegate2.default.propType
 };
 
-exports.default = (0, _disclosable2.default)()(EmbeddedContentConsumer);
+exports.default = EmbeddedContentConsumer;

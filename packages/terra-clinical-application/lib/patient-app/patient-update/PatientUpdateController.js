@@ -30,10 +30,6 @@ var _PatientUpdate = require('./PatientUpdate');
 
 var _PatientUpdate2 = _interopRequireDefault(_PatientUpdate);
 
-var _disclosable = require('../hoc/disclosable');
-
-var _disclosable2 = _interopRequireDefault(_disclosable);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -129,4 +125,4 @@ PatientUpdateController.propTypes = {
   patientUpdateData: _react.PropTypes.object
 };
 
-exports.default = (0, _disclosable2.default)()(PatientUpdateController);
+exports.default = PatientUpdateController;

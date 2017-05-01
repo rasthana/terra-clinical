@@ -4,7 +4,6 @@ import { Consumer } from 'xfc';
 import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
 import ContentContainer from '../../generic-components/content-container/ContentContainer';
 import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
-import disclosable from '../hoc/disclosable';
 
 import './EmbeddedContentConsumer.scss';
 
@@ -110,4 +109,4 @@ EmbeddedContentConsumer.propTypes = {
   app: AppDelegate.propType,
 };
 
-export default disclosable()(EmbeddedContentConsumer);
+export default EmbeddedContentConsumer;

@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import ComponentRegistry from 'terra-clinical-application/src/navigation/core/registry/ComponentRegistry';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import { dismissModal, pushModal, popModal, maximizeModal } from './actions/shared/modalManager';
+
+AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
 
 const modalDisclosureController = stateKey => (
   (WrappedComponent) => {
@@ -29,7 +30,7 @@ const modalDisclosureController = stateKey => (
         const components = modalState.componentKeys.map((componentKey, index) => {
           const componentData = modalState.components[componentKey];
 
-          const ComponentClass = ComponentRegistry[componentData.name];
+          const ComponentClass = AppDelegate.getComponent(componentData.name);
 
           if (!ComponentClass) {
             return undefined;
@@ -42,7 +43,7 @@ const modalDisclosureController = stateKey => (
                 contentStruct = {
                   content: {
                     key: data.content.key,
-                    name: EmbeddedContentConsumer.disclosureKey,
+                    name: 'EmbeddedContentConsumer',
                     props: {
                       src: data.content.fallbackUrl,
                     },

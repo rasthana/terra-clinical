@@ -9,7 +9,7 @@ import PatientLoader from '../data/PatientLoader';
 
 import PatientDetailController from '../patient-detail/PatientDetailController';
 
-import disclosable from '../hoc/disclosable';
+AppDelegate.registerComponent('PatentDetailController', PatientDetailController);
 
 class PatientListController extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class PatientListController extends React.Component {
       panelBehavior: 'squish',
       content: {
         key: `DETAIL_${this.props.physicianId}_${patient.id}`,
-        name: PatientDetailController.disclosureKey,
+        name: 'PatentDetailController',
         props: {
           physicianId: this.props.physicianId,
           patientId: patient.id,
@@ -103,4 +103,4 @@ PatientListController.propTypes = {
   patientListData: PropTypes.object,
 };
 
-export default disclosable()(PatientListController);
+export default PatientListController;

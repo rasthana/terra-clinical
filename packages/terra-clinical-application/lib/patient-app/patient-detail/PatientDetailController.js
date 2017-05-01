@@ -16,10 +16,6 @@ var _AppDelegate = require('../../navigation/core/app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
 
-var _NavigationHeader = require('../../navigation/core/navigation-header/NavigationHeader');
-
-var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
-
 var _Placeholder = require('../../generic-components/placeholder/Placeholder');
 
 var _Placeholder2 = _interopRequireDefault(_Placeholder);
@@ -36,10 +32,6 @@ var _PatientUpdateController = require('../patient-update/PatientUpdateControlle
 
 var _PatientUpdateController2 = _interopRequireDefault(_PatientUpdateController);
 
-var _disclosable = require('../hoc/disclosable');
-
-var _disclosable2 = _interopRequireDefault(_disclosable);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -49,6 +41,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_AppDelegate2.default.registerComponent('PatientUpdateController', _PatientUpdateController2.default);
 
 var PatientDetailController = function (_React$Component) {
   _inherits(PatientDetailController, _React$Component);
@@ -102,7 +96,7 @@ var PatientDetailController = function (_React$Component) {
         preferredType: type,
         content: {
           key: 'UPDATE_' + this.props.physicianId + '_' + patient.id,
-          name: _PatientUpdateController2.default.disclosureKey,
+          name: 'PatientUpdateController',
           props: {
             physicianId: this.props.physicianId,
             patientId: patient.id
@@ -144,4 +138,4 @@ PatientDetailController.propTypes = {
   patient: _react.PropTypes.object
 };
 
-exports.default = (0, _disclosable2.default)()(PatientDetailController);
+exports.default = PatientDetailController;

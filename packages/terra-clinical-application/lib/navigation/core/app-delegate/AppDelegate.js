@@ -8,6 +8,16 @@ var _react = require('react');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var ComponentRegistry = {};
+
+var getComponent = function getComponent(key) {
+  return ComponentRegistry[key];
+};
+
+var registerComponent = function registerComponent(key, Component) {
+  ComponentRegistry[key] = Component;
+};
+
 var App =
 /**
  * disclose(options) - A function that presents the given content using the specified progressive disclosure method.
@@ -60,7 +70,9 @@ var AppDelegate = {
     var newAppDelegate = new App(data);
     return Object.freeze(newAppDelegate);
   },
-  propType: _react.PropTypes.instanceOf(App)
+  propType: _react.PropTypes.instanceOf(App),
+  registerComponent: registerComponent,
+  getComponent: getComponent
 };
 
 exports.default = AppDelegate;
