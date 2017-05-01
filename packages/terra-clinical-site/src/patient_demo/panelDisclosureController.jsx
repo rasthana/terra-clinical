@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import ComponentRegistry from 'terra-clinical-application/src/navigation/core/registry/ComponentRegistry';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
+import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import { dismissPanel, pushPanel, popPanel, maximizePanel } from './actions/shared/panelManager';
 
@@ -36,25 +37,35 @@ const panelDisclosureController = stateKey => (
 
           const appDelegate = AppDelegate.create({
             disclose: (data) => {
-              debugger;
-              if (data.preferredType === 'modal') {
-                this.props.discloseModal({
-                  content: {
-                    key: data.content.key,
-                    name: data.content.name,
-                    props: data.content.props,
-                  },
-                  size: data.size,
-                });
-              } else {
-                this.props.pushPanel({
-                  content: {
-                    key: data.content.key,
-                    name: data.content.name,
-                    props: data.content.props,
-                  },
-                });
+              if (data.preferredType !== 'panel' && this.props.app) {
+                this.props.app.disclose(data);
+                return;
               }
+
+              let contentStruct;
+              if (data.content.fallbackUrl) {
+                contentStruct = {
+                  content: {
+                    key: data.content.key,
+                    name: EmbeddedContentConsumer.disclosureKey,
+                    props: {
+                      src: data.content.fallbackUrl,
+                    },
+                  },
+                };
+              } else {
+                contentStruct = {
+                  content: {
+                    key: data.content.key,
+                    name: data.content.name,
+                    props: data.content.props,
+                  },
+                };
+              }
+
+              this.props.pushPanel(Object.assign({}, contentStruct, {
+                size: data.size,
+              }));
             },
             dismiss: (index > 0 ?
               () => {
@@ -92,6 +103,7 @@ const panelDisclosureController = stateKey => (
     }
 
     PanelDisclosureController.propTypes = {
+      app: AppDelegate.propType,
       panelState: PropTypes.object,
       dismissPanel: PropTypes.func,
       pushPanel: PropTypes.func,

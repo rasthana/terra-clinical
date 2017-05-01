@@ -34,6 +34,11 @@ class PatientAppController extends React.Component {
       disclose: (data) => {
         let contentStruct;
         if (data.content.fallbackUrl) {
+          if (this.props.app && this.props.app.disclose) {
+            this.props.app.disclose(data);
+            return;
+          }
+
           contentStruct = {
             content: {
               key: data.content.key,
@@ -71,8 +76,8 @@ class PatientAppController extends React.Component {
 
     return (
       <ClinicalBase style={{ height: '100%', width: '100%' }}>
-        <PatientAppModalController>
-          <PatientAppPanelController>
+        <PatientAppModalController app={rootAppDelegate}>
+          <PatientAppPanelController app={rootAppDelegate}>
             <PatientListController
               app={rootAppDelegate}
               physicianId={physicianId}

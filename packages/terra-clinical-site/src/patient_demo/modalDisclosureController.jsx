@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import ComponentRegistry from 'terra-clinical-application/src/navigation/core/registry/ComponentRegistry';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
+import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import { dismissModal, pushModal, popModal, maximizeModal } from './actions/shared/modalManager';
 
@@ -36,14 +37,30 @@ const modalDisclosureController = stateKey => (
 
           const appDelegate = AppDelegate.create({
             disclose: (data) => {
-              this.props.pushModal({
-                content: {
-                  key: data.content.key,
-                  name: data.content.name,
-                  props: data.content.props,
-                },
+              let contentStruct;
+              if (data.content.fallbackUrl) {
+                contentStruct = {
+                  content: {
+                    key: data.content.key,
+                    name: EmbeddedContentConsumer.disclosureKey,
+                    props: {
+                      src: data.content.fallbackUrl,
+                    },
+                  },
+                };
+              } else {
+                contentStruct = {
+                  content: {
+                    key: data.content.key,
+                    name: data.content.name,
+                    props: data.content.props,
+                  },
+                };
+              }
+
+              this.props.pushModal(Object.assign({}, contentStruct, {
                 size: data.size,
-              });
+              }));
             },
             dismiss: (index > 0 ?
               () => {
@@ -76,6 +93,7 @@ const modalDisclosureController = stateKey => (
     }
 
     ModalDisclosureController.propTypes = {
+      app: AppDelegate.propType,
       modalState: PropTypes.object,
       dismissModal: PropTypes.func,
       pushModal: PropTypes.func,
