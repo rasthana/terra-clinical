@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
-import Button from 'terra-button';
 
 import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
-import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
 
 import Placeholder from '../../generic-components/placeholder/Placeholder';
 
@@ -23,7 +21,7 @@ class PatientUpdateController extends React.Component {
 
     this.state = {
       isLoading: false,
-      patient: props.patient,
+      patient: props.patientUpdateData,
     };
 
     this.loader = new PatientLoader({
@@ -33,8 +31,8 @@ class PatientUpdateController extends React.Component {
       },
       onChange: (newState) => {
         this.setState(newState);
-      }
-    })
+      },
+    });
   }
 
   componentDidMount() {

@@ -31,8 +31,8 @@ class PatientDetailController extends React.Component {
       },
       onChange: (loaderState) => {
         this.setState(loaderState);
-      }
-    })
+      },
+    });
   }
 
   componentDidMount() {
@@ -59,7 +59,7 @@ class PatientDetailController extends React.Component {
           physicianId: this.props.physicianId,
           patientId: patient.id,
         },
-      }
+      },
     });
   }
 
@@ -68,18 +68,18 @@ class PatientDetailController extends React.Component {
 
     if (!this.state.patient) {
       return <Placeholder app={app} headerText="Patient Detail" loadingText="Loading patient..." />;
-    } else {
-      return (
-        <PatientDetail
-          {...customProps}
-          app={app}
-          patient={this.state.patient}
-          isLoading={this.state.isLoading}
-          onRefresh={this.refresh}
-          onSelectPatientUpdate={this.presentPatientUpdate}
-        />
-      )
     }
+
+    return (
+      <PatientDetail
+        {...customProps}
+        app={app}
+        patient={this.state.patient}
+        isLoading={this.state.isLoading}
+        onRefresh={this.refresh}
+        onSelectPatientUpdate={this.presentPatientUpdate}
+      />
+    );
   }
 }
 

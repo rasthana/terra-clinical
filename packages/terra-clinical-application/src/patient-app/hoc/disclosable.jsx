@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 import ComponentRegistry from '../../navigation/core/registry/ComponentRegistry';
 
-const disclosable = (customKey) => (
+const disclosable = customKey => (
   (WrappedComponent) => {
-    const Disclosable = (props) => (
+    const Disclosable = props => (
       <WrappedComponent {...props} />
     );
 
@@ -20,6 +20,6 @@ const disclosable = (customKey) => (
 
     return Disclosable;
   }
-)
+);
 
 export default disclosable;

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
-import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
 
 import Placeholder from '../../generic-components/placeholder/Placeholder';
 
@@ -11,8 +10,6 @@ import PatientLoader from '../data/PatientLoader';
 import PatientDetailController from '../patient-detail/PatientDetailController';
 
 import disclosable from '../hoc/disclosable';
-
-let patientListId = 0;
 
 class PatientListController extends React.Component {
   constructor(props) {
@@ -34,8 +31,8 @@ class PatientListController extends React.Component {
       },
       onChange: (loaderState) => {
         this.setState(loaderState);
-      }
-    })
+      },
+    });
   }
 
   componentDidMount() {
@@ -63,8 +60,8 @@ class PatientListController extends React.Component {
           physicianId: this.props.physicianId,
           patientId: patient.id,
         },
-      }
-    })
+      },
+    });
   }
 
   presentNestedPatientList(type) {
@@ -81,19 +78,19 @@ class PatientListController extends React.Component {
 
     if (!this.state.patientListData) {
       return <Placeholder app={app} headerText="Patient List" loadingText="Loading patients..." />;
-    } else {
-      return (
-        <PatientList
-          {...customProps}
-          app={app}
-          patients={{ patients: this.state.patientListData}}
-          isLoading={this.state.isLoading}
-          onRefresh={this.refresh}
-          onSelectPatientDetail={this.presentPatientDetail}
-          onShowPatientList={this.presentNestedPatientList}
-        />
-      )
     }
+
+    return (
+      <PatientList
+        {...customProps}
+        app={app}
+        patients={{ patients: this.state.patientListData }}
+        isLoading={this.state.isLoading}
+        onRefresh={this.refresh}
+        onSelectPatientDetail={this.presentPatientDetail}
+        onShowPatientList={this.presentNestedPatientList}
+      />
+    );
   }
 }
 
