@@ -6,7 +6,7 @@ import EmbeddedContentProvider from 'terra-clinical-application/src/patient-app/
 // import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 
 // import { embeddedNavHandshake } from './EmbeddedNavBootstrapper';
-import PatientApp from './PatientApp';
+import PatientAppController from './PatientAppController';
 
 import './demo.scss';
 
@@ -16,10 +16,10 @@ Consumer.init();
 if (window.top !== window) {
   ReactDOM.render((
     <EmbeddedContentProvider
-      content={<PatientApp />}
+      content={<PatientAppController />}
     />
   ), document.getElementById('orion-application-default'));
 } else {
-  ReactDOM.render(<PatientApp />, document.getElementById('orion-application-default'));
+  ReactDOM.render(<PatientAppController />, document.getElementById('orion-application-default'));
 }
 

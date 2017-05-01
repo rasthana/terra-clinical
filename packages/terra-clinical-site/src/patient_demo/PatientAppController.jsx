@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-import ClinicalBase from 'terra-clinical-application/src/navigation/layouts/clinical-base/ClinicalBase';
+import Base from 'terra-base';
+
 import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 import PanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/panel-disclosure-presenter/PanelDisclosurePresenter';
 import BottomPanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/bottom-panel-disclosure-presenter/BottomPanelDisclosurePresenter';
@@ -16,6 +18,13 @@ import panelDisclosureController from './panelDisclosureController';
 
 import { disclose as discloseModal } from './actions/shared/modal';
 import { disclose as disclosePanel } from './actions/shared/panel';
+
+import patientAppController from './reducers/patientAppController';
+
+const store = createStore(
+  patientAppController,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 const physicianId = 'physician1';
 
@@ -57,14 +66,14 @@ class PatientAppController extends React.Component {
         }
 
         if (data.preferredType === 'modal') {
-          this.props.discloseModal(Object.assign({}, contentStruct, {
+          store.dispatch(discloseModal(Object.assign({}, contentStruct, {
             size: data.size
-          }));
+          })));
         } else if (data.preferredType === 'panel') {
-          this.props.disclosePanel(Object.assign({}, contentStruct, {
+          store.dispatch(disclosePanel(Object.assign({}, contentStruct, {
             size: data.size,
             behavior: data.panelBehavior,
-          }));
+          })));
         }
       },
       dismiss: this.props.app && this.props.app.dismiss,
@@ -74,32 +83,25 @@ class PatientAppController extends React.Component {
     });
 
     return (
-      <ClinicalBase style={{ height: '100%', width: '100%' }}>
-        <PatientAppModalController app={rootAppDelegate}>
-          <PatientAppPanelController app={rootAppDelegate}>
-            <PatientListController
-              app={rootAppDelegate}
-              physicianId={physicianId}
-              key={'PATIENT_LIST_APP'}
-            />
-          </PatientAppPanelController>
-        </PatientAppModalController>
-      </ClinicalBase>
+      <Provider store={store}>
+        <Base style={{ height: '100%', width: '100%' }}>
+          <PatientAppModalController app={rootAppDelegate}>
+            <PatientAppPanelController app={rootAppDelegate}>
+              <PatientListController
+                app={rootAppDelegate}
+                physicianId={physicianId}
+                key={'PATIENT_LIST_APP'}
+              />
+            </PatientAppPanelController>
+          </PatientAppModalController>
+        </Base>
+      </Provider>
     );
   }
 }
 
 PatientAppController.propTypes = {
   app: AppDelegate.propType,
-  discloseModal: PropTypes.func,
-  disclosePanel: PropTypes.func,
 };
 
-const mapDispatchToProps = dispatch => (
-  {
-    discloseModal: (data) => { dispatch(discloseModal(data)); },
-    disclosePanel: (data) => { dispatch(disclosePanel(data)); },
-  }
-);
-
-export default connect(null, mapDispatchToProps)(PatientAppController);
+export default PatientAppController;
