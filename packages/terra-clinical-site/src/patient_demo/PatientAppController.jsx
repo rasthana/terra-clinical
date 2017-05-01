@@ -71,6 +71,7 @@ class PatientAppController extends React.Component {
       },
       dismiss: this.props.app && this.props.app.dismiss,
       closeDisclosure: this.props.app && this.props.app.closeDisclosure,
+      maximize: this.props.app && this.props.app.maximize,
       canGoBack: this.props.app && this.props.app.canGoBack,
     });
 

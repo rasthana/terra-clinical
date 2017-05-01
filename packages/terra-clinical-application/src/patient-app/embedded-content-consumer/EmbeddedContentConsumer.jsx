@@ -34,10 +34,19 @@ class EmbeddedContentConsumer extends React.Component {
       this.xfcFrame.on('providerApplication.dismiss', this.providerDismiss);
       this.xfcFrame.on('providerApplication.closeDisclosure', this.providerCloseDisclosure);
       this.xfcFrame.on('providerApplication.maximize', this.providerMaximize);
+
+      // Set a timeout to switch the navigation support state flag to false. We don't want to set this immediately,
+      // but if the consumer does not provide navigation support data in 5 seconds, we'll display our header to
+      // ensure the user can close the disclosure.
+      this.fallbackHeaderTimeout = setTimeout(() => {
+        this.setState({ contentSupportsNavigation: false });
+      }, 5000);
     }
   }
 
   componentWillUnmount() {
+    clearTimeout(this.fallbackHeaderTimeout);
+
     if (this.xfcFrame) {
       this.xfcFrame.removeAllListeners('providerApplication.mounted');
       this.xfcFrame.removeAllListeners('providerApplication.disclose');
@@ -47,6 +56,9 @@ class EmbeddedContentConsumer extends React.Component {
   }
 
   providerMounted(data) {
+    // Since the provider responded, we clear the timeout and use the value given in the payload to determine support.
+    clearTimeout(this.fallbackHeaderTimeout);
+
     this.setState({ contentSupportsNavigation: data.navigationSupported });
 
     this.xfcFrame.trigger('consumerApplication.bootstrap', {
