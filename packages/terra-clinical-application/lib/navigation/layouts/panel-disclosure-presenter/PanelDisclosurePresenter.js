@@ -14,10 +14,6 @@ var _terraSlidePanel = require('terra-slide-panel');
 
 var _terraSlidePanel2 = _interopRequireDefault(_terraSlidePanel);
 
-var _AppDelegate = require('../../core/app-delegate/AppDelegate');
-
-var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
-
 var _NavStack = require('../../../generic-components/nav-stack/NavStack');
 
 var _NavStack2 = _interopRequireDefault(_NavStack);
@@ -30,22 +26,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SlidePanelLayout = function (_React$Component) {
-  _inherits(SlidePanelLayout, _React$Component);
+var PanelDisclosurePresenter = function (_React$Component) {
+  _inherits(PanelDisclosurePresenter, _React$Component);
 
-  function SlidePanelLayout() {
-    _classCallCheck(this, SlidePanelLayout);
+  function PanelDisclosurePresenter() {
+    _classCallCheck(this, PanelDisclosurePresenter);
 
-    return _possibleConstructorReturn(this, (SlidePanelLayout.__proto__ || Object.getPrototypeOf(SlidePanelLayout)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (PanelDisclosurePresenter.__proto__ || Object.getPrototypeOf(PanelDisclosurePresenter)).apply(this, arguments));
   }
 
-  _createClass(SlidePanelLayout, [{
+  _createClass(PanelDisclosurePresenter, [{
     key: 'render',
     value: function render() {
       var panelState = this.props.panelState;
 
       return _react2.default.createElement(_terraSlidePanel2.default, {
-        className: 'orion-SlidePanelLayout',
         mainContent: this.props.children,
         panelContent: _react2.default.createElement(_NavStack2.default, { items: panelState.componentStack }),
         isOpen: panelState.isOpen,
@@ -58,13 +53,12 @@ var SlidePanelLayout = function (_React$Component) {
     }
   }]);
 
-  return SlidePanelLayout;
+  return PanelDisclosurePresenter;
 }(_react2.default.Component);
 
-SlidePanelLayout.propTypes = {
+PanelDisclosurePresenter.propTypes = {
   children: _react.PropTypes.node,
-  panelState: _react.PropTypes.object,
-  app: _AppDelegate2.default.propType
+  panelState: _react.PropTypes.object
 };
 
-exports.default = SlidePanelLayout;
+exports.default = PanelDisclosurePresenter;

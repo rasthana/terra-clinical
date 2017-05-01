@@ -16,10 +16,6 @@ var _AppDelegate = require('../../navigation/core/app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
 
-var _NavigationHeader = require('../../navigation/core/navigation-header/NavigationHeader');
-
-var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
-
 var _Placeholder = require('../../generic-components/placeholder/Placeholder');
 
 var _Placeholder2 = _interopRequireDefault(_Placeholder);
@@ -49,8 +45,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var patientListId = 0;
 
 var PatientListController = function (_React$Component) {
   _inherits(PatientListController, _React$Component);
@@ -118,10 +112,13 @@ var PatientListController = function (_React$Component) {
     key: 'presentNestedPatientList',
     value: function presentNestedPatientList(type) {
       this.props.app.disclose({
-        fallbackUrl: window.location.origin + '/?type=' + type + Math.random(),
         preferredType: type,
         size: 'large',
-        panelBehavior: 'overlay'
+        panelBehavior: 'overlay',
+        content: {
+          key: 'LIST_EMBEDDED_' + Math.random(),
+          fallbackUrl: window.location.origin + '/?type=' + type + Math.random()
+        }
       });
     }
   }, {
@@ -135,16 +132,16 @@ var PatientListController = function (_React$Component) {
 
       if (!this.state.patientListData) {
         return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient List', loadingText: 'Loading patients...' });
-      } else {
-        return _react2.default.createElement(_PatientList2.default, _extends({}, customProps, {
-          app: app,
-          patients: { patients: this.state.patientListData },
-          isLoading: this.state.isLoading,
-          onRefresh: this.refresh,
-          onSelectPatientDetail: this.presentPatientDetail,
-          onShowPatientList: this.presentNestedPatientList
-        }));
       }
+
+      return _react2.default.createElement(_PatientList2.default, _extends({}, customProps, {
+        app: app,
+        patients: { patients: this.state.patientListData },
+        isLoading: this.state.isLoading,
+        onRefresh: this.refresh,
+        onSelectPatientDetail: this.presentPatientDetail,
+        onShowPatientList: this.presentNestedPatientList
+      }));
     }
   }]);
 

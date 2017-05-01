@@ -122,15 +122,15 @@ var PatientDetailController = function (_React$Component) {
 
       if (!this.state.patient) {
         return _react2.default.createElement(_Placeholder2.default, { app: app, headerText: 'Patient Detail', loadingText: 'Loading patient...' });
-      } else {
-        return _react2.default.createElement(_PatientDetail2.default, _extends({}, customProps, {
-          app: app,
-          patient: this.state.patient,
-          isLoading: this.state.isLoading,
-          onRefresh: this.refresh,
-          onSelectPatientUpdate: this.presentPatientUpdate
-        }));
       }
+
+      return _react2.default.createElement(_PatientDetail2.default, _extends({}, customProps, {
+        app: app,
+        patient: this.state.patient,
+        isLoading: this.state.isLoading,
+        onRefresh: this.refresh,
+        onSelectPatientUpdate: this.presentPatientUpdate
+      }));
     }
   }]);
 

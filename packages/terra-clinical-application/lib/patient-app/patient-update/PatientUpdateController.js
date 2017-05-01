@@ -10,17 +10,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _terraButton = require('terra-button');
-
-var _terraButton2 = _interopRequireDefault(_terraButton);
-
 var _AppDelegate = require('../../navigation/core/app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
-
-var _NavigationHeader = require('../../navigation/core/navigation-header/NavigationHeader');
-
-var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
 
 var _Placeholder = require('../../generic-components/placeholder/Placeholder');
 
@@ -64,7 +56,7 @@ var PatientUpdateController = function (_React$Component) {
 
     _this.state = {
       isLoading: false,
-      patient: props.patient
+      patient: props.patientUpdateData
     };
 
     _this.loader = new _PatientLoader2.default({

@@ -12,17 +12,21 @@ var _react2 = _interopRequireDefault(_react);
 
 var _xfc = require('xfc');
 
-var _NavigationHeader = require('../../core/navigation-header/NavigationHeader');
+var _NavigationHeader = require('../../navigation/core/navigation-header/NavigationHeader');
 
 var _NavigationHeader2 = _interopRequireDefault(_NavigationHeader);
 
-var _ContentContainer = require('../../../generic-components/content-container/ContentContainer');
+var _ContentContainer = require('../../generic-components/content-container/ContentContainer');
 
 var _ContentContainer2 = _interopRequireDefault(_ContentContainer);
 
-var _AppDelegate = require('../app-delegate/AppDelegate');
+var _AppDelegate = require('../../navigation/core/app-delegate/AppDelegate');
 
 var _AppDelegate2 = _interopRequireDefault(_AppDelegate);
+
+var _disclosable = require('../hoc/disclosable');
+
+var _disclosable2 = _interopRequireDefault(_disclosable);
 
 require('./EmbeddedContentConsumer.scss');
 
@@ -51,7 +55,6 @@ var EmbeddedContentConsumer = function (_React$Component) {
     _this.providerDisclose = _this.providerDisclose.bind(_this);
     _this.providerDismiss = _this.providerDismiss.bind(_this);
     _this.providerCloseDisclosure = _this.providerCloseDisclosure.bind(_this);
-    _this.providerGoBack = _this.providerGoBack.bind(_this);
     _this.providerMaximize = _this.providerMaximize.bind(_this);
     return _this;
   }
@@ -67,7 +70,6 @@ var EmbeddedContentConsumer = function (_React$Component) {
         this.xfcFrame.on('providerApplication.disclose', this.providerDisclose);
         this.xfcFrame.on('providerApplication.dismiss', this.providerDismiss);
         this.xfcFrame.on('providerApplication.closeDisclosure', this.providerCloseDisclosure);
-        this.xfcFrame.on('providerApplication.goBack', this.providerGoBack);
         this.xfcFrame.on('providerApplication.maximize', this.providerMaximize);
       }
     }
@@ -78,8 +80,6 @@ var EmbeddedContentConsumer = function (_React$Component) {
         this.xfcFrame.removeAllListeners('providerApplication.mounted');
         this.xfcFrame.removeAllListeners('providerApplication.disclose');
         this.xfcFrame.removeAllListeners('providerApplication.dismiss');
-        this.xfcFrame.removeAllListeners('providerApplication.closeDisclosure');
-        this.xfcFrame.removeAllListeners('providerApplication.goBack');
         this.xfcFrame.removeAllListeners('providerApplication.maximize');
       }
     }
@@ -91,10 +91,10 @@ var EmbeddedContentConsumer = function (_React$Component) {
       this.xfcFrame.trigger('consumerApplication.bootstrap', {
         navigator: {
           disclose: true,
-          dismiss: true,
+          dismiss: this.props.app.dismiss !== undefined,
           closeDisclosure: this.props.app.closeDisclosure !== undefined,
-          goBack: this.props.app.goBack !== undefined,
-          maximize: this.props.app.maximize !== undefined
+          maximize: this.props.app.maximize !== undefined,
+          canGoBack: this.props.app.canGoBack
         }
       });
     }
@@ -112,11 +112,6 @@ var EmbeddedContentConsumer = function (_React$Component) {
     key: 'providerCloseDisclosure',
     value: function providerCloseDisclosure(data) {
       this.props.app.closeDisclosure(data.options);
-    }
-  }, {
-    key: 'providerGoBack',
-    value: function providerGoBack(data) {
-      this.props.app.goBack(data.options);
     }
   }, {
     key: 'providerMaximize',
@@ -155,4 +150,4 @@ EmbeddedContentConsumer.propTypes = {
   app: _AppDelegate2.default.propType
 };
 
-exports.default = EmbeddedContentConsumer;
+exports.default = (0, _disclosable2.default)()(EmbeddedContentConsumer);
