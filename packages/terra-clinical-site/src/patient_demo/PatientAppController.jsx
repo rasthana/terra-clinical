@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import Base from 'terra-base';
@@ -10,8 +10,8 @@ import BottomPanelDisclosurePresenter from 'terra-clinical-application/src/navig
 
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 
-import PatientListController from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
-import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
+import PatientListController, { reducers as patientListReducers } from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
+import { appDelegateKey as EmbeddedContentKey } from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import modalDisclosureController from './modalDisclosureController';
 import panelDisclosureController from './panelDisclosureController';
@@ -22,18 +22,15 @@ import { disclose as disclosePanel } from './actions/shared/panel';
 import patientAppController from './reducers/patientAppController';
 
 const store = createStore(
-  patientAppController,
+  combineReducers(Object.assign({}, { patientAppController }, patientListReducers )),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
 const physicianId = 'physician1';
 
 // Create Redux-aware containers with the correct state mappings
-const PatientAppModalController = modalDisclosureController('modalManager')(ModalDisclosurePresenter);
-const PatientAppPanelController = panelDisclosureController('panelManager')(BottomPanelDisclosurePresenter);
-
-// Ensure EmbeddedContentConsumer is registered for disclosures
-AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
+const PatientAppModalController = modalDisclosureController(['patientAppController', 'modalManager'])(ModalDisclosurePresenter);
+const PatientAppPanelController = panelDisclosureController(['patientAppController', 'panelManager'])(PanelDisclosurePresenter);
 
 class PatientAppController extends React.Component {
   render() {
@@ -49,7 +46,7 @@ class PatientAppController extends React.Component {
           contentStruct = {
             content: {
               key: data.content.key,
-              name: 'EmbeddedContentConsumer',
+              name: EmbeddedContentKey,
               props: {
                 src: data.content.fallbackUrl,
               },

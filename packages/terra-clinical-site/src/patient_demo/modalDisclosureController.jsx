@@ -2,13 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
-import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
+import { appDelegateKey as EmbeddedContentKey } from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import { dismiss, push, pop, toggleMaximize } from './actions/shared/modal';
 
-AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
-
-const modalDisclosureController = stateKey => (
+const modalDisclosureController = stateKeys => (
   (WrappedComponent) => {
     class ModalDisclosureController extends React.Component {
       constructor(props) {
@@ -43,7 +41,7 @@ const modalDisclosureController = stateKey => (
                 contentStruct = {
                   content: {
                     key: data.content.key,
-                    name: 'EmbeddedContentConsumer',
+                    name: EmbeddedContentKey,
                     props: {
                       src: data.content.fallbackUrl,
                     },
@@ -106,11 +104,14 @@ const modalDisclosureController = stateKey => (
       `ModalDisclosureController(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`
     ))();
 
-    const mapStateToProps = state => (
-      {
-        modalState: state[stateKey],
-      }
-    );
+    const mapStateToProps = (state) => {
+      let modalState = state;
+      stateKeys.forEach((key) => {
+        modalState = modalState[key];
+      });
+
+      return { modalState };
+    };
 
     const mapDispatchToProps = dispatch => (
       {

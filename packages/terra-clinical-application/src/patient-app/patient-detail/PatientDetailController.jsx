@@ -6,10 +6,9 @@ import Placeholder from '../../generic-components/placeholder/Placeholder';
 
 import PatientDetail from './PatientDetail';
 import PatientLoader from '../data/PatientLoader';
+import patientDetailController from './reducers/patientDetailController';
 
-import PatientUpdateController from '../patient-update/PatientUpdateController';
-
-AppDelegate.registerComponent('PatientUpdateController', PatientUpdateController);
+import { appDelegateKey as PatientUpdateKey, reducers as patientUpdateReducers } from '../patient-update/PatientUpdateController';
 
 class PatientDetailController extends React.Component {
   constructor(props) {
@@ -53,7 +52,7 @@ class PatientDetailController extends React.Component {
       preferredType: type,
       content: {
         key: `UPDATE_${this.props.physicianId}_${patient.id}`,
-        name: 'PatientUpdateController',
+        name: PatientUpdateKey,
         props: {
           physicianId: this.props.physicianId,
           patientId: patient.id,
@@ -91,3 +90,9 @@ PatientDetailController.propTypes = {
 
 export default PatientDetailController;
 
+const appDelegateKey = 'PatientDetailController';
+AppDelegate.registerComponent(appDelegateKey, PatientDetailController);
+export { appDelegateKey };
+
+const reducers = Object.assign({}, { patientDetailController }, patientUpdateReducers);
+export { reducers };

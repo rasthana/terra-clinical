@@ -9,6 +9,8 @@ import PatientStore from '../data/PatientStore';
 
 import PatientUpdate from './PatientUpdate';
 
+import patientUpdateController from './reducers/patientUpdateController';
+
 class PatientUpdateController extends React.Component {
   constructor(props) {
     super(props);
@@ -84,3 +86,11 @@ PatientUpdateController.propTypes = {
 };
 
 export default PatientUpdateController;
+
+const appDelegateKey = 'PatientUpdateController';
+AppDelegate.registerComponent(appDelegateKey, PatientUpdateController);
+
+export { appDelegateKey };
+
+const reducers = { patientUpdateController };
+export { reducers };

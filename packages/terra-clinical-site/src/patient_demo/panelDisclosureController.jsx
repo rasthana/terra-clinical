@@ -2,13 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
-import EmbeddedContentConsumer from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
+import { appDelegateKey as EmbeddedContentKey } from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
 import { dismiss, push, pop, toggleMaximize } from './actions/shared/panel';
 
-AppDelegate.registerComponent('EmbeddedContentConsumer', EmbeddedContentConsumer);
-
-const panelDisclosureController = stateKey => (
+const panelDisclosureController = stateKeys => (
   (WrappedComponent) => {
     class PanelDisclosureController extends React.Component {
       constructor(props) {
@@ -48,7 +46,7 @@ const panelDisclosureController = stateKey => (
                 contentStruct = {
                   content: {
                     key: data.content.key,
-                    name: 'EmbeddedContentConsumer',
+                    name: EmbeddedContentKey,
                     props: {
                       src: data.content.fallbackUrl,
                     },
@@ -116,11 +114,14 @@ const panelDisclosureController = stateKey => (
       `PanelDisclosureController(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`
     ))();
 
-    const mapStateToProps = state => (
-      {
-        panelState: state[stateKey],
-      }
-    );
+    const mapStateToProps = (state) => {
+      let panelState = state;
+      stateKeys.forEach((key) => {
+        panelState = panelState[key];
+      });
+
+      return { panelState };
+    };
 
     const mapDispatchToProps = dispatch => (
       {

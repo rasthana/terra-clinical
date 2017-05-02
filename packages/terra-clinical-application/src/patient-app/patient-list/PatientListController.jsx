@@ -6,10 +6,9 @@ import Placeholder from '../../generic-components/placeholder/Placeholder';
 
 import PatientList from './PatientList';
 import PatientLoader from '../data/PatientLoader';
+import patientListController from './reducers/patientListController';
 
-import PatientDetailController from '../patient-detail/PatientDetailController';
-
-AppDelegate.registerComponent('PatentDetailController', PatientDetailController);
+import { appDelegateKey as PatientDetailKey, reducers as patientDetailReducers } from '../patient-detail/PatientDetailController';
 
 class PatientListController extends React.Component {
   constructor(props) {
@@ -55,7 +54,7 @@ class PatientListController extends React.Component {
       panelBehavior: 'squish',
       content: {
         key: `DETAIL_${this.props.physicianId}_${patient.id}`,
-        name: 'PatentDetailController',
+        name: PatientDetailKey,
         props: {
           physicianId: this.props.physicianId,
           patientId: patient.id,
@@ -104,3 +103,10 @@ PatientListController.propTypes = {
 };
 
 export default PatientListController;
+
+const appDelegateKey = 'PatientListController';
+AppDelegate.registerComponent(appDelegateKey, PatientListController);
+export { appDelegateKey };
+
+const reducers = Object.assign({}, { patientListController }, patientDetailReducers);
+export { reducers };

@@ -110,3 +110,7 @@ EmbeddedContentConsumer.propTypes = {
 };
 
 export default EmbeddedContentConsumer;
+
+const appDelegateKey = 'EmbeddedContentConsumer';
+AppDelegate.registerComponent(appDelegateKey, EmbeddedContentConsumer);
+export { appDelegateKey };
