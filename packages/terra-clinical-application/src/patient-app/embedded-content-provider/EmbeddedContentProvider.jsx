@@ -18,6 +18,7 @@ const bootstrappedAppDelegate = data => (
       Provider.trigger('providerApplication.maximize', { options });
     } : null,
     canGoBack: data.navigator.canGoBack,
+    isMaximized: data.navigator.isMaximized,
   })
 );
 

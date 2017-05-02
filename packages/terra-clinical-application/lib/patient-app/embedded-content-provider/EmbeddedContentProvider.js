@@ -38,7 +38,8 @@ var bootstrappedAppDelegate = function bootstrappedAppDelegate(data) {
     maximize: data.navigator.maximize ? function (options) {
       _xfc.Provider.trigger('providerApplication.maximize', { options: options });
     } : null,
-    canGoBack: data.navigator.canGoBack
+    canGoBack: data.navigator.canGoBack,
+    isMaximized: data.navigator.isMaximized
   });
 };
 

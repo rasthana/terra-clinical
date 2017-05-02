@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.reducers = exports.appDelegateKey = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -29,6 +30,10 @@ var _PatientStore2 = _interopRequireDefault(_PatientStore);
 var _PatientUpdate = require('./PatientUpdate');
 
 var _PatientUpdate2 = _interopRequireDefault(_PatientUpdate);
+
+var _patientUpdateController = require('./reducers/patientUpdateController');
+
+var _patientUpdateController2 = _interopRequireDefault(_patientUpdateController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -126,3 +131,13 @@ PatientUpdateController.propTypes = {
 };
 
 exports.default = PatientUpdateController;
+
+
+var appDelegateKey = 'PatientUpdateController';
+_AppDelegate2.default.registerComponent(appDelegateKey, PatientUpdateController);
+
+exports.appDelegateKey = appDelegateKey;
+
+
+var reducers = { patientUpdateController: _patientUpdateController2.default };
+exports.reducers = reducers;

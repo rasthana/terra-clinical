@@ -49,6 +49,7 @@ class PatientAppController extends React.Component {
               name: EmbeddedContentKey,
               props: {
                 src: data.content.fallbackUrl,
+                ...data.content.props,
               },
             },
           };
@@ -77,6 +78,9 @@ class PatientAppController extends React.Component {
       closeDisclosure: this.props.app && this.props.app.closeDisclosure,
       maximize: this.props.app && this.props.app.maximize,
       canGoBack: this.props.app && this.props.app.canGoBack,
+      isMaximized: this.props.app && this.props.app.isMaximized,
+      disclosedAs: this.props.app && this.props.app.disclosedAs,
+      availableDisclosureTypes: ['modal', 'panel'],
     });
 
     return (

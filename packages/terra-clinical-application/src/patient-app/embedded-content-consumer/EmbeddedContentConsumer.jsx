@@ -15,6 +15,7 @@ class EmbeddedContentConsumer extends React.Component {
       contentSupportsNavigation: true,
     };
 
+    this.bootstrapFrame = this.bootstrapFrame.bind(this);
     this.providerMounted = this.providerMounted.bind(this);
 
     this.providerDisclose = this.providerDisclose.bind(this);
@@ -43,6 +44,12 @@ class EmbeddedContentConsumer extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    // This might be too heavy to do every update. We might want to compare app delegates and only bootstrap
+    // when changes ocurred.
+    this.bootstrapFrame();
+  }
+
   componentWillUnmount() {
     clearTimeout(this.fallbackHeaderTimeout);
 
@@ -54,12 +61,7 @@ class EmbeddedContentConsumer extends React.Component {
     }
   }
 
-  providerMounted(data) {
-    // Since the provider responded, we clear the timeout and use the value given in the payload to determine support.
-    clearTimeout(this.fallbackHeaderTimeout);
-
-    this.setState({ contentSupportsNavigation: data.navigationSupported });
-
+  bootstrapFrame() {
     this.xfcFrame.trigger('consumerApplication.bootstrap', {
       navigator: {
         disclose: true,
@@ -67,8 +69,18 @@ class EmbeddedContentConsumer extends React.Component {
         closeDisclosure: this.props.app.closeDisclosure !== undefined,
         maximize: this.props.app.maximize !== undefined,
         canGoBack: this.props.app.canGoBack,
+        isMaximized: this.props.app.isMaximized,
       },
     });
+  }
+
+  providerMounted(data) {
+    // Since the provider responded, we clear the timeout and use the value given in the payload to determine support.
+    clearTimeout(this.fallbackHeaderTimeout);
+
+    this.setState({ contentSupportsNavigation: data.navigationSupported });
+
+    this.bootstrapFrame();
   }
 
   providerDisclose(data) {

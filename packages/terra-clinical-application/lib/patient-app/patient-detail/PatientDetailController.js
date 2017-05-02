@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.reducers = exports.appDelegateKey = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -28,9 +29,11 @@ var _PatientLoader = require('../data/PatientLoader');
 
 var _PatientLoader2 = _interopRequireDefault(_PatientLoader);
 
-var _PatientUpdateController = require('../patient-update/PatientUpdateController');
+var _patientDetailController = require('./reducers/patientDetailController');
 
-var _PatientUpdateController2 = _interopRequireDefault(_PatientUpdateController);
+var _patientDetailController2 = _interopRequireDefault(_patientDetailController);
+
+var _PatientUpdateController = require('../patient-update/PatientUpdateController');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,8 +44,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-_AppDelegate2.default.registerComponent('PatientUpdateController', _PatientUpdateController2.default);
 
 var PatientDetailController = function (_React$Component) {
   _inherits(PatientDetailController, _React$Component);
@@ -96,7 +97,7 @@ var PatientDetailController = function (_React$Component) {
         preferredType: type,
         content: {
           key: 'UPDATE_' + this.props.physicianId + '_' + patient.id,
-          name: 'PatientUpdateController',
+          name: _PatientUpdateController.appDelegateKey,
           props: {
             physicianId: this.props.physicianId,
             patientId: patient.id
@@ -139,3 +140,12 @@ PatientDetailController.propTypes = {
 };
 
 exports.default = PatientDetailController;
+
+
+var appDelegateKey = 'PatientDetailController';
+_AppDelegate2.default.registerComponent(appDelegateKey, PatientDetailController);
+exports.appDelegateKey = appDelegateKey;
+
+
+var reducers = _extends({}, { patientDetailController: _patientDetailController2.default }, _PatientUpdateController.reducers);
+exports.reducers = reducers;

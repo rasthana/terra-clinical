@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.appDelegateKey = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -46,6 +47,7 @@ var EmbeddedContentConsumer = function (_React$Component) {
       contentSupportsNavigation: true
     };
 
+    _this.bootstrapFrame = _this.bootstrapFrame.bind(_this);
     _this.providerMounted = _this.providerMounted.bind(_this);
 
     _this.providerDisclose = _this.providerDisclose.bind(_this);
@@ -79,6 +81,13 @@ var EmbeddedContentConsumer = function (_React$Component) {
       }
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      // This might be too heavy to do every update. We might want to compare app delegates and only bootstrap
+      // when changes ocurred.
+      this.bootstrapFrame();
+    }
+  }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       clearTimeout(this.fallbackHeaderTimeout);
@@ -91,6 +100,20 @@ var EmbeddedContentConsumer = function (_React$Component) {
       }
     }
   }, {
+    key: 'bootstrapFrame',
+    value: function bootstrapFrame() {
+      this.xfcFrame.trigger('consumerApplication.bootstrap', {
+        navigator: {
+          disclose: true,
+          dismiss: this.props.app.dismiss !== undefined,
+          closeDisclosure: this.props.app.closeDisclosure !== undefined,
+          maximize: this.props.app.maximize !== undefined,
+          canGoBack: this.props.app.canGoBack,
+          isMaximized: this.props.app.isMaximized
+        }
+      });
+    }
+  }, {
     key: 'providerMounted',
     value: function providerMounted(data) {
       // Since the provider responded, we clear the timeout and use the value given in the payload to determine support.
@@ -98,15 +121,7 @@ var EmbeddedContentConsumer = function (_React$Component) {
 
       this.setState({ contentSupportsNavigation: data.navigationSupported });
 
-      this.xfcFrame.trigger('consumerApplication.bootstrap', {
-        navigator: {
-          disclose: true,
-          dismiss: this.props.app.dismiss !== undefined,
-          closeDisclosure: this.props.app.closeDisclosure !== undefined,
-          maximize: this.props.app.maximize !== undefined,
-          canGoBack: this.props.app.canGoBack
-        }
-      });
+      this.bootstrapFrame();
     }
   }, {
     key: 'providerDisclose',
@@ -161,3 +176,8 @@ EmbeddedContentConsumer.propTypes = {
 };
 
 exports.default = EmbeddedContentConsumer;
+
+
+var appDelegateKey = 'EmbeddedContentConsumer';
+_AppDelegate2.default.registerComponent(appDelegateKey, EmbeddedContentConsumer);
+exports.appDelegateKey = appDelegateKey;
