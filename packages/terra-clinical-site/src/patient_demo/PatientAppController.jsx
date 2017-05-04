@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 
 import TerraApplication from './TerraApplication';
 
-import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
+import ModalController from './terra-clinical-modal-controller/ModalController';
+
+// import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 import PanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/panel-disclosure-presenter/PanelDisclosurePresenter';
 import BottomPanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/bottom-panel-disclosure-presenter/BottomPanelDisclosurePresenter';
 
@@ -13,8 +15,10 @@ import AppDelegate from 'terra-clinical-application/src/navigation/core/app-dele
 import PatientListController, { reducers as patientListReducers } from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
 import { appDelegateKey as EmbeddedContentKey } from 'terra-clinical-application/src/patient-app/embedded-content-consumer/EmbeddedContentConsumer';
 
-import modalDisclosureController from './modalDisclosureController';
+// import modalDisclosureController from './modalDisclosureController';
 import panelDisclosureController from './panelDisclosureController';
+
+import modalController from './reducers/shared/modal';
 
 import { disclose as discloseModal } from './actions/shared/modal';
 import { disclose as disclosePanel } from './actions/shared/panel';
@@ -22,14 +26,14 @@ import { disclose as disclosePanel } from './actions/shared/panel';
 import patientAppController from './reducers/patientAppController';
 
 const store = createStore(
-  combineReducers(Object.assign({}, { patientAppController }, patientListReducers )),
+  combineReducers(Object.assign({}, { patientAppController }, patientListReducers, { modalController })),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
 const physicianId = 'physician1';
 
 // Create Redux-aware containers with the correct state mappings
-const PatientAppModalController = modalDisclosureController(['patientAppController', 'modalManager'])(ModalDisclosurePresenter);
+// const PatientAppModalController = modalDisclosureController(['patientAppController', 'modalManager'])(ModalDisclosurePresenter);
 const PatientAppPanelController = panelDisclosureController(['patientAppController', 'panelManager'])(PanelDisclosurePresenter);
 
 class PatientAppController extends React.Component {
@@ -86,13 +90,12 @@ class PatientAppController extends React.Component {
     return (
       <Provider store={store}>
         <TerraApplication app={rootAppDelegate} style={{ height: '100%', width: '100%' }}>
-          <PatientAppModalController>
+          <ModalController>
             <PatientListController
-              app={rootAppDelegate}
               physicianId={physicianId}
               key={'PATIENT_LIST_APP'}
             />
-          </PatientAppModalController>
+          </ModalController>
         </TerraApplication>
       </Provider>
     );
