@@ -1,11 +1,3 @@
-const supportedSizes = {
-  tiny: 'tiny',
-  small: 'small',
-  medium: 'medium',
-  large: 'large',
-  huge: 'huge',
-};
-
 const cloneDisclosureState = (state) => {
   const newState = Object.assign({}, state);
   newState.componentKeys = Object.assign([], newState.componentKeys);
@@ -62,4 +54,4 @@ const maximize = (state) => {
   return newState;
 };
 
-export { supportedSizes, defaultState, disclose, push, pop, maximize };
+export { defaultState, disclose, push, pop, maximize };

@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
-import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
+import ModalPresenter from './ModalPresenter';
 
-import modal from '../reducers/shared/modal';
-import { disclose, dismiss, push, pop, toggleMaximize } from '../actions/shared/modal';
+import modalReducers from './reducers/modalController';
+import { disclose, dismiss, push, pop, toggleMaximize } from './actions/modalController';
 
 class ModalController extends React.Component {
   constructor(props) {
@@ -68,7 +68,7 @@ class ModalController extends React.Component {
     const { app, modalState, discloseModal, dismissModal, pushModal, popModal, maximizeModal, children } = this.props;
 
     return (
-      <ModalDisclosurePresenter modalState={this.dataForModalState()}>
+      <ModalPresenter modalState={this.dataForModalState()}>
         {React.Children.map(children, child => {
           const app = AppDelegate.create({
             disclose: (data) => {
@@ -85,7 +85,7 @@ class ModalController extends React.Component {
 
           return React.cloneElement(child, { app });
         })}
-      </ModalDisclosurePresenter>
+      </ModalPresenter>
     );
   }
 }
@@ -118,7 +118,7 @@ const mapDispatchToProps = dispatch => (
 export default connect(mapStateToProps, mapDispatchToProps)(ModalController);
 
 const reducers = {
-  modalController: modal,
+  modalController: modalReducers,
 }
 
 export { reducers };

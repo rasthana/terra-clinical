@@ -1,4 +1,4 @@
-import { disclose, push, pop, maximize, defaultState, supportedSizes } from './disclosure';
+import { disclose, push, pop, maximize, defaultState } from './disclosureUtils';
 
 import {
   DISCLOSE_MODAL,
@@ -6,12 +6,20 @@ import {
   PUSH_MODAL,
   POP_MODAL,
   TOGGLE_MAXIMIZE_MODAL,
-} from '../../actions/shared/modal';
+} from '../actions/modalController';
+
+const supportedSizes = {
+  tiny: 'tiny',
+  small: 'small',
+  medium: 'medium',
+  large: 'large',
+  huge: 'huge',
+};
 
 const defaultModalState = Object.assign({}, defaultState, {
   size: supportedSizes.small,
 });
-const modalManager = (state = defaultModalState, action) => {
+const modalController = (state = defaultModalState, action) => {
   switch (action.type) {
     case DISCLOSE_MODAL:
       return Object.assign({}, disclose(state, action), { size: action.data.size || supportedSizes.small });
@@ -28,4 +36,4 @@ const modalManager = (state = defaultModalState, action) => {
   }
 };
 
-export default modalManager;
+export default modalController;
