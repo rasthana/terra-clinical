@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "terra-base": "file:../../../terra-ui/packages/terra-base",
+    "terra-base": "^0.x",
     "terra-list": "file:../../../terra-ui/packages/terra-list",
     "terra-button": "file:../../../terra-ui/packages/terra-button",
     "terra-button-group": "file:../../../terra-ui/packages/terra-button-group",
