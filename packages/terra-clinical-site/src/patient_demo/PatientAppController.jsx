@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import Base from 'terra-base';
+import TerraApplication from './TerraApplication';
 
 import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 import PanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/panel-disclosure-presenter/PanelDisclosurePresenter';
@@ -65,7 +65,7 @@ class PatientAppController extends React.Component {
 
         if (data.preferredType === 'modal') {
           store.dispatch(discloseModal(Object.assign({}, contentStruct, {
-            size: data.size
+            size: data.size,
           })));
         } else if (data.preferredType === 'panel') {
           store.dispatch(disclosePanel(Object.assign({}, contentStruct, {
@@ -85,17 +85,15 @@ class PatientAppController extends React.Component {
 
     return (
       <Provider store={store}>
-        <Base style={{ height: '100%', width: '100%' }}>
-          <PatientAppModalController app={rootAppDelegate}>
-            <PatientAppPanelController app={rootAppDelegate}>
-              <PatientListController
-                app={rootAppDelegate}
-                physicianId={physicianId}
-                key={'PATIENT_LIST_APP'}
-              />
-            </PatientAppPanelController>
+        <TerraApplication app={rootAppDelegate} style={{ height: '100%', width: '100%' }}>
+          <PatientAppModalController>
+            <PatientListController
+              app={rootAppDelegate}
+              physicianId={physicianId}
+              key={'PATIENT_LIST_APP'}
+            />
           </PatientAppModalController>
-        </Base>
+        </TerraApplication>
       </Provider>
     );
   }
