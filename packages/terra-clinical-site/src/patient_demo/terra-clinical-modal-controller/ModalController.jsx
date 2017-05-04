@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
 import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 
+import modal from '../reducers/shared/modal';
 import { disclose, dismiss, push, pop, toggleMaximize } from '../actions/shared/modal';
 
 class ModalController extends React.Component {
@@ -115,3 +116,9 @@ const mapDispatchToProps = dispatch => (
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalController);
+
+const reducers = {
+  modalController: modal,
+}
+
+export { reducers };

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import TerraApplication from './TerraApplication';
 
-import ModalController from './terra-clinical-modal-controller/ModalController';
+import ModalController, { reducers as modalControllerReducers } from './terra-clinical-modal-controller/ModalController';
 
 // import ModalDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/modal-disclosure-presenter/ModalDisclosurePresenter';
 import PanelDisclosurePresenter from 'terra-clinical-application/src/navigation/layouts/panel-disclosure-presenter/PanelDisclosurePresenter';
@@ -18,15 +18,13 @@ import { appDelegateKey as EmbeddedContentKey } from 'terra-clinical-application
 // import modalDisclosureController from './modalDisclosureController';
 import panelDisclosureController from './panelDisclosureController';
 
-import modalController from './reducers/shared/modal';
-
-import { disclose as discloseModal } from './actions/shared/modal';
+// import { disclose as discloseModal } from './actions/shared/modal';
 import { disclose as disclosePanel } from './actions/shared/panel';
 
 import patientAppController from './reducers/patientAppController';
 
 const store = createStore(
-  combineReducers(Object.assign({}, { patientAppController }, patientListReducers, { modalController })),
+  combineReducers(Object.assign({ patientAppController }, patientListReducers, modalControllerReducers)),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
@@ -38,58 +36,58 @@ const PatientAppPanelController = panelDisclosureController(['patientAppControll
 
 class PatientAppController extends React.Component {
   render() {
-    const rootAppDelegate = AppDelegate.create({
-      disclose: (data) => {
-        let contentStruct;
-        if (data.content.fallbackUrl) {
-          if (this.props.app && this.props.app.disclose) {
-            this.props.app.disclose(data);
-            return;
-          }
+    // const rootAppDelegate = AppDelegate.create({
+    //   disclose: (data) => {
+    //     let contentStruct;
+    //     if (data.content.fallbackUrl) {
+    //       if (this.props.app && this.props.app.disclose) {
+    //         this.props.app.disclose(data);
+    //         return;
+    //       }
 
-          contentStruct = {
-            content: {
-              key: data.content.key,
-              name: EmbeddedContentKey,
-              props: {
-                src: data.content.fallbackUrl,
-                ...data.content.props,
-              },
-            },
-          };
-        } else {
-          contentStruct = {
-            content: {
-              key: data.content.key,
-              name: data.content.name,
-              props: data.content.props,
-            },
-          };
-        }
+    //       contentStruct = {
+    //         content: {
+    //           key: data.content.key,
+    //           name: EmbeddedContentKey,
+    //           props: {
+    //             src: data.content.fallbackUrl,
+    //             ...data.content.props,
+    //           },
+    //         },
+    //       };
+    //     } else {
+    //       contentStruct = {
+    //         content: {
+    //           key: data.content.key,
+    //           name: data.content.name,
+    //           props: data.content.props,
+    //         },
+    //       };
+    //     }
 
-        if (data.preferredType === 'modal') {
-          store.dispatch(discloseModal(Object.assign({}, contentStruct, {
-            size: data.size,
-          })));
-        } else if (data.preferredType === 'panel') {
-          store.dispatch(disclosePanel(Object.assign({}, contentStruct, {
-            size: data.size,
-            behavior: data.panelBehavior,
-          })));
-        }
-      },
-      dismiss: this.props.app && this.props.app.dismiss,
-      closeDisclosure: this.props.app && this.props.app.closeDisclosure,
-      maximize: this.props.app && this.props.app.maximize,
-      canGoBack: this.props.app && this.props.app.canGoBack,
-      isMaximized: this.props.app && this.props.app.isMaximized,
-      disclosedAs: this.props.app && this.props.app.disclosedAs,
-      availableDisclosureTypes: ['modal', 'panel'],
-    });
+    //     if (data.preferredType === 'modal') {
+    //       store.dispatch(discloseModal(Object.assign({}, contentStruct, {
+    //         size: data.size,
+    //       })));
+    //     } else if (data.preferredType === 'panel') {
+    //       store.dispatch(disclosePanel(Object.assign({}, contentStruct, {
+    //         size: data.size,
+    //         behavior: data.panelBehavior,
+    //       })));
+    //     }
+    //   },
+    //   dismiss: this.props.app && this.props.app.dismiss,
+    //   closeDisclosure: this.props.app && this.props.app.closeDisclosure,
+    //   maximize: this.props.app && this.props.app.maximize,
+    //   canGoBack: this.props.app && this.props.app.canGoBack,
+    //   isMaximized: this.props.app && this.props.app.isMaximized,
+    //   disclosedAs: this.props.app && this.props.app.disclosedAs,
+    //   availableDisclosureTypes: ['modal', 'panel'],
+    // });
 
     return (
       <Provider store={store}>
-        <TerraApplication app={rootAppDelegate} style={{ height: '100%', width: '100%' }}>
+        <TerraApplication style={{ height: '100%', width: '100%' }}>
           <ModalController>
             <PatientListController
               physicianId={physicianId}
