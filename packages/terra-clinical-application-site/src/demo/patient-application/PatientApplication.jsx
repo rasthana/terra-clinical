@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import TerraApplication from '../terra-application/TerraApplication';
-import AppDelegate from 'terra-clinical-application/src/navigation/core/app-delegate/AppDelegate';
+import TerraApplication from 'terra-clinical-application/Application';
+import AppDelegate from 'terra-clinical-app-delegate';
 
-import ModalController, { reducers as modalControllerReducers } from '../terra-clinical-modal-controller/ModalController';
-import PatientListController, { reducers as patientListReducers } from 'terra-clinical-application/src/patient-app/patient-list/PatientListController';
+import ModalController, { reducers as modalControllerReducers } from 'terra-clinical-modal-controller/ModalController';
+import PatientListController, { reducers as patientListReducers } from '../patient-list/PatientListController';
 
 import patientApplication from './reducers/patientApplication';
 

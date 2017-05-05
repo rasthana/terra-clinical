@@ -2,14 +2,13 @@ import React, { PropTypes } from 'react';
 import Button from 'terra-button';
 import ButtonGroup from 'terra-button-group';
 import List from 'terra-list';
+import ContentContainer from 'terra-content-container';
 import ClinicalItemView from 'terra-clinical-item-view';
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
+import AppDelegate from 'terra-clinical-app-delegate';
 
-import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
-import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
-
-import ActivityIndicator from '../../generic-components/activity-indicator/ActivityIndicator';
-import ContentContainer from '../../generic-components/content-container/ContentContainer';
+import NavigationHeader from '../navigation-header/NavigationHeader';
+import ActivityIndicator from '../activity-overlay/ActivityOverlay';
 
 let patientListId = 0;
 
@@ -40,7 +39,7 @@ class PatientList extends React.Component {
   render() {
     let loadingIndicator;
     if (this.props.isLoading) {
-      loadingIndicator = <ActivityIndicator />;
+      loadingIndicator = <ActivityOverlay />;
     }
 
     const patientList = this.props.patients;

@@ -1,38 +1,38 @@
 {
-  "name": "terra-clinical-application",
-  "main": "lib/Application.js",
+  "name": "terra-clinical-navigation-controller",
+  "main": "lib/NavigationController.js",
   "private": true,
   "version": "0.1.0",
-  "description": "terra-clinical-application",
+  "description": "terra-clinical-navigation-controller",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cerner/terra-clinical.git"
+    "url": "git+https://github.com/cerner/terra-ui.git"
   },
   "keywords": [
     "Cerner",
     "Terra",
-    "terra-clinical-application",
-    "Application",
+    "terra-clinical-navigation-controller",
+    "ClinicalNavigationController",
     "UI"
   ],
   "author": "Cerner Corporation",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/cerner/terra-clinical/issues"
+    "url": "https://github.com/cerner/terra-ui/issues"
   },
-  "homepage": "https://github.com/cerner/terra-clinical#readme",
+  "homepage": "https://github.com/cerner/terra-ui#readme",
   "devDependencies": {
     "terra-toolkit": "^0.1.0"
   },
   "peerDependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "terra-base": "^0.x",
-    "terra-clinical-app-delegate": "^0.x"
+    "react-dom": "^15.4.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "terra-mixins": "^1.0.0"
+    "react": "^15.4.2",
+    "terra-mixins": "^1.0.0",
+    "react-transition-group": "^1.1.3"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",

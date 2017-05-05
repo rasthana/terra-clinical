@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import Button from 'terra-button';
 import ButtonGroup from 'terra-button-group';
+import ContentContainer from 'terra-content-container';
 import DetailView from 'terra-clinical-detail-view';
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
 
-import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
-import NavigationHeader from '../../navigation/core/navigation-header/NavigationHeader';
+import AppDelegate from 'terra-clinical-app-delegate';
 
-import ContentContainer from '../../generic-components/content-container/ContentContainer';
-import ActivityIndicator from '../../generic-components/activity-indicator/ActivityIndicator';
+import NavigationHeader from '../navigation-header/NavigationHeader';
+import ActivityIndicator from '../activity-overlay/ActivityOverlay';
 
 class PatientDetail extends React.Component {
   constructor(props) {

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import AppDelegate from '../../navigation/core/app-delegate/AppDelegate';
+import AppDelegate from 'terra-clinical-app-delegate';
 
-import Placeholder from '../../generic-components/placeholder/Placeholder';
+// import Placeholder from '../../generic-components/placeholder/Placeholder';
 
 import PatientDetail from './PatientDetail';
 import PatientLoader from '../data/PatientLoader';
@@ -65,7 +65,7 @@ class PatientDetailController extends React.Component {
     const { app, patient, physicianId, patientId, ...customProps } = this.props;
 
     if (!this.state.patient) {
-      return <Placeholder app={app} headerText="Patient Detail" loadingText="Loading patient..." />;
+      return null; // <Placeholder app={app} headerText="Patient Detail" loadingText="Loading patient..." />;
     }
 
     return (
