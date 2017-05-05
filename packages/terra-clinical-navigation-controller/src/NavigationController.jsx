@@ -26,7 +26,7 @@ const NavigationController = (props) => {
       key={transitionGroupKey}
       transitionEnter={!props.animationIsDisabled}
       transitionLeave={!props.animationIsDisabled}
-      transitionName="stack-nav"
+      transitionName="terraClinical-NavigationSlide"
       transitionEnterTimeout={300}
       transitionLeaveTimeout={300}
     >

@@ -26,13 +26,13 @@
   },
   "peerDependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "terra-base": "^0.x",
-    "terra-clinical-app-delegate": "^0.x"
+    "react-dom": "^15.4.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "terra-mixins": "^1.0.0"
+    "terra-mixins": "^1.0.0",
+    "terra-base": "^0.x",
+    "terra-clinical-app-delegate": "^0.x"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PatientApplication from './patient-application/PatientApplication';
+import PatientApplication from './demo/patient-application/PatientApplication';
 
 import './index.scss';
 
