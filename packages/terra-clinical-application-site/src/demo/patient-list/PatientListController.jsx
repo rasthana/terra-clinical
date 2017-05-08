@@ -50,7 +50,6 @@ class PatientListController extends React.Component {
   presentPatientDetail(patient, type) {
     this.props.app.disclose({
       preferredType: type,
-      panelBehavior: 'squish',
       content: {
         key: `DETAIL_${this.props.physicianId}_${patient.id}`,
         name: PatientDetailKey,

@@ -25,7 +25,7 @@ const NavigationHeader = ({
 
   let headerCloseButton;
   if (app.closeDisclosure) {
-    headerCloseButton = <Button style={{ marginLeft: '5px' }} onClick={() => { app.closeDisclosure(); }} icon={<IconClose />} />;
+    headerCloseButton = <Button onClick={() => { app.closeDisclosure(); }} icon={<IconClose />} />;
   }
 
   let headerBackButton;
