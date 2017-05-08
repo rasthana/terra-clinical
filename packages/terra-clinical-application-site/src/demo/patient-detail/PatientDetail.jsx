@@ -4,6 +4,7 @@ import ButtonGroup from 'terra-button-group';
 import ContentContainer from 'terra-content-container';
 import DetailView from 'terra-clinical-detail-view';
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
+import IconEdit from 'terra-icon/lib/icon/IconEdit';
 
 import AppDelegate from 'terra-clinical-app-delegate';
 
@@ -40,27 +41,6 @@ class PatientDetail extends React.Component {
           title={patient.name}
           subtitles={[patient.status]}
           graph={<img style={{ width: '280px' }} alt="patient-img" src={patient.photo} />}
-          details={[
-            <div key="UPDATE_BUTTONS">
-              <ButtonGroup size="small">
-                <ButtonGroup.Button
-                  key="PANEL"
-                  text="Update (Panel)"
-                  onClick={this.showPatientUpdate(patient, 'panel')}
-                />
-                <ButtonGroup.Button
-                  key="MODAL"
-                  text="Update (Modal)"
-                  onClick={this.showPatientUpdate(patient, 'modal')}
-                />
-                <ButtonGroup.Button
-                  key="MAIN"
-                  text="Update (Main)"
-                  onClick={this.showPatientUpdate(patient, 'main')}
-                />
-              </ButtonGroup>
-            </div>,
-          ]}
           footer={patient.comment}
           isDivided
         />
@@ -73,6 +53,7 @@ class PatientDetail extends React.Component {
         header={(
           <NavigationHeader title="Patient Detail" app={this.props.app}>
             {this.props.onRefresh && <Button onClick={this.props.onRefresh} icon={<IconRefresh isSpin={this.props.isLoading} />} />}
+            <Button icon={<IconEdit />} onClick={this.showPatientUpdate(patient, 'modal')} />
           </NavigationHeader>
         )}
         fill

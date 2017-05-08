@@ -2,13 +2,10 @@ import React, { PropTypes } from 'react';
 
 import AppDelegate from 'terra-clinical-app-delegate';
 
-// import Placeholder from '../../generic-components/placeholder/Placeholder';
-
 import PatientLoader from '../data/PatientLoader';
 import PatientStore from '../data/PatientStore';
 
 import PatientUpdate from './PatientUpdate';
-
 import patientUpdateController from './reducers/patientUpdateController';
 
 class PatientUpdateController extends React.Component {

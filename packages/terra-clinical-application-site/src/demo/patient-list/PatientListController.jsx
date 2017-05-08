@@ -16,7 +16,6 @@ class PatientListController extends React.Component {
 
     this.refresh = this.refresh.bind(this);
     this.presentPatientDetail = this.presentPatientDetail.bind(this);
-    this.presentNestedPatientList = this.presentNestedPatientList.bind(this);
 
     this.state = {
       isLoading: false,
@@ -63,18 +62,6 @@ class PatientListController extends React.Component {
     });
   }
 
-  presentNestedPatientList(type) {
-    this.props.app.disclose({
-      preferredType: type,
-      size: 'large',
-      panelBehavior: 'overlay',
-      content: {
-        key: `LIST_EMBEDDED_${Math.random()}`,
-        fallbackUrl: `${window.location.origin}/?type=${type}${Math.random()}`,
-      },
-    });
-  }
-
   render() {
     const { app, physicianId, patientListData, ...customProps } = this.props;
 
@@ -90,7 +77,6 @@ class PatientListController extends React.Component {
         isLoading={this.state.isLoading}
         onRefresh={this.refresh}
         onSelectPatientDetail={this.presentPatientDetail}
-        onShowPatientList={this.presentNestedPatientList}
       />
     );
   }

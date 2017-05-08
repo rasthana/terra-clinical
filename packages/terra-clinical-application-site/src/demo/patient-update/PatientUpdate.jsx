@@ -4,7 +4,7 @@ import ContentContainer from 'terra-content-container';
 import AppDelegate from 'terra-clinical-app-delegate';
 
 import NavigationHeader from '../navigation-header/NavigationHeader';
-import ActivityIndicator from '../activity-overlay/ActivityOverlay';
+import ActivityOverlay from '../activity-overlay/ActivityOverlay';
 
 class PatientUpdate extends React.Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class PatientUpdate extends React.Component {
 
     let loadingIndicator;
     if (this.props.isLoading) {
-      loadingIndicator = <ActivityIndicator />;
+      loadingIndicator = <ActivityOverlay />;
     }
 
     return (

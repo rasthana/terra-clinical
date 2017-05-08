@@ -8,7 +8,7 @@ import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
 import AppDelegate from 'terra-clinical-app-delegate';
 
 import NavigationHeader from '../navigation-header/NavigationHeader';
-import ActivityIndicator from '../activity-overlay/ActivityOverlay';
+import ActivityOverlay from '../activity-overlay/ActivityOverlay';
 
 let patientListId = 0;
 
@@ -17,7 +17,6 @@ class PatientList extends React.Component {
     super(props);
 
     this.showPatientDetail = this.showPatientDetail.bind(this);
-    this.showPatientList = this.showPatientList.bind(this);
 
     this.state = {
       id: patientListId += 1,
@@ -27,12 +26,6 @@ class PatientList extends React.Component {
   showPatientDetail(patient, type) {
     return () => {
       this.props.onSelectPatientDetail(patient, type);
-    };
-  }
-
-  showPatientList(type) {
-    return () => {
-      this.props.onShowPatientList(type);
     };
   }
 
@@ -61,13 +54,7 @@ class PatientList extends React.Component {
                   <ClinicalItemView.Comment text={patient.comment} />
                 }
                 endAccessory={
-                  <div>
-                    <ButtonGroup size="medium" variant="secondary">
-                      <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'modal')} text="View (Modal)" key="MODAL" />
-                      <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'panel')} text="View (Panel)" key="PANEL" />
-                      <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'main')} text="View (Main)" key="MAIN" />
-                    </ButtonGroup>
-                  </div>
+                  <Button onClick={this.showPatientDetail(patient, 'modal')} text="..." key="MODAL" />
                 }
               />
             }
@@ -80,13 +67,8 @@ class PatientList extends React.Component {
       <ContentContainer
         className="orion-PatientList"
         header={(
-          <NavigationHeader title={`Patient List - ${this.state.id}`} app={this.props.app}>
+          <NavigationHeader title="Patient List" app={this.props.app}>
             {this.props.onRefresh && <Button key="Refresh" onClick={this.props.onRefresh} icon={<IconRefresh isSpin={this.props.isLoading} />} />}
-            <ButtonGroup>
-              <ButtonGroup.Button key="Modal" onClick={this.showPatientList('modal')} text="Launch Modal" />
-              <ButtonGroup.Button key="Panel" onClick={this.showPatientList('panel')} text="Launch Panel" />
-              <ButtonGroup.Button key="Main" onClick={this.showPatientList('main')} text="Launch Main" />
-            </ButtonGroup>
           </NavigationHeader>
         )}
         fill
@@ -106,7 +88,6 @@ PatientList.propTypes = {
   isLoading: PropTypes.bool,
   onRefresh: PropTypes.func,
   onSelectPatientDetail: PropTypes.func,
-  onShowPatientList: PropTypes.func,
 };
 
 export default PatientList;
