@@ -12,7 +12,12 @@ import PatientListController, { reducers as patientListReducers } from '../patie
 import patientApplication from './reducers/patientApplication';
 
 const store = createStore(
-  combineReducers(Object.assign({}, { patientApplication }, patientListReducers, modalControllerReducers, panelControllerReducers)),
+  combineReducers(Object.assign({},
+    { patientApplication },
+    patientListReducers,
+    modalControllerReducers,
+    panelControllerReducers,
+  )),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 

@@ -1,5 +1,12 @@
 import { PropTypes } from 'react';
 
+/**
+ * The ComponentDisclosureRegistry will hold a mapping of string to Component values that users of the AppDelegate
+ * can use to construct component instances from data in the disclose API.
+ *
+ * It is not exposed, expect through the AppDelegate, to prevent unneccesary manipulation.
+ */
+
 const ComponentDisclosureRegistry = {};
 
 const getComponent = key => (
@@ -10,7 +17,7 @@ const registerComponent = (key, Component) => {
   ComponentDisclosureRegistry[key] = Component;
 };
 
-class App {
+class AppDelegateInstance {
   /**
    * disclose(options) - A function that presents the given content using the specified progressive disclosure method.
    *   options - An Object containing disclosure data.
@@ -56,10 +63,10 @@ class App {
 // Factory to limit the creation of these App objects.
 const AppDelegate = {
   create: (data) => {
-    const newAppDelegate = new App(data);
+    const newAppDelegate = new AppDelegateInstance(data);
     return Object.freeze(newAppDelegate);
   },
-  propType: PropTypes.instanceOf(App),
+  propType: PropTypes.instanceOf(AppDelegateInstance),
   registerComponent,
   getComponent,
 };

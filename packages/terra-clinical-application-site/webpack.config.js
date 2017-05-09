@@ -71,4 +71,8 @@ module.exports = {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
   },
+  devServer: {
+    host: '0.0.0.0',
+    disableHostCheck: true,
+  },
 };
