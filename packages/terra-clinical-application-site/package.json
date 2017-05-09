@@ -42,6 +42,7 @@
     "terra-legacy-theme": "^0.x",
     "terra-markdown": "^0.x",
     "terra-props-table": "^0.x",
+    "terra-slide-panel": "^0.x",
     "terra-clinical-app-delegate": "^0.x",
     "terra-clinical-application": "^0.x",
     "terra-clinical-navigation-controller": "^0.x",

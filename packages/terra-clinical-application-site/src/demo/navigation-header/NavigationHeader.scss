@@ -4,7 +4,7 @@
 
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   background-color: #e3e8ef;
 
@@ -25,13 +25,19 @@
 
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-
+    flex-wrap: nowrap;
+    overflow: hidden;
     padding-left: 5px;
     // overflow: auto;
 
     > * {
       flex: 0 1 auto;
+    }
+
+    .terraClinical-NavigationHeader-start-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -40,8 +46,7 @@
 
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-
+    flex-wrap: nowrap;
     padding-right: 5px;
     // overflow: auto;
 

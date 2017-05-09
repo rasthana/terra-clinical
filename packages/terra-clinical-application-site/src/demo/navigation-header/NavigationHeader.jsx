@@ -49,7 +49,9 @@ const NavigationHeader = ({
       <span className="terraClinical-NavigationHeader-start">
         {headerBackButton}
         {maximizeButton}
-        <h2>{title}</h2>
+        <div className="terraClinical-NavigationHeader-start-title">
+          <h2>{title}</h2>
+        </div>
       </span>
       <span className="terraClinical-NavigationHeader-end">
         {children}

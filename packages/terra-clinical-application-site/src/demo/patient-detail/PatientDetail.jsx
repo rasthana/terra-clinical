@@ -51,7 +51,7 @@ class PatientDetail extends React.Component {
       <ContentContainer
         id="orion-PatientDetail"
         header={(
-          <NavigationHeader title="Patient Detail" app={this.props.app}>
+          <NavigationHeader app={this.props.app}>
             {this.props.onRefresh && <Button onClick={this.props.onRefresh} icon={<IconRefresh isSpin={this.props.isLoading} />} />}
             <Button icon={<IconEdit />} onClick={this.showPatientUpdate(patient, 'modal')} />
           </NavigationHeader>
