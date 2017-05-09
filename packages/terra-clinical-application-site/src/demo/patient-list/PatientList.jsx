@@ -6,6 +6,7 @@ import ContentContainer from 'terra-content-container';
 import ClinicalItemView from 'terra-clinical-item-view';
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
 import IconInformation from 'terra-icon/lib/icon/IconInformationInverse';
+import IconPanelRight from 'terra-icon/lib/icon/IconPanelRight';
 import AppDelegate from 'terra-clinical-app-delegate';
 
 import NavigationHeader from '../navigation-header/NavigationHeader';
@@ -55,7 +56,10 @@ class PatientList extends React.Component {
                   <ClinicalItemView.Comment text={patient.comment} />
                 }
                 endAccessory={
-                  <Button onClick={this.showPatientDetail(patient, 'modal')} icon={<IconInformation />} key="MODAL" />
+                  <ButtonGroup>
+                    <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'modal')} icon={<IconInformation />} key="MODAL" />
+                    <ButtonGroup.Button onClick={this.showPatientDetail(patient, 'panel')} icon={<IconPanelRight />} key="PANEL" />
+                  </ButtonGroup>
                 }
               />
             }

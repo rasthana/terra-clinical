@@ -49,7 +49,7 @@ class PatientListController extends React.Component {
 
   presentPatientDetail(patient, type) {
     this.props.app.disclose({
-      preferredType: 'modal',
+      preferredType: type,
       content: {
         key: `DETAIL_${this.props.physicianId}_${patient.id}`,
         name: PatientDetailKey,
