@@ -3,7 +3,10 @@ import Button from 'terra-button';
 import ButtonGroup from 'terra-button-group';
 import List from 'terra-list';
 import ContentContainer from 'terra-content-container';
-import ClinicalItemView from 'terra-clinical-item-view';
+import ItemView from 'terra-clinical-item-view';
+import ItemDisplay from 'terra-clinical-item-display';
+import ItemComment from 'terra-clinical-item-display/lib/ItemComment';
+
 import IconRefresh from 'terra-icon/lib/icon/IconRefresh';
 import IconInformation from 'terra-icon/lib/icon/IconInformationInverse';
 import IconPanelRight from 'terra-icon/lib/icon/IconPanelRight';
@@ -46,14 +49,14 @@ class PatientList extends React.Component {
           <List.Item
             key={patient.id}
             content={
-              <ClinicalItemView
+              <ItemView
                 className="orion-ClinicalItemView"
                 displays={[
-                  <ClinicalItemView.Display text={patient.name} />,
-                  <ClinicalItemView.Display text={patient.status} />,
+                  <ItemDisplay text={patient.name} />,
+                  <ItemDisplay text={patient.status} />,
                 ]}
                 comment={
-                  <ClinicalItemView.Comment text={patient.comment} />
+                  <ItemComment text={patient.comment} />
                 }
                 endAccessory={
                   <ButtonGroup>

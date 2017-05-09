@@ -1,65 +1,71 @@
 import React, { PropTypes } from 'react';
-import Button from 'terra-button';
-import IconClose from 'terra-icon/lib/icon/IconClose';
-import IconLeft from 'terra-icon/lib/icon/IconLeft';
-import IconMaximize from 'terra-icon/lib/icon/IconMaximize';
-import IconMinimize from 'terra-icon/lib/icon/IconMinimize';
 
+import ActionHeader from 'terra-clinical-action-header';
 import AppDelegate from 'terra-clinical-app-delegate';
 
 import './NavigationHeader.scss';
 
-const NavigationHeader = ({
-  app,
-  title,
-  children,
-  hasBottomBorder,
-  }) => {
-  if (!app) {
+class NavigationHeader extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.closeDisclosure = this.closeDisclosure.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.maximize = this.maximize.bind(this);
+    this.minimize = this.minimize.bind(this);
+  }
+
+  closeDisclosure() {
+    this.props.app.closeDisclosure();
+  }
+
+  dismiss() {
+    this.props.app.dismiss();
+  }
+
+  maximize() {
+    this.props.app.maximize();
+  }
+
+  minimize() {
+    this.props.app.maximize();
+  }
+
+  render() {
+    const { app, title, children, ...customProps } = this.props;
+
+    let onClose;
+    if (app.closeDisclosure) {
+      onClose = this.closeDisclosure;
+    }
+
+    let onBack;
+    if (app.canGoBack) {
+      onBack = this.dismiss;
+    }
+
+    let onMaximize;
+    let onMinimize;
+    if (app.maximize && !app.isMaximized) {
+      onMaximize = this.maximize;
+    } else if (app.maximize && app.isMaximized) {
+      onMinimize = this.maximize;
+    }
+
     return (
-      <header className="terraClinical-NavigationHeader">
-        <h2>{title}</h2>
-      </header>
+      <ActionHeader
+        title={title}
+        onClose={onClose}
+        onBack={onBack}
+        onMaximize={onMaximize}
+        onMinimize={onMinimize}
+        {...customProps}
+      >
+        {children}
+      </ActionHeader>
     );
   }
-
-  let headerCloseButton;
-  if (app.closeDisclosure) {
-    headerCloseButton = <Button onClick={() => { app.closeDisclosure(); }} icon={<IconClose />} />;
-  }
-
-  let headerBackButton;
-  if (app.canGoBack) {
-    headerBackButton = <Button onClick={() => { app.dismiss(); }} icon={<IconLeft />} />;
-  }
-
-  let maximizeButton;
-  if (app.maximize) {
-    const maximizeButtonIcon = (app.isMaximized) ? <IconMinimize /> : <IconMaximize />;
-    maximizeButton = <Button onClick={() => { app.maximize(); }} icon={maximizeButtonIcon} />;
-  }
-
-  let className = 'terraClinical-NavigationHeader';
-  if (hasBottomBorder) {
-    className = `${className} terraClinical-NavigationHeader--borderBottom`;
-  }
-
-  return (
-    <header className={className}>
-      <span className="terraClinical-NavigationHeader-start">
-        {headerBackButton}
-        {maximizeButton}
-        <div className="terraClinical-NavigationHeader-start-title">
-          <h2>{title}</h2>
-        </div>
-      </span>
-      <span className="terraClinical-NavigationHeader-end">
-        {children}
-        {headerCloseButton}
-      </span>
-    </header>
-  );
-};
+}
 
 NavigationHeader.propTypes = {
   title: PropTypes.string,
