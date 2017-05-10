@@ -1,6 +1,6 @@
 {
   "name": "terra-clinical-modal-controller",
-  "main": "lib/ModalController.js",
+  "main": "lib/containers/ModalController.js",
   "private": true,
   "version": "0.1.0",
   "description": "terra-clinical-modal-controller",
@@ -33,6 +33,7 @@
     "classnames": "^2.2.5",
     "terra-mixins": "^1.0.0",
     "react-modal": "^1.6.5",
+    "terra-responsive-element": "^0.x",
     "terra-clinical-app-delegate": "^0.x",
     "terra-clinical-navigation-controller": "^0.x"
   },

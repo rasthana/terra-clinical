@@ -84,10 +84,9 @@ PatientUpdateController.propTypes = {
 
 export default PatientUpdateController;
 
-const appDelegateKey = 'PatientUpdateController';
-AppDelegate.registerComponent(appDelegateKey, PatientUpdateController);
-
-export { appDelegateKey };
+const disclosureName = 'PatientUpdateController';
+AppDelegate.registerComponentForDisclosure(disclosureName, PatientUpdateController);
+export { disclosureName };
 
 const reducers = { patientUpdateController };
 export { reducers };

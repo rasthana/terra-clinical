@@ -8,7 +8,7 @@ import PatientList from './PatientList';
 import PatientLoader from '../data/PatientLoader';
 import patientListController from './reducers/patientListController';
 
-import { appDelegateKey as PatientDetailKey, reducers as patientDetailReducers } from '../patient-detail/PatientDetailController';
+import { disclosureName as patientDetailDisclosureName, reducers as patientDetailReducers } from '../patient-detail/PatientDetailController';
 
 class PatientListController extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class PatientListController extends React.Component {
       preferredType: type,
       content: {
         key: `DETAIL_${this.props.physicianId}_${patient.id}`,
-        name: PatientDetailKey,
+        name: patientDetailDisclosureName,
         props: {
           physicianId: this.props.physicianId,
           patientId: patient.id,
@@ -89,9 +89,9 @@ PatientListController.propTypes = {
 
 export default PatientListController;
 
-const appDelegateKey = 'PatientListController';
-AppDelegate.registerComponent(appDelegateKey, PatientListController);
-export { appDelegateKey };
+const disclosureName = 'PatientListController';
+AppDelegate.registerComponentForDisclosure(disclosureName, PatientListController);
+export { disclosureName };
 
 const reducers = Object.assign({}, { patientListController }, patientDetailReducers);
 export { reducers };

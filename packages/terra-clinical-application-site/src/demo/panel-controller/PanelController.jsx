@@ -21,7 +21,7 @@ class PanelController extends React.Component {
     return this.props.componentKeys.map((componentKey, index) => {
       const componentData = this.props.componentDirectory[componentKey];
 
-      const ComponentClass = AppDelegate.getComponent(componentData.name);
+      const ComponentClass = AppDelegate.getComponentForDisclosure(componentData.name);
 
       if (!ComponentClass) {
         return undefined;
@@ -65,7 +65,7 @@ class PanelController extends React.Component {
         isMaximized={isMaximized}
       >
         {React.Children.map(children, (child) => {
-          const childAppDelegate = AppDelegate.createDescendant(app, {
+          const childAppDelegate = AppDelegate.clone(app, {
             disclose: (data) => {
               if (data.preferredType === 'panel' || !app) {
                 disclosePanel(data);

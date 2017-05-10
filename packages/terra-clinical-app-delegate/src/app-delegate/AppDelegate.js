@@ -9,20 +9,17 @@ import { PropTypes } from 'react';
 
 const ComponentDisclosureRegistry = {};
 
-const getComponent = key => (
-  ComponentDisclosureRegistry[key]
-);
-
-const registerComponent = (key, Component) => {
+const registerComponentForDisclosure = (key, Component) => {
   ComponentDisclosureRegistry[key] = Component;
 };
 
+const getComponentForDisclosure = key => (
+  ComponentDisclosureRegistry[key]
+);
+
 class AppDelegateInstance {
   constructor(data) {
-    // Required API's
     this.disclose = data.disclose;
-
-    // Optional API's
     this.dismiss = data.dismiss;
     this.closeDisclosure = data.closeDisclosure;
     this.goBack = data.goBack;
@@ -31,9 +28,11 @@ class AppDelegateInstance {
   }
 }
 
-const create = data => (Object.freeze(new AppDelegateInstance(data)));
+const create = data => (
+  Object.freeze(new AppDelegateInstance(data))
+);
 
-const createDescendant = (delegate, data) => {
+const clone = (delegate, data) => {
   const ancestorDelegate = delegate || {};
 
   return create({
@@ -46,13 +45,12 @@ const createDescendant = (delegate, data) => {
   });
 };
 
-// Factory to limit the creation of these App objects.
 const AppDelegate = {
   propType: PropTypes.instanceOf(AppDelegateInstance),
   create,
-  createDescendant,
-  registerComponent,
-  getComponent,
+  clone,
+  registerComponentForDisclosure,
+  getComponentForDisclosure,
 };
 
 export default AppDelegate;

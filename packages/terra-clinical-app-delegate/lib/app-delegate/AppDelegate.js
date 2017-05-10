@@ -17,21 +17,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var ComponentDisclosureRegistry = {};
 
-var getComponent = function getComponent(key) {
-  return ComponentDisclosureRegistry[key];
+var registerComponentForDisclosure = function registerComponentForDisclosure(key, Component) {
+  ComponentDisclosureRegistry[key] = Component;
 };
 
-var registerComponent = function registerComponent(key, Component) {
-  ComponentDisclosureRegistry[key] = Component;
+var getComponentForDisclosure = function getComponentForDisclosure(key) {
+  return ComponentDisclosureRegistry[key];
 };
 
 var AppDelegateInstance = function AppDelegateInstance(data) {
   _classCallCheck(this, AppDelegateInstance);
 
-  // Required API's
   this.disclose = data.disclose;
-
-  // Optional API's
   this.dismiss = data.dismiss;
   this.closeDisclosure = data.closeDisclosure;
   this.goBack = data.goBack;
@@ -43,7 +40,7 @@ var create = function create(data) {
   return Object.freeze(new AppDelegateInstance(data));
 };
 
-var createDescendant = function createDescendant(delegate, data) {
+var clone = function clone(delegate, data) {
   var ancestorDelegate = delegate || {};
 
   return create({
@@ -56,13 +53,12 @@ var createDescendant = function createDescendant(delegate, data) {
   });
 };
 
-// Factory to limit the creation of these App objects.
 var AppDelegate = {
   propType: _react.PropTypes.instanceOf(AppDelegateInstance),
   create: create,
-  createDescendant: createDescendant,
-  registerComponent: registerComponent,
-  getComponent: getComponent
+  clone: clone,
+  registerComponentForDisclosure: registerComponentForDisclosure,
+  getComponentForDisclosure: getComponentForDisclosure
 };
 
 exports.default = AppDelegate;

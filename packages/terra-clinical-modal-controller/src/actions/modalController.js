@@ -1,9 +1,9 @@
-export const DISCLOSE_MODAL = 'DISCLOSE_MODAL';
-export const DISMISS_MODAL = 'DISMISS_MODAL';
-export const PUSH_MODAL = 'PUSH_MODAL';
-export const POP_MODAL = 'POP_MODAL';
-export const MAXIMIZE_MODAL = 'MAXIMIZE_MODAL';
-export const MINIMIZE_MODAL = 'MINIMIZE_MODAL';
+export const DISCLOSE_MODAL = 'MC_DISCLOSE_MODAL';
+export const DISMISS_MODAL = 'MC_DISMISS_MODAL';
+export const PUSH_MODAL = 'MC_PUSH_MODAL';
+export const POP_MODAL = 'MC_POP_MODAL';
+export const MAXIMIZE_MODAL = 'MC_MAXIMIZE_MODAL';
+export const MINIMIZE_MODAL = 'MC_MINIMIZE_MODAL';
 
 export function disclose(data) {
   return { type: DISCLOSE_MODAL, data };

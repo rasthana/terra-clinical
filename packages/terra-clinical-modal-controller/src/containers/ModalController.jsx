@@ -1,17 +1,40 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import AppDelegate from 'terra-clinical-app-delegate';
 
-import modalReducers from './reducers/modalController';
-import { disclose, dismiss, push, pop, maximize, minimize } from './actions/modalController';
-import ModalPresenter from './ModalPresenter';
+import modalReducers from '../reducers/modalController';
+import { disclose, dismiss, push, pop, maximize, minimize } from '../actions/modalController';
+import ModalPresenter from '../components/ModalPresenter';
 
 class ModalController extends React.Component {
   constructor(props) {
     super(props);
 
+    this.forceFullscreenModal = false;
+
+    this.updateFullscreenState = this.updateFullscreenState.bind(this);
     this.componentsFromModalState = this.componentsFromModalState.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateFullscreenState();
+
+    window.addEventListener('resize', () => {
+      this.updateFullscreenState();
+    });
+  }
+
+  updateFullscreenState() {
+    const previousFullscreenState = this.forceFullscreenModal;
+
+    this.forceFullscreenModal = window.innerWidth < getBreakpoints().small;
+
+    // Only update if the modal isn't maximized, if it's currently open, and if it's changing states.
+    if (!this.props.isMaximized && this.props.isOpen && previousFullscreenState !== this.forceFullscreenModal) {
+      this.forceUpdate();
+    }
   }
 
   componentsFromModalState() {
@@ -22,7 +45,7 @@ class ModalController extends React.Component {
     return this.props.componentKeys.map((componentKey, index) => {
       const componentData = this.props.componentDirectory[componentKey];
 
-      const ComponentClass = AppDelegate.getComponent(componentData.name);
+      const ComponentClass = AppDelegate.getComponentForDisclosure(componentData.name);
 
       if (!ComponentClass) {
         return undefined;
@@ -58,10 +81,10 @@ class ModalController extends React.Component {
         componentStack={this.componentsFromModalState()}
         size={size}
         isOpen={isOpen}
-        isMaximized={isMaximized}
+        isMaximized={isMaximized || this.forceFullscreenModal}
       >
         {React.Children.map(children, (child) => {
-          const childAppDelegate = AppDelegate.createDescendant(app, {
+          const childAppDelegate = AppDelegate.clone(app, {
             disclose: (data) => {
               discloseModal(data);
             },

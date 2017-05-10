@@ -2,13 +2,11 @@ import React, { PropTypes } from 'react';
 
 import AppDelegate from 'terra-clinical-app-delegate';
 
-// import Placeholder from '../../generic-components/placeholder/Placeholder';
-
 import PatientDetail from './PatientDetail';
 import PatientLoader from '../data/PatientLoader';
 import patientDetailController from './reducers/patientDetailController';
 
-import { appDelegateKey as PatientUpdateKey, reducers as patientUpdateReducers } from '../patient-update/PatientUpdateController';
+import { disclosureName as patientUpdateDisclosureName, reducers as patientUpdateReducers } from '../patient-update/PatientUpdateController';
 
 class PatientDetailController extends React.Component {
   constructor(props) {
@@ -52,7 +50,7 @@ class PatientDetailController extends React.Component {
       preferredType: type,
       content: {
         key: `UPDATE_${this.props.physicianId}_${patient.id}`,
-        name: PatientUpdateKey,
+        name: patientUpdateDisclosureName,
         props: {
           physicianId: this.props.physicianId,
           patientId: patient.id,
@@ -90,9 +88,9 @@ PatientDetailController.propTypes = {
 
 export default PatientDetailController;
 
-const appDelegateKey = 'PatientDetailController';
-AppDelegate.registerComponent(appDelegateKey, PatientDetailController);
-export { appDelegateKey };
+const disclosureName = 'PatientDetailController';
+AppDelegate.registerComponentForDisclosure(disclosureName, PatientDetailController);
+export { disclosureName };
 
 const reducers = Object.assign({}, { patientDetailController }, patientUpdateReducers);
 export { reducers };

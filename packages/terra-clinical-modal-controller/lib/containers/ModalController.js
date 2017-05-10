@@ -15,17 +15,21 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
+var _breakpoints = require('terra-responsive-element/lib/breakpoints');
+
+var _breakpoints2 = _interopRequireDefault(_breakpoints);
+
 var _terraClinicalAppDelegate = require('terra-clinical-app-delegate');
 
 var _terraClinicalAppDelegate2 = _interopRequireDefault(_terraClinicalAppDelegate);
 
-var _modalController = require('./reducers/modalController');
+var _modalController = require('../reducers/modalController');
 
 var _modalController2 = _interopRequireDefault(_modalController);
 
-var _modalController3 = require('./actions/modalController');
+var _modalController3 = require('../actions/modalController');
 
-var _ModalPresenter = require('./ModalPresenter');
+var _ModalPresenter = require('../components/ModalPresenter');
 
 var _ModalPresenter2 = _interopRequireDefault(_ModalPresenter);
 
@@ -45,23 +49,49 @@ var ModalController = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ModalController.__proto__ || Object.getPrototypeOf(ModalController)).call(this, props));
 
+    _this.forceFullscreenModal = false;
+
+    _this.updateFullscreenState = _this.updateFullscreenState.bind(_this);
     _this.componentsFromModalState = _this.componentsFromModalState.bind(_this);
     return _this;
   }
 
   _createClass(ModalController, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.updateFullscreenState();
+
+      window.addEventListener('resize', function () {
+        _this2.updateFullscreenState();
+      });
+    }
+  }, {
+    key: 'updateFullscreenState',
+    value: function updateFullscreenState() {
+      var previousFullscreenState = this.forceFullscreenModal;
+
+      this.forceFullscreenModal = window.innerWidth < (0, _breakpoints2.default)().small;
+
+      // Only update if the modal isn't maximized, if it's currently open, and if it's changing states.
+      if (!this.props.isMaximized && this.props.isOpen && previousFullscreenState !== this.forceFullscreenModal) {
+        this.forceUpdate();
+      }
+    }
+  }, {
     key: 'componentsFromModalState',
     value: function componentsFromModalState() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!this.props.componentKeys || !this.props.componentKeys.length) {
         return null;
       }
 
       return this.props.componentKeys.map(function (componentKey, index) {
-        var componentData = _this2.props.componentDirectory[componentKey];
+        var componentData = _this3.props.componentDirectory[componentKey];
 
-        var ComponentClass = _terraClinicalAppDelegate2.default.getComponent(componentData.name);
+        var ComponentClass = _terraClinicalAppDelegate2.default.getComponentForDisclosure(componentData.name);
 
         if (!ComponentClass) {
           return undefined;
@@ -69,24 +99,24 @@ var ModalController = function (_React$Component) {
 
         var appDelegate = _terraClinicalAppDelegate2.default.create({
           disclose: function disclose(data) {
-            _this2.props.pushModal(data);
+            _this3.props.pushModal(data);
           },
           dismiss: index > 0 ? function () {
-            _this2.props.popModal();
+            _this3.props.popModal();
           } : function () {
-            _this2.props.dismissModal();
+            _this3.props.dismissModal();
           },
           closeDisclosure: function closeDisclosure() {
-            _this2.props.dismissModal();
+            _this3.props.dismissModal();
           },
           goBack: index > 0 ? function () {
-            _this2.props.popModal();
+            _this3.props.popModal();
           } : null,
-          maximize: !_this2.props.isMaximized ? function () {
-            _this2.props.maximizeModal();
+          maximize: !_this3.props.isMaximized ? function () {
+            _this3.props.maximizeModal();
           } : null,
-          minimize: _this2.props.isMaximized ? function () {
-            _this2.props.minimizeModal();
+          minimize: _this3.props.isMaximized ? function () {
+            _this3.props.minimizeModal();
           } : null
         });
 
@@ -111,10 +141,10 @@ var ModalController = function (_React$Component) {
           componentStack: this.componentsFromModalState(),
           size: size,
           isOpen: isOpen,
-          isMaximized: isMaximized
+          isMaximized: isMaximized || this.forceFullscreenModal
         },
         _react2.default.Children.map(children, function (child) {
-          var childAppDelegate = _terraClinicalAppDelegate2.default.createDescendant(app, {
+          var childAppDelegate = _terraClinicalAppDelegate2.default.clone(app, {
             disclose: function disclose(data) {
               discloseModal(data);
             }
