@@ -57,7 +57,15 @@ var pop = function pop(state) {
 var maximize = function maximize(state) {
   var newState = cloneDisclosureState(state);
 
-  newState.isMaximized = !state.isMaximized;
+  newState.isMaximized = true;
+
+  return newState;
+};
+
+var minimize = function minimize(state) {
+  var newState = cloneDisclosureState(state);
+
+  newState.isMaximized = false;
 
   return newState;
 };
@@ -67,3 +75,4 @@ exports.disclose = disclose;
 exports.push = push;
 exports.pop = pop;
 exports.maximize = maximize;
+exports.minimize = minimize;

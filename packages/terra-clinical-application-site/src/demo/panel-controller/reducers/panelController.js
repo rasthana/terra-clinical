@@ -1,11 +1,12 @@
-import { disclose, push, pop, maximize, defaultState } from 'terra-clinical-modal-controller/lib/reducers/disclosureUtils';
+import { disclose, push, pop, maximize, minimize, defaultState } from 'terra-clinical-modal-controller/lib/reducers/disclosureUtils';
 
 import {
   DISCLOSE_PANEL,
   DISMISS_PANEL,
   PUSH_PANEL,
   POP_PANEL,
-  TOGGLE_MAXIMIZE_PANEL,
+  MAXIMIZE_PANEL,
+  MINIMIZE_PANEL,
 } from '../actions/panelController';
 
 const supportedSizes = {
@@ -38,8 +39,10 @@ const panelManager = (state = defaultPanelState, action) => {
       return push(state, action);
     case POP_PANEL:
       return pop(state, action);
-    case TOGGLE_MAXIMIZE_PANEL:
+    case MAXIMIZE_PANEL:
       return maximize(state, action);
+    case MINIMIZE_PANEL:
+      return minimize(state, action);
     default:
       return state;
   }

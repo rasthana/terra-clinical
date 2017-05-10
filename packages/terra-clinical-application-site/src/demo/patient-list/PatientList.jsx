@@ -17,7 +17,7 @@ import ActivityOverlay from '../activity-overlay/ActivityOverlay';
 
 let patientListId = 0;
 
-class PatientList extends React.Component {
+class PatientList extends React.PureComponent {
   constructor(props) {
     super(props);
 

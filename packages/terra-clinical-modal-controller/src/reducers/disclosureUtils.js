@@ -49,9 +49,17 @@ const pop = (state) => {
 const maximize = (state) => {
   const newState = cloneDisclosureState(state);
 
-  newState.isMaximized = !state.isMaximized;
+  newState.isMaximized = true;
 
   return newState;
 };
 
-export { defaultState, disclose, push, pop, maximize };
+const minimize = (state) => {
+  const newState = cloneDisclosureState(state);
+
+  newState.isMaximized = false;
+
+  return newState;
+};
+
+export { defaultState, disclose, push, pop, maximize, minimize };

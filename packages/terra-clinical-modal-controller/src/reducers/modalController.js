@@ -1,11 +1,12 @@
-import { disclose, push, pop, maximize, defaultState } from './disclosureUtils';
+import { disclose, push, pop, maximize, minimize, defaultState } from './disclosureUtils';
 
 import {
   DISCLOSE_MODAL,
   DISMISS_MODAL,
   PUSH_MODAL,
   POP_MODAL,
-  TOGGLE_MAXIMIZE_MODAL,
+  MAXIMIZE_MODAL,
+  MINIMIZE_MODAL,
 } from '../actions/modalController';
 
 const supportedSizes = {
@@ -29,8 +30,10 @@ const modalController = (state = defaultModalState, action) => {
       return push(state, action);
     case POP_MODAL:
       return pop(state, action);
-    case TOGGLE_MAXIMIZE_MODAL:
+    case MAXIMIZE_MODAL:
       return maximize(state, action);
+    case MINIMIZE_MODAL:
+      return minimize(state, action);
     default:
       return state;
   }

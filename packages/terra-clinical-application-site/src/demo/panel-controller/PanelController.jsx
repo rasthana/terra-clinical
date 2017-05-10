@@ -4,27 +4,22 @@ import AppDelegate from 'terra-clinical-app-delegate';
 import PanelPresenter from './PanelPresenter';
 
 import panelControllerReducers from './reducers/panelController';
-import { disclose, dismiss, push, pop, toggleMaximize } from './actions/panelController';
+import { disclose, dismiss, push, pop, maximize, minimize } from './actions/panelController';
 
 class PanelController extends React.Component {
   constructor(props) {
     super(props);
 
-    this.dataForPanelState = this.dataForPanelState.bind(this);
+    this.componentsFromPanelState = this.componentsFromPanelState.bind(this);
   }
 
-  dataForPanelState() {
-    const panelState = this.props.panelState;
-
-    if (!panelState.isOpen) {
-      return {
-        isOpen: false,
-        components: undefined,
-      };
+  componentsFromPanelState() {
+    if (!this.props.componentKeys || !this.props.componentKeys.length) {
+      return null;
     }
 
-    const components = panelState.componentKeys.map((componentKey, index) => {
-      const componentData = panelState.components[componentKey];
+    return this.props.componentKeys.map((componentKey, index) => {
+      const componentData = this.props.componentDirectory[componentKey];
 
       const ComponentClass = AppDelegate.getComponent(componentData.name);
 
@@ -49,31 +44,28 @@ class PanelController extends React.Component {
           }
         ),
         closeDisclosure: () => { this.props.dismissPanel(); },
-        maximize: () => { this.props.toggleMaximizePanel(); },
-        canGoBack: index > 0,
-        isMaximized: panelState.isMaximized,
-        disclosedAs: 'panel',
-        availableDisclosureTypes: Object.assign([], this.props.app.availableDisclosureTypes, ['panel']),
+        goBack: index > 0 ? () => { this.props.popPanel(); } : null,
+        maximize: !this.props.isMaximized ? () => { this.props.maximizePanel(); } : null,
+        minimize: this.props.isMaximized ? () => { this.props.minimizePanel(); } : null,
       });
 
       return <ComponentClass key={componentKey} {...componentData.props} app={appDelegate} />;
     });
-
-    return {
-      isOpen: true,
-      isMaximized: panelState.isMaximized,
-      componentStack: components,
-      size: panelState.size,
-    };
   }
 
   render() {
-    const { app, panelState, disclosePanel, dismissPanel, pushPanel, popPanel, toggleMaximizePanel, children } = this.props;
+    const { app, disclosePanel, size, isOpen, isMaximized, children } = this.props;
 
     return (
-      <PanelPresenter panelState={this.dataForPanelState()}>
+      <PanelPresenter
+        componentStack={this.componentsFromPanelState()}
+        size={size}
+        behavior="squish"
+        isOpen={isOpen}
+        isMaximized={isMaximized}
+      >
         {React.Children.map(children, (child) => {
-          const childAppDelegate = AppDelegate.create({
+          const childAppDelegate = AppDelegate.createDescendant(app, {
             disclose: (data) => {
               if (data.preferredType === 'panel' || !app) {
                 disclosePanel(data);
@@ -81,13 +73,6 @@ class PanelController extends React.Component {
                 app.disclose(data);
               }
             },
-            dismiss: app && app.dismiss,
-            closeDisclosure: app && app.closeDisclosure,
-            maximize: app && app.maximize,
-            isMaximized: app && app.isMaximized,
-            canGoBack: app && app.canGoBack,
-            disclosedAs: app && app.disclosedAs,
-            availableDisclosureTypes: Object.assign([], app && app.availableDisclosureTypes, ['panel']),
           });
 
           return React.cloneElement(child, { app: childAppDelegate });
@@ -100,25 +85,39 @@ class PanelController extends React.Component {
 PanelController.propTypes = {
   app: AppDelegate.propType,
   children: PropTypes.node,
-  panelState: PropTypes.object,
+
+  componentKeys: PropTypes.array,
+  componentDirectory: PropTypes.object,
+  size: PropTypes.string,
+  isOpen: PropTypes.bool,
+  isMaximized: PropTypes.bool,
+
   disclosePanel: PropTypes.func,
   dismissPanel: PropTypes.func,
   pushPanel: PropTypes.func,
   popPanel: PropTypes.func,
-  toggleMaximizePanel: PropTypes.func,
+  maximizePanel: PropTypes.func,
+  minimizePanel: PropTypes.func,
 };
 
-const mapStateToProps = state => ({ panelState: state.panelController });
-
-const mapDispatchToProps = dispatch => (
-  {
-    disclosePanel: (data) => { dispatch(disclose(data)); },
-    dismissPanel: (data) => { dispatch(dismiss(data)); },
-    pushPanel: (data) => { dispatch(push(data)); },
-    popPanel: (data) => { dispatch(pop(data)); },
-    toggleMaximizePanel: (data) => { dispatch(toggleMaximize(data)); },
-  }
+const mapStateToProps = state => (
+  (disclosureState => ({
+    componentKeys: disclosureState.componentKeys,
+    componentDirectory: disclosureState.components,
+    size: disclosureState.size,
+    isOpen: disclosureState.isOpen,
+    isMaximized: disclosureState.isMaximized,
+  }))(state.panelController)
 );
+
+const mapDispatchToProps = dispatch => ({
+  disclosePanel: (data) => { dispatch(disclose(data)); },
+  dismissPanel: (data) => { dispatch(dismiss(data)); },
+  pushPanel: (data) => { dispatch(push(data)); },
+  popPanel: (data) => { dispatch(pop(data)); },
+  maximizePanel: (data) => { dispatch(maximize(data)); },
+  minimizePanel: (data) => { dispatch(minimize(data)); },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PanelController);
 

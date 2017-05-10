@@ -1,30 +1,26 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import AppDelegate from 'terra-clinical-app-delegate';
-import ModalPresenter from './ModalPresenter';
 
 import modalReducers from './reducers/modalController';
-import { disclose, dismiss, push, pop, toggleMaximize } from './actions/modalController';
+import { disclose, dismiss, push, pop, maximize, minimize } from './actions/modalController';
+import ModalPresenter from './ModalPresenter';
 
 class ModalController extends React.Component {
   constructor(props) {
     super(props);
 
-    this.dataForModalState = this.dataForModalState.bind(this);
+    this.componentsFromModalState = this.componentsFromModalState.bind(this);
   }
 
-  dataForModalState() {
-    const modalState = this.props.modalState;
-
-    if (!modalState.isOpen) {
-      return {
-        isOpen: false,
-        components: undefined,
-      };
+  componentsFromModalState() {
+    if (!this.props.componentKeys || !this.props.componentKeys.length) {
+      return null;
     }
 
-    const components = modalState.componentKeys.map((componentKey, index) => {
-      const componentData = modalState.components[componentKey];
+    return this.props.componentKeys.map((componentKey, index) => {
+      const componentData = this.props.componentDirectory[componentKey];
 
       const ComponentClass = AppDelegate.getComponent(componentData.name);
 
@@ -45,41 +41,30 @@ class ModalController extends React.Component {
           }
         ),
         closeDisclosure: () => { this.props.dismissModal(); },
-        maximize: () => { this.props.toggleMaximizeModal(); },
-        canGoBack: index > 0,
-        isMaximized: modalState.isMaximized,
-        disclosedAs: 'modal',
-        availableDisclosureTypes: 'modal',
+        goBack: index > 0 ? () => { this.props.popModal(); } : null,
+        maximize: !this.props.isMaximized ? () => { this.props.maximizeModal(); } : null,
+        minimize: this.props.isMaximized ? () => { this.props.minimizeModal(); } : null,
       });
 
       return <ComponentClass key={componentKey} {...componentData.props} app={appDelegate} />;
     });
-
-    return {
-      isOpen: true,
-      isMaximized: modalState.isMaximized,
-      componentStack: components,
-      size: modalState.size,
-    };
   }
 
   render() {
-    const { app, modalState, discloseModal, dismissModal, pushModal, popModal, maximizeModal, children } = this.props;
+    const { app, discloseModal, size, isOpen, isMaximized, children } = this.props;
 
     return (
-      <ModalPresenter modalState={this.dataForModalState()}>
-        {React.Children.map(children, child => {
-          const childAppDelegate = AppDelegate.create({
+      <ModalPresenter
+        componentStack={this.componentsFromModalState()}
+        size={size}
+        isOpen={isOpen}
+        isMaximized={isMaximized}
+      >
+        {React.Children.map(children, (child) => {
+          const childAppDelegate = AppDelegate.createDescendant(app, {
             disclose: (data) => {
               discloseModal(data);
             },
-            dismiss: app && app.dismiss,
-            closeDisclosure: app && app.closeDisclosure,
-            maximize: app && app.maximize,
-            isMaximized: app && app.isMaximized,
-            canGoBack: app && app.canGoBack,
-            disclosedAs: app && app.disclosedAs,
-            availableDisclosureTypes: Object.assign([], app && app.availableDisclosureTypes, ['modal']),
           });
 
           return React.cloneElement(child, { app: childAppDelegate });
@@ -92,25 +77,39 @@ class ModalController extends React.Component {
 ModalController.propTypes = {
   app: AppDelegate.propType,
   children: PropTypes.node,
-  modalState: PropTypes.object,
+
+  componentKeys: PropTypes.array,
+  componentDirectory: PropTypes.object,
+  size: PropTypes.string,
+  isOpen: PropTypes.bool,
+  isMaximized: PropTypes.bool,
+
   discloseModal: PropTypes.func,
   dismissModal: PropTypes.func,
   pushModal: PropTypes.func,
   popModal: PropTypes.func,
-  toggleMaximizeModal: PropTypes.func,
+  maximizeModal: PropTypes.func,
+  minimizeModal: PropTypes.func,
 };
 
-const mapStateToProps = state => ({ modalState: state.modalController });
-
-const mapDispatchToProps = dispatch => (
-  {
-    discloseModal: (data) => { dispatch(disclose(data)); },
-    dismissModal: (data) => { dispatch(dismiss(data)); },
-    pushModal: (data) => { dispatch(push(data)); },
-    popModal: (data) => { dispatch(pop(data)); },
-    toggleMaximizeModal: (data) => { dispatch(toggleMaximize(data)); },
-  }
+const mapStateToProps = state => (
+  (disclosureState => ({
+    componentKeys: disclosureState.componentKeys,
+    componentDirectory: disclosureState.components,
+    size: disclosureState.size,
+    isOpen: disclosureState.isOpen,
+    isMaximized: disclosureState.isMaximized,
+  }))(state.modalController)
 );
+
+const mapDispatchToProps = dispatch => ({
+  discloseModal: (data) => { dispatch(disclose(data)); },
+  dismissModal: (data) => { dispatch(dismiss(data)); },
+  pushModal: (data) => { dispatch(push(data)); },
+  popModal: (data) => { dispatch(pop(data)); },
+  maximizeModal: (data) => { dispatch(maximize(data)); },
+  minimizeModal: (data) => { dispatch(minimize(data)); },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalController);
 

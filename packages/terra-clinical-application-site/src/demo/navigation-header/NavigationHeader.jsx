@@ -3,8 +3,6 @@ import React, { PropTypes } from 'react';
 import ActionHeader from 'terra-clinical-action-header';
 import AppDelegate from 'terra-clinical-app-delegate';
 
-import './NavigationHeader.scss';
-
 class NavigationHeader extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +26,7 @@ class NavigationHeader extends React.Component {
   }
 
   minimize() {
-    this.props.app.maximize();
+    this.props.app.minimize();
   }
 
   render() {
@@ -40,16 +38,18 @@ class NavigationHeader extends React.Component {
     }
 
     let onBack;
-    if (app.canGoBack) {
-      onBack = this.dismiss;
+    if (app.goBack) {
+      onBack = app.goBack;
     }
 
     let onMaximize;
-    let onMinimize;
-    if (app.maximize && !app.isMaximized) {
+    if (app.maximize) {
       onMaximize = this.maximize;
-    } else if (app.maximize && app.isMaximized) {
-      onMinimize = this.maximize;
+    }
+
+    let onMinimize;
+    if (app.minimize) {
+      onMinimize = this.minimize;
     }
 
     return (
@@ -68,10 +68,9 @@ class NavigationHeader extends React.Component {
 }
 
 NavigationHeader.propTypes = {
+  app: AppDelegate.propType,
   title: PropTypes.string,
   children: PropTypes.node,
-  app: AppDelegate.propType,
-  hasBottomBorder: PropTypes.bool,
 };
 
 export default NavigationHeader;

@@ -34,8 +34,10 @@ var modalController = function modalController() {
       return (0, _disclosureUtils.push)(state, action);
     case _modalController.POP_MODAL:
       return (0, _disclosureUtils.pop)(state, action);
-    case _modalController.TOGGLE_MAXIMIZE_MODAL:
+    case _modalController.MAXIMIZE_MODAL:
       return (0, _disclosureUtils.maximize)(state, action);
+    case _modalController.MINIMIZE_MODAL:
+      return (0, _disclosureUtils.minimize)(state, action);
     default:
       return state;
   }

@@ -19,15 +19,15 @@ var _terraClinicalAppDelegate = require('terra-clinical-app-delegate');
 
 var _terraClinicalAppDelegate2 = _interopRequireDefault(_terraClinicalAppDelegate);
 
-var _ModalPresenter = require('./ModalPresenter');
-
-var _ModalPresenter2 = _interopRequireDefault(_ModalPresenter);
-
 var _modalController = require('./reducers/modalController');
 
 var _modalController2 = _interopRequireDefault(_modalController);
 
 var _modalController3 = require('./actions/modalController');
+
+var _ModalPresenter = require('./ModalPresenter');
+
+var _ModalPresenter2 = _interopRequireDefault(_ModalPresenter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,26 +45,21 @@ var ModalController = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ModalController.__proto__ || Object.getPrototypeOf(ModalController)).call(this, props));
 
-    _this.dataForModalState = _this.dataForModalState.bind(_this);
+    _this.componentsFromModalState = _this.componentsFromModalState.bind(_this);
     return _this;
   }
 
   _createClass(ModalController, [{
-    key: 'dataForModalState',
-    value: function dataForModalState() {
+    key: 'componentsFromModalState',
+    value: function componentsFromModalState() {
       var _this2 = this;
 
-      var modalState = this.props.modalState;
-
-      if (!modalState.isOpen) {
-        return {
-          isOpen: false,
-          components: undefined
-        };
+      if (!this.props.componentKeys || !this.props.componentKeys.length) {
+        return null;
       }
 
-      var components = modalState.componentKeys.map(function (componentKey, index) {
-        var componentData = modalState.components[componentKey];
+      return this.props.componentKeys.map(function (componentKey, index) {
+        var componentData = _this2.props.componentDirectory[componentKey];
 
         var ComponentClass = _terraClinicalAppDelegate2.default.getComponent(componentData.name);
 
@@ -84,54 +79,45 @@ var ModalController = function (_React$Component) {
           closeDisclosure: function closeDisclosure() {
             _this2.props.dismissModal();
           },
-          maximize: function maximize() {
-            _this2.props.toggleMaximizeModal();
-          },
-          canGoBack: index > 0,
-          isMaximized: modalState.isMaximized,
-          disclosedAs: 'modal',
-          availableDisclosureTypes: 'modal'
+          goBack: index > 0 ? function () {
+            _this2.props.popModal();
+          } : null,
+          maximize: !_this2.props.isMaximized ? function () {
+            _this2.props.maximizeModal();
+          } : null,
+          minimize: _this2.props.isMaximized ? function () {
+            _this2.props.minimizeModal();
+          } : null
         });
 
         return _react2.default.createElement(ComponentClass, _extends({ key: componentKey }, componentData.props, { app: appDelegate }));
       });
-
-      return {
-        isOpen: true,
-        isMaximized: modalState.isMaximized,
-        componentStack: components,
-        size: modalState.size
-      };
     }
   }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
           app = _props.app,
-          modalState = _props.modalState,
           discloseModal = _props.discloseModal,
-          dismissModal = _props.dismissModal,
-          pushModal = _props.pushModal,
-          popModal = _props.popModal,
-          maximizeModal = _props.maximizeModal,
+          size = _props.size,
+          isOpen = _props.isOpen,
+          isMaximized = _props.isMaximized,
           children = _props.children;
 
 
       return _react2.default.createElement(
         _ModalPresenter2.default,
-        { modalState: this.dataForModalState() },
+        {
+          componentStack: this.componentsFromModalState(),
+          size: size,
+          isOpen: isOpen,
+          isMaximized: isMaximized
+        },
         _react2.default.Children.map(children, function (child) {
-          var childAppDelegate = _terraClinicalAppDelegate2.default.create({
+          var childAppDelegate = _terraClinicalAppDelegate2.default.createDescendant(app, {
             disclose: function disclose(data) {
               discloseModal(data);
-            },
-            dismiss: app && app.dismiss,
-            closeDisclosure: app && app.closeDisclosure,
-            maximize: app && app.maximize,
-            isMaximized: app && app.isMaximized,
-            canGoBack: app && app.canGoBack,
-            disclosedAs: app && app.disclosedAs,
-            availableDisclosureTypes: _extends([], app && app.availableDisclosureTypes, ['modal'])
+            }
           });
 
           return _react2.default.cloneElement(child, { app: childAppDelegate });
@@ -146,16 +132,31 @@ var ModalController = function (_React$Component) {
 ModalController.propTypes = {
   app: _terraClinicalAppDelegate2.default.propType,
   children: _react.PropTypes.node,
-  modalState: _react.PropTypes.object,
+
+  componentKeys: _react.PropTypes.array,
+  componentDirectory: _react.PropTypes.object,
+  size: _react.PropTypes.string,
+  isOpen: _react.PropTypes.bool,
+  isMaximized: _react.PropTypes.bool,
+
   discloseModal: _react.PropTypes.func,
   dismissModal: _react.PropTypes.func,
   pushModal: _react.PropTypes.func,
   popModal: _react.PropTypes.func,
-  toggleMaximizeModal: _react.PropTypes.func
+  maximizeModal: _react.PropTypes.func,
+  minimizeModal: _react.PropTypes.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
-  return { modalState: state.modalController };
+  return function (disclosureState) {
+    return {
+      componentKeys: disclosureState.componentKeys,
+      componentDirectory: disclosureState.components,
+      size: disclosureState.size,
+      isOpen: disclosureState.isOpen,
+      isMaximized: disclosureState.isMaximized
+    };
+  }(state.modalController);
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -172,8 +173,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     popModal: function popModal(data) {
       dispatch((0, _modalController3.pop)(data));
     },
-    toggleMaximizeModal: function toggleMaximizeModal(data) {
-      dispatch((0, _modalController3.toggleMaximize)(data));
+    maximizeModal: function maximizeModal(data) {
+      dispatch((0, _modalController3.maximize)(data));
+    },
+    minimizeModal: function minimizeModal(data) {
+      dispatch((0, _modalController3.minimize)(data));
     }
   };
 };
