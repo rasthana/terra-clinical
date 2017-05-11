@@ -1,30 +1,18 @@
 import { PropTypes } from 'react';
+import {
+  registerComponentForDisclosure,
+  getComponentForDisclosure,
+} from '../disclosure-component-registry/DisclosureComponentRegistry';
 
-/**
- * The ComponentDisclosureRegistry will hold a mapping of string to Component values that users of the AppDelegate
- * can use to construct component instances from data in the disclose API.
- *
- * It is not exposed, expect through the AppDelegate, to prevent unneccesary manipulation.
- */
-
-const ComponentDisclosureRegistry = {};
-
-const registerComponentForDisclosure = (key, Component) => {
-  ComponentDisclosureRegistry[key] = Component;
-};
-
-const getComponentForDisclosure = key => (
-  ComponentDisclosureRegistry[key]
-);
+const supportedAttributes = [
+  'disclose', 'dismiss', 'closeDisclosure', 'goBack', 'maximize', 'minimize',
+];
 
 class AppDelegateInstance {
   constructor(data) {
-    this.disclose = data.disclose;
-    this.dismiss = data.dismiss;
-    this.closeDisclosure = data.closeDisclosure;
-    this.goBack = data.goBack;
-    this.maximize = data.maximize;
-    this.minimize = data.minimize;
+    supportedAttributes.forEach((attribute) => {
+      this[attribute] = data[attribute];
+    });
   }
 }
 
@@ -35,20 +23,29 @@ const create = data => (
 const clone = (delegate, data) => {
   const ancestorDelegate = delegate || {};
 
-  return create({
-    disclose: data.disclose || ancestorDelegate.disclose,
-    dismiss: data.dismiss || ancestorDelegate.dismiss,
-    closeDisclosure: data.closeDisclosure || ancestorDelegate.closeDisclosure,
-    goBack: data.goBack || ancestorDelegate.goBack,
-    maximize: data.maximize || ancestorDelegate.maximize,
-    minimize: data.minimize || ancestorDelegate.minimize,
+  const mergedData = {};
+  supportedAttributes.forEach((attribute) => {
+    mergedData[attribute] = data[attribute] || ancestorDelegate[attribute];
   });
+
+  return create(mergedData);
+};
+
+const isEqual = (delegateA, delegateB) => {
+  if (!delegateA || !delegateB) {
+    return false;
+  }
+
+  return !supportedAttributes.some(attribute => (
+    delegateA[attribute] !== delegateB[attribute]
+  ));
 };
 
 const AppDelegate = {
   propType: PropTypes.instanceOf(AppDelegateInstance),
   create,
   clone,
+  isEqual,
   registerComponentForDisclosure,
   getComponentForDisclosure,
 };
