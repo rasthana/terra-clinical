@@ -8,7 +8,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-require('./NavigationSlide.scss');
+require('./Slide.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17,15 +17,15 @@ var propTypes = {
   children: _react.PropTypes.node
 };
 
-var NavigationSlide = function NavigationSlide(props) {
+var Slide = function Slide(props) {
   return _react2.default.createElement(
     'div',
-    { className: 'terraClinical-NavigationSlide', 'aria-hidden': props.isHidden || null },
-    _react2.default.createElement('div', { className: 'terraClinical-NavigationSlide-shadow' }),
+    { className: 'terraClinical-Slide', 'aria-hidden': props.isHidden || null },
+    _react2.default.createElement('div', { className: 'terraClinical-Slide-shadow' }),
     props.children
   );
 };
 
-NavigationSlide.propTypes = propTypes;
+Slide.propTypes = propTypes;
 
-exports.default = NavigationSlide;
+exports.default = Slide;

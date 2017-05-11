@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-import NavigationSlide from './NavigationSlide';
+import Slide from './Slide';
 
 const propTypes = {
   animationIsDisabled: PropTypes.bool,
   items: PropTypes.array,
 };
 
-const NavigationController = (props) => {
+const SlideGroup = (props) => {
   // We don't want to render the transition group when no children exist. Doing so will cause the first child to
   // animate into place, which in most cases we do not want.
   if (!props.items || !props.items.length) {
@@ -26,19 +26,19 @@ const NavigationController = (props) => {
       key={transitionGroupKey}
       transitionEnter={!props.animationIsDisabled}
       transitionLeave={!props.animationIsDisabled}
-      transitionName="terraClinical-NavigationSlide"
+      transitionName="terraClinical-Slide"
       transitionEnterTimeout={300}
       transitionLeaveTimeout={300}
     >
       {props.items.map((item, index) => (
-        <NavigationSlide key={item.key} isHidden={index !== itemCount - 1}>
+        <Slide key={item.key} isHidden={index !== itemCount - 1}>
           {item}
-        </NavigationSlide>
+        </Slide>
       ))}
     </CSSTransitionGroup>
   );
 };
 
-NavigationController.propTypes = propTypes;
+SlideGroup.propTypes = propTypes;
 
-export default NavigationController;
+export default SlideGroup;

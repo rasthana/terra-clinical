@@ -12,9 +12,9 @@ var _CSSTransitionGroup = require('react-transition-group/CSSTransitionGroup');
 
 var _CSSTransitionGroup2 = _interopRequireDefault(_CSSTransitionGroup);
 
-var _NavigationSlide = require('./NavigationSlide');
+var _Slide = require('./Slide');
 
-var _NavigationSlide2 = _interopRequireDefault(_NavigationSlide);
+var _Slide2 = _interopRequireDefault(_Slide);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23,7 +23,7 @@ var propTypes = {
   items: _react.PropTypes.array
 };
 
-var NavigationController = function NavigationController(props) {
+var SlideGroup = function SlideGroup(props) {
   // We don't want to render the transition group when no children exist. Doing so will cause the first child to
   // animate into place, which in most cases we do not want.
   if (!props.items || !props.items.length) {
@@ -42,13 +42,13 @@ var NavigationController = function NavigationController(props) {
       key: transitionGroupKey,
       transitionEnter: !props.animationIsDisabled,
       transitionLeave: !props.animationIsDisabled,
-      transitionName: 'terraClinical-NavigationSlide',
+      transitionName: 'terraClinical-Slide',
       transitionEnterTimeout: 300,
       transitionLeaveTimeout: 300
     },
     props.items.map(function (item, index) {
       return _react2.default.createElement(
-        _NavigationSlide2.default,
+        _Slide2.default,
         { key: item.key, isHidden: index !== itemCount - 1 },
         item
       );
@@ -56,6 +56,6 @@ var NavigationController = function NavigationController(props) {
   );
 };
 
-NavigationController.propTypes = propTypes;
+SlideGroup.propTypes = propTypes;
 
-exports.default = NavigationController;
+exports.default = SlideGroup;

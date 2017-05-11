@@ -16,9 +16,9 @@ var _reactModal = require('react-modal');
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
-var _terraClinicalNavigationController = require('terra-clinical-navigation-controller');
+var _terraClinicalSlideGroup = require('terra-clinical-slide-group');
 
-var _terraClinicalNavigationController2 = _interopRequireDefault(_terraClinicalNavigationController);
+var _terraClinicalSlideGroup2 = _interopRequireDefault(_terraClinicalSlideGroup);
 
 require('./ModalPresenter.scss');
 
@@ -45,7 +45,7 @@ var ModalPresenter = function ModalPresenter(_ref) {
         overlayClassName: 'terraClinical-ModalPresenter-modalOverlay',
         contentLabel: ''
       },
-      _react2.default.createElement(_terraClinicalNavigationController2.default, { items: componentStack })
+      _react2.default.createElement(_terraClinicalSlideGroup2.default, { items: componentStack })
     )
   );
 };

@@ -35,7 +35,7 @@
     "react-modal": "^1.6.5",
     "terra-responsive-element": "^0.x",
     "terra-clinical-app-delegate": "^0.x",
-    "terra-clinical-navigation-controller": "^0.x"
+    "terra-clinical-slide-group": "^0.x"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",

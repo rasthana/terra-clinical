@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 
 import SlidePanel from 'terra-slide-panel';
-import NavigationController from 'terra-clinical-navigation-controller';
+import SlideGroup from 'terra-clinical-slide-group';
 
 const PanelPresenter = ({ componentStack, behavior, position, size, isOpen, isMaximized, children, ...customProps }) => (
   <SlidePanel
     mainContent={children}
-    panelContent={<NavigationController items={componentStack} />}
+    panelContent={<SlideGroup items={componentStack} />}
     isOpen={isOpen}
     panelBehavior={behavior}
     panelSize={size}

@@ -5,13 +5,13 @@ import Markdown from '../../../packages/terra-site/src/Markdown';
 import ReadMe from '../docs/README.md';
 // Component Source
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/first, import/no-unresolved, import/extensions
-import ClinicalNavigationControllerSrc from '!raw-loader!../src/ClinicalNavigationController.jsx';
+import SlideGroupSrc from '!raw-loader!../src/SlideGroup.jsx';
 
-const ClinicalNavigationControllerExamples = () => (
+const SlideGroupExamples = () => (
   <div>
     <Markdown id="readme" src={ReadMe} />
-    <PropsTable id="props" src={ClinicalNavigationControllerSrc} />
+    <PropsTable id="props" src={SlideGroupSrc} />
   </div>
 );
 
-export default ClinicalNavigationControllerExamples;
+export default SlideGroupExamples;

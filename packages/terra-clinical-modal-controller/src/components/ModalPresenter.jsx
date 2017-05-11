@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import Modal from 'react-modal';
-import NavigationController from 'terra-clinical-navigation-controller';
+import SlideGroup from 'terra-clinical-slide-group';
 
 import './ModalPresenter.scss';
 
@@ -22,7 +22,7 @@ const ModalPresenter = ({ componentStack, size, isOpen, isMaximized, children })
         overlayClassName="terraClinical-ModalPresenter-modalOverlay"
         contentLabel=""
       >
-        <NavigationController items={componentStack} />
+        <SlideGroup items={componentStack} />
       </Modal>
     </div>
   );
