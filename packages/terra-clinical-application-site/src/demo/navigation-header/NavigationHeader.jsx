@@ -8,7 +8,7 @@ class NavigationHeader extends React.Component {
     super(props);
 
     this.closeDisclosure = this.closeDisclosure.bind(this);
-    this.dismiss = this.dismiss.bind(this);
+    this.goBack = this.goBack.bind(this);
     this.maximize = this.maximize.bind(this);
     this.minimize = this.minimize.bind(this);
   }
@@ -17,8 +17,8 @@ class NavigationHeader extends React.Component {
     this.props.app.closeDisclosure();
   }
 
-  dismiss() {
-    this.props.app.dismiss();
+  goBack() {
+    this.props.app.goBack();
   }
 
   maximize() {
@@ -32,33 +32,13 @@ class NavigationHeader extends React.Component {
   render() {
     const { app, title, children, ...customProps } = this.props;
 
-    let onClose;
-    if (app.closeDisclosure) {
-      onClose = this.closeDisclosure;
-    }
-
-    let onBack;
-    if (app.goBack) {
-      onBack = app.goBack;
-    }
-
-    let onMaximize;
-    if (app.maximize) {
-      onMaximize = this.maximize;
-    }
-
-    let onMinimize;
-    if (app.minimize) {
-      onMinimize = this.minimize;
-    }
-
     return (
       <ActionHeader
         title={title}
-        onClose={onClose}
-        onBack={onBack}
-        onMaximize={onMaximize}
-        onMinimize={onMinimize}
+        onClose={app.closeDisclosure && this.closeDisclosure}
+        onBack={app.goBack && this.goBack}
+        onMaximize={app.maximize && this.maximize}
+        onMinimize={app.minimize && this.minimize}
         {...customProps}
       >
         {children}

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import TerraApplication from 'terra-clinical-application';
+import Application from 'terra-clinical-application';
 import AppDelegate from 'terra-clinical-app-delegate';
 
 import ModalController, { reducers as modalControllerReducers } from 'terra-clinical-modal-controller';
@@ -27,7 +27,7 @@ class PatientApplication extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <TerraApplication style={{ height: '100%', width: '100%' }}>
+        <Application>
           <ModalController>
             <PanelController>
               <PatientListController
@@ -36,7 +36,7 @@ class PatientApplication extends React.Component {
               />
             </PanelController>
           </ModalController>
-        </TerraApplication>
+        </Application>
       </Provider>
     );
   }

@@ -65,10 +65,27 @@ const copy = object => JSON.parse(JSON.stringify(object));
 
 const PatientStore = {
   getPatientList: physicianId => (copy(patientListData[physicianId])),
-  getPatient: (physicianId, patientId) => (copy(patientListData[physicianId]).find(patient => (patient.id === patientId))),
+  getPatient: (physicianId, patientId) => {
+    const patientList = copy(patientListData[physicianId]);
+
+    let patientData;
+    patientList.forEach((patient) => {
+      if (patient.id === patientId) {
+        patientData = patient;
+      }
+    });
+
+    return patientData;
+  },
   update: (physicianId, patientId, data) => {
     const patientList = patientListData[physicianId];
-    const patientToUpdate = patientList.find(patient => (patient.id === patientId));
+
+    let patientToUpdate;
+    patientList.forEach((patient) => {
+      if (patient.id === patientId) {
+        patientToUpdate = patient;
+      }
+    });
 
     if (data.name) {
       patientToUpdate.name = data.name;

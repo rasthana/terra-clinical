@@ -22,13 +22,15 @@ var _terraClinicalAppDelegate = require('terra-clinical-app-delegate');
 
 var _terraClinicalAppDelegate2 = _interopRequireDefault(_terraClinicalAppDelegate);
 
+require('./Application.scss');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var propTypes = {
   app: _terraClinicalAppDelegate2.default.propType,
-  children: _react.PropTypes.node
+  children: _react.PropTypes.node.isRequired
 };
 
 var Application = function Application(_ref) {
@@ -36,12 +38,18 @@ var Application = function Application(_ref) {
       children = _ref.children,
       customProps = _objectWithoutProperties(_ref, ['app', 'children']);
 
+  var childrenToRender = children;
+
+  if (app) {
+    childrenToRender = _react2.default.Children.map(children, function (child) {
+      return _react2.default.cloneElement(child, { app: app });
+    });
+  }
+
   return _react2.default.createElement(
     _terraBase2.default,
     _extends({}, customProps, { className: (0, _classnames2.default)([customProps.className, 'terraClinical-Application']) }),
-    _react2.default.Children.map(children, function (child) {
-      return _react2.default.cloneElement(child, { app: app });
-    })
+    childrenToRender
   );
 };
 

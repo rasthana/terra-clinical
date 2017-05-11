@@ -18,6 +18,7 @@ import NoDataViewExamples from './examples/no-data-view/Index';
 /* eslint-disable import/first */
 
 import ActionHeaderTestRoutes from 'terra-clinical-action-header/tests/nightwatch/ActionHeaderTestRoutes';
+import ApplicationTestRoutes from 'terra-clinical-application/tests/nightwatch/ApplicationTestRoutes';
 import DetailViewTestRoutes from 'terra-clinical-detail-view/tests/nightwatch/DetailView/DetailViewTestRoutes';
 import DetailListTestRoutes from 'terra-clinical-detail-view/tests/nightwatch/DetailList/DetailListTestRoutes';
 import DetailListItemTestRoutes from 'terra-clinical-detail-view/tests/nightwatch/DetailListItem/ListItemTestRoutes';
@@ -47,6 +48,7 @@ ReactDOM.render((
     </Route>
     <Route path="/tests" component={TestLinks} />
     {ActionHeaderTestRoutes}
+    {ApplicationTestRoutes}
     {DetailViewTestRoutes}
     {DetailListTestRoutes}
     {DetailListItemTestRoutes}
