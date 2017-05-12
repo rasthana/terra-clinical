@@ -1,5 +1,5 @@
 import React from 'react';
-import ClinicalNavigationController from '../../src/ClinicalNavigationController';
+import Slide from '../../src/Slide';
 
 it('should render a default component', () => {
   expect(1).toEqual(1);

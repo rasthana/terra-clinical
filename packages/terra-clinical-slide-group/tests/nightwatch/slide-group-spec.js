@@ -9,7 +9,7 @@ module.exports = {
 
   'Displays a default button with the provided text': (browser) => {
     browser
-      .url(`http://localhost:${browser.globals.webpackDevServerPort}/#/tests/clinical-navigation-controller-tests/default`);
+      .url(`http://localhost:${browser.globals.webpackDevServerPort}/#/tests/slide-group-tests/default`);
   },
 };
 

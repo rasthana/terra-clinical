@@ -19,8 +19,14 @@ var _Slide2 = _interopRequireDefault(_Slide);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var propTypes = {
-  animationIsDisabled: _react.PropTypes.bool,
-  items: _react.PropTypes.array
+  /**
+   * The array of components for the group. Only the last component is visible. The others are hidden but still mounted.
+   */
+  items: _react.PropTypes.array,
+  /**
+   * When true, the transition between slides is not animated.
+   */
+  animationIsDisabled: _react.PropTypes.bool
 };
 
 var SlideGroup = function SlideGroup(props) {
@@ -31,7 +37,7 @@ var SlideGroup = function SlideGroup(props) {
   }
 
   // We use the key from the first child as the key for the transition group. This will cause the transition group to
-  // rerender when root child changes and subsequently prevent that child from animating into position.
+  // rerender when the root child changes and subsequently prevent that child from animating into position.
   var transitionGroupKey = props.items[0].key;
 
   var itemCount = props.items.length;

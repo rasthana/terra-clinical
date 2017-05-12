@@ -4,8 +4,14 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Slide from './Slide';
 
 const propTypes = {
-  animationIsDisabled: PropTypes.bool,
+  /**
+   * The array of components for the group. Only the last component is visible. The others are hidden but still mounted.
+   */
   items: PropTypes.array,
+  /**
+   * When true, the transition between slides is not animated.
+   */
+  animationIsDisabled: PropTypes.bool,
 };
 
 const SlideGroup = (props) => {
@@ -16,7 +22,7 @@ const SlideGroup = (props) => {
   }
 
   // We use the key from the first child as the key for the transition group. This will cause the transition group to
-  // rerender when root child changes and subsequently prevent that child from animating into position.
+  // rerender when the root child changes and subsequently prevent that child from animating into position.
   const transitionGroupKey = props.items[0].key;
 
   const itemCount = props.items.length;
