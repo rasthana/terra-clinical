@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/cerner/terra-ui#readme",
   "devDependencies": {
-    "terra-toolkit": "^0.1.0"
+    "terra-toolkit": "^0.x"
   },
   "peerDependencies": {
     "react": "^15.4.2",
@@ -30,13 +30,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "react": "^15.4.2",
     "terra-mixins": "^1.0.0",
     "react-transition-group": "^1.1.3"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",
-    "compile:clean": "rm -rf lib",
+    "compile:clean": "$(cd ..; npm bin)/rimraf lib",
     "compile:build": "$(cd ..; npm bin)/babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "$(cd ..; npm bin)/eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
@@ -47,9 +46,11 @@
     "test": "npm run test:spec && npm run test:nightwatch-default",
     "test:spec": "$(cd ..; npm bin)/jest --config ../../jestconfig.json",
     "test:all": "npm run test:nightwatch-default && npm run test:nightwatch-chrome && npm run test:nightwatch-firefox && npm run test:nightwatch-safari",
-    "test:nightwatch-default": "node ../../scripts/nightwatch/nightwatch.js",
-    "test:nightwatch-chrome": "node ../../scripts/nightwatch/nightwatch.js chrome",
-    "test:nightwatch-firefox": "node ../../scripts/nightwatch/nightwatch.js firefox",
-    "test:nightwatch-safari": "node ../../scripts/nightwatch/nightwatch-non-parallel.js safari"
+    "test:nightwatch-default": "WEBPACK_CONFIG_PATH=../../../../terra-clinical-site/webpack.config SPECTRE_TEST_SUITE=terra-clinical-detail-view node ./node_modules/terra-toolkit/lib/scripts/nightwatch.js",
+    "test:nightwatch-chrome": "WEBPACK_CONFIG_PATH=../../../../terra-clinical-site/webpack.config SPECTRE_TEST_SUITE=terra-clinical-detail-view node ./node_modules/terra-toolkit/lib/scripts/nightwatch.js chrome",
+    "test:nightwatch-firefox": "WEBPACK_CONFIG_PATH=../../../../terra-clinical-site/webpack.config SPECTRE_TEST_SUITE=terra-clinical-detail-view node ./node_modules/terra-toolkit/lib/scripts/nightwatch.js firefox",
+    "test:nightwatch-safari": "WEBPACK_CONFIG_PATH=../../../../terra-clinical-site/webpack.config SPECTRE_TEST_SUITE=terra-clinical-detail-view node ./node_modules/terra-toolkit/lib/scripts/nightwatch-non-parallel.js safari",
+    "test:remote": "WEBPACK_CONFIG_PATH=../../../../terra-clinical-site/webpack.config REMOTE=true node ./node_modules/terra-toolkit/lib/scripts/nightwatch-process.js --config tests/nightwatch.conf.js",
+    "test:remote:all": "WEBPACK_CONFIG_PATH=../../../../terra-clinical-site/webpack.config REMOTE=true node ./node_modules/terra-toolkit/lib/scripts/nightwatch-process.js --config tests/nightwatch.conf.js --env chrome-tiny,chrome-small,chrome-medium,chrome-large,chrome-huge,chrome-enormous,firefox-tiny,firefox-small,firefox-medium,firefox-large,firefox-huge,firefox-enormous,ie10-tiny,ie10-small,ie10-medium,ie10-large,ie10-huge,ie10-enormous,ie11-tiny,ie11-small,ie11-medium,ie11-large,ie11-huge,ie11-enormous,edge-tiny,edge-small,edge-medium,edge-large,edge-huge,edge-enormous,safari-tiny,safari-small,safari-medium,safari-large,safari-huge,safari-enormous"
   }
 }

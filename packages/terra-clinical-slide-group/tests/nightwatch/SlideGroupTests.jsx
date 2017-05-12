@@ -3,12 +3,12 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const ClinicalNavigationControllerTests = () => (
+const SlideGroupTests = () => (
   <div>
     <ul>
-      <li><Link to="/tests/clinical-navigation-controller-tests/default">Default ClinicalNavigationController</Link></li>
+      <li><Link to="/tests/slide-group-tests/default">Default SlideGroup</Link></li>
     </ul>
   </div>
 );
 
-export default ClinicalNavigationControllerTests;
+export default SlideGroupTests;
