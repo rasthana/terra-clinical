@@ -1,7 +1,9 @@
 import React from 'react';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+// import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
+// import createSagaMiddleware from 'redux-saga';
+
+import { getStore } from 'terra-clinical-redux';
 
 import Application from 'terra-clinical-application';
 import AppDelegate from 'terra-clinical-app-delegate';
@@ -10,22 +12,9 @@ import ModalManager, { reducers as modalManagerReducers } from 'terra-clinical-m
 import PanelController, { reducers as panelControllerReducers } from '../panel-controller/PanelController';
 import PatientListController, { reducers as patientListReducers } from '../patient-list/PatientListController';
 
-import patientSagas from '../patient-concept/sagas/patientSagas';
+// import patientSagas from '../patient-concept/sagas/patientSagas';
 
-const sagaMiddleware = createSagaMiddleware();
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  combineReducers(Object.assign({},
-    patientListReducers,
-    modalManagerReducers,
-    panelControllerReducers,
-  )),
-  composeEnhancers(applyMiddleware(sagaMiddleware)),
-);
-
-patientSagas.map(saga => (sagaMiddleware.run(saga)));
+const store = getStore();
 
 const physicianId = 'physician1';
 

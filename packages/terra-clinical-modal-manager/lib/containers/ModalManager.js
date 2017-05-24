@@ -7,6 +7,8 @@ exports.reducers = undefined;
 
 var _reactRedux = require('react-redux');
 
+var _terraClinicalRedux = require('terra-clinical-redux');
+
 var _ModalManager = require('../components/ModalManager');
 
 var _ModalManager2 = _interopRequireDefault(_ModalManager);
@@ -62,3 +64,6 @@ var reducers = {
 };
 
 exports.reducers = reducers;
+
+
+(0, _terraClinicalRedux.injectReducer)('modalManager', _modalManager2.default);

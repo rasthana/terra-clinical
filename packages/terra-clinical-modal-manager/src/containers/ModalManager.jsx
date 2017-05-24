@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { injectReducer } from 'terra-clinical-redux';
 
 import ModalManagerComponent from '../components/ModalManager';
 
@@ -31,3 +32,5 @@ const reducers = {
 };
 
 export { reducers };
+
+injectReducer('modalManager', modalManagerReducers);

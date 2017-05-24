@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AppDelegate from 'terra-clinical-app-delegate';
 
+import { injectReducer, injectSaga } from 'terra-clinical-redux';
+
 import { loadPatient } from '../patient-concept/actions/patientActions';
 import patientReducers from '../patient-concept/reducers/patientReducers';
+import patientSagas from '../patient-concept/sagas/patientSagas';
 
 import PatientDetail from './PatientDetail';
 
@@ -102,3 +105,6 @@ export { disclosureName };
 
 const reducers = Object.assign({}, { patientState: patientReducers }, patientUpdateReducers);
 export { reducers };
+
+injectReducer('patientState', patientReducers);
+injectSaga('patientSaga', patientSagas);

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AppDelegate from 'terra-clinical-app-delegate';
+import { injectReducer } from 'terra-clinical-redux';
+
 import PanelPresenter from './PanelPresenter';
 
 import panelControllerReducers from './reducers/panelController';
@@ -129,3 +131,6 @@ const reducers = {
 };
 
 export { reducers };
+
+injectReducer('panelController', panelControllerReducers);
+
