@@ -1,0 +1,12 @@
+@import '~terra-mixins';
+
+/* Hide mounted apps that haven't loaded or authorized */
+.xfc[data-status='mounted'],
+.xfc[data-status='launched'] {
+  display: none;
+}
+
+/* Reveal the app once its been authorized */
+.xfc[data-status='authorized'] {
+  display: block;
+}

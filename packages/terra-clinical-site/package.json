@@ -47,6 +47,7 @@
     "terra-clinical-no-data-view": "^0.x",
     "terra-clinical-slide-group": "^0.x",
     "terra-clinical-modal-manager": "^0.x",
+    "terra-clinical-embedded-content": "^0.x",
     "terra-icon": "^0.x",
     "terra-grid": "^2.x",
     "terra-i18n-plugin": "^0.x",

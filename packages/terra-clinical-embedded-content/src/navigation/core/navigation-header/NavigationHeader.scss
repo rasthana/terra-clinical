@@ -1,0 +1,54 @@
+.terra-NavigationHeader {
+  clear: both;
+  overflow: auto;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  background-color: #e3e8ef;
+
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+  }
+
+  > * + * {
+    padding-left: 10px;
+  }
+
+  > .terra-NavigationHeader-start {
+    flex: 1 1 auto;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    padding-left: 5px;
+    // overflow: auto;
+
+    > * {
+      flex: 0 1 auto;
+    }
+  }
+
+  > .terra-NavigationHeader-end {
+    flex: 0 1 auto;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    padding-right: 5px;
+    // overflow: auto;
+
+    > * {
+      flex: 0 1 auto;
+    }
+  }
+}
+
+.terra-NavigationHeader--borderBottom {
+  border-bottom: 1px solid lightgrey;
+}
