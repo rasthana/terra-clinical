@@ -34,14 +34,10 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "terra-base": "^0.x",
-    "terra-list": "file:/Users/ra026552/code/forks/terra-core/packages/terra-list",
-    "terra-button": "file:/Users/ra026552/code/forks/terra-core/packages/terra-button",
-    "terra-button-group": "file:/Users/ra026552/code/forks/terra-core/packages/terra-button-group",
+    "terra-base": "^0.x",    
     "xfc": "git+http://github.cerner.com/hi-infra/xfc.git#0.4.1",
     "react-addons-css-transition-group": "15.4.2",
     "react-modal": "^1.6.5",
-    "terra-slide-panel": "/Users/ra026552/code/forks/terra-core/packages/terra-slide-panel",
     "terra-clinical-detail-view": "^0.x",
     "terra-clinical-item-view": "^0.x"
   },
