@@ -35,7 +35,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "terra-base": "^0.x",    
-    "xfc": "git+http://github.cerner.com/hi-infra/xfc.git#0.4.1",
+    "xfc": "https://github.com/cerner/xfc.git",
     "react-addons-css-transition-group": "15.4.2",
     "react-modal": "^1.6.5",
     "terra-clinical-detail-view": "^0.x",
