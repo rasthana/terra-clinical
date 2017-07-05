@@ -105,10 +105,6 @@ class EmbeddedContent extends React.Component {
     }
   }
 
-  // showAlert() {
-  //   alert("Show the Chart!");
-  // }
-
   // componentDidUpdate() {
   //   // This might be too heavy to do every update. We might want to compare app delegates and only bootstrap
   //   // when changes ocurred.
