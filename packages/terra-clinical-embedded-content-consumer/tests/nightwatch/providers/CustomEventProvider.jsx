@@ -7,12 +7,8 @@ function CustomEventProvider() {
   });
 
   setTimeout(() => {
-    Provider.trigger('EventA');
+    Provider.trigger('invokeCustomEvent');
   }, 1000);
-
-  setTimeout(() => {
-    Provider.trigger('EventB');
-  }, 2000);
 
   return (
     <div>
@@ -23,7 +19,6 @@ function CustomEventProvider() {
         <h1>Custom Events</h1>
         <p>A custom event can be registered with the consumer and intiated by the provider.</p>
         <p>After a one second delay the provider sends the message and consumer handles the message by adding a border.</p>
-        <p>After another second delay the provider sends the message and consumer handles the message by updating the border.</p>
       </div>
     </div>
   );

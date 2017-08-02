@@ -10,9 +10,11 @@ import EmbeddedContentConsumerSrc from '!raw-loader!terra-clinical-embedded-cont
 /* eslint-disable import/no-webpack-loader-syntax, import/first, import/no-unresolved, import/extensions */
 
 // Example files
-import BasicEmbeddedContentConsumer from './BasicEmbeddedContentConsumer';
-import CustomEventEmbeddedContentConsumer from './CustomEventEmbeddedContentConsumer';
-import OnReadyEmbeddedContentConsumer from './OnReadyEmbeddedContentConsumer';
+import BasicConsumer from './consumers/BasicConsumer';
+import CustomEventConsumer from './consumers/CustomEventConsumer';
+import CustomEventsConsumer from './consumers/CustomEventsConsumer';
+import OnReadyConsumer from './consumers/OnReadyConsumer';
+import ResizeConsumer from './consumers/resizeConsumer';
 
 const EmbeddedContentConsumerExamples = () => (
   <div>
@@ -20,12 +22,16 @@ const EmbeddedContentConsumerExamples = () => (
     <Markdown id="readme" src={ReadMe} />
     <h2>Embedded Content Consumer</h2>
     <PropsTable id="embedded_content_consumer_props" src={EmbeddedContentConsumerSrc} />
-    <h2 id="Basic Embedded Content">Basic Embedded Content</h2>
-    <BasicEmbeddedContentConsumer />
-    <h2 id="On Ready Embedded Content">On Ready Embedded Content</h2>
-    <OnReadyEmbeddedContentConsumer />
-    <h2 id="Custom Event Embedded Content">Custom Event Embedded Content</h2>
-    <CustomEventEmbeddedContentConsumer />
+    <h2 id="Basic Content">Basic Embedded Content</h2>
+    <BasicConsumer />
+    <h2 id="Custom Event Content">Custom Event Embedded Content</h2>
+    <CustomEventConsumer />
+    <h2 id="Custom Events Content">Custom Event Embedded Content</h2>
+    <CustomEventsConsumer />
+    <h2 id="On Ready Content">On Ready Embedded Content</h2>
+    <OnReadyConsumer />
+    <h2 id="Resize Content">Resize Embedded Content</h2>
+    <ResizeConsumer />
   </div>
 );
 
